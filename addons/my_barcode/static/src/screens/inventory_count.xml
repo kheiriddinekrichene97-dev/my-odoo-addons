@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="my_barcode.InventoryCount">
+        <div class="o_my_barcode_screen">
+            <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+                <label class="fw-bold" for="o_my_barcode_location">Location</label>
+                <select id="o_my_barcode_location" class="form-select w-auto flex-grow-1" t-on-change="onLocationChange">
+                    <option t-foreach="state.locations" t-as="location" t-key="location.id"
+                            t-att-value="location.id" t-att-selected="location.id === state.locationId"
+                            t-esc="location.name"/>
+                </select>
+            </div>
+
+            <div t-if="!state.lines.length" class="o_my_barcode_empty">
+                <i class="fa fa-cubes d-block"/>
+                Scan the products in <strong t-esc="locationName"/> to count them.
+                Each scan adds 1. Scan a location barcode to switch location.
+            </div>
+            <t t-else="">
+                <div class="list-group mb-3">
+                    <div t-foreach="state.lines" t-as="line" t-key="line.quant_id"
+                         class="list-group-item o_my_barcode_line d-flex flex-wrap align-items-center gap-2"
+                         t-att-class="{ o_my_barcode_line_last: line.product_id === state.lastProductId }">
+                        <div class="flex-grow-1">
+                            <div class="fw-bold" t-esc="line.product_name"/>
+                            <div class="small text-muted">
+                                On hand: <t t-esc="formatQty(line.on_hand)"/> <t t-esc="line.uom"/>
+                                <t t-set="diff" t-value="line.counted - line.on_hand"/>
+                                <span t-if="diff" class="ms-2 fw-bold"
+                                      t-att-class="diff > 0 ? 'text-success' : 'text-danger'">
+                                    (<t t-esc="diff > 0 ? '+' : ''"/><t t-esc="formatQty(diff)"/>)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center gap-1">
+                            <button class="btn btn-light border" title="Remove one" aria-label="Remove one"
+                                    t-on-click="() => this.increment(line, -1)">
+                                <i class="fa fa-minus"/>
+                            </button>
+                            <input type="number" min="0" step="any" class="form-control o_my_barcode_qty_input"
+                                   t-att-value="line.counted" t-on-change="(ev) => this.onQtyChange(line, ev)"/>
+                            <button class="btn btn-light border" title="Add one" aria-label="Add one"
+                                    t-on-click="() => this.increment(line, 1)">
+                                <i class="fa fa-plus"/>
+                            </button>
+                            <button class="btn btn-link text-danger" title="Remove line" aria-label="Remove line"
+                                    t-on-click="() => this.remove(line)">
+                                <i class="fa fa-trash"/>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="o_my_barcode_footer d-flex gap-2 justify-content-end">
+                    <button class="btn btn-secondary" t-on-click="discard">Discard</button>
+                    <button class="btn btn-primary" t-on-click="apply">
+                        <i class="fa fa-check me-1"/>Apply count
+                    </button>
+                </div>
+            </t>
+        </div>
+    </t>
+
+</templates>

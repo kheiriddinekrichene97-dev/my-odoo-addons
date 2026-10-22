@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="my_barcode.BarcodeApp">
+        <div class="o_action o_my_barcode h-100 d-flex flex-column">
+            <div class="o_my_barcode_topbar d-flex flex-wrap align-items-center gap-2 px-3 py-2 border-bottom bg-view">
+                <button t-if="state.screen !== 'home'" class="btn btn-light" title="Back" aria-label="Back" t-on-click="goBack">
+                    <i class="fa fa-arrow-left"/>
+                </button>
+                <h4 class="mb-0 me-auto text-truncate" t-esc="title"/>
+                <form class="o_my_barcode_manual d-flex gap-1" t-on-submit.prevent="onManualSubmit">
+                    <input type="text" class="form-control" placeholder="Type a barcode or reference"
+                           autocomplete="off" t-model="state.manualCode"/>
+                    <button type="submit" class="btn btn-secondary" title="Submit" aria-label="Submit">
+                        <i class="fa fa-check"/>
+                    </button>
+                </form>
+                <button t-if="cameraSupported" class="btn btn-primary" title="Scan with the camera"
+                        aria-label="Scan with the camera" t-on-click="openCamera">
+                    <i class="fa fa-camera"/>
+                </button>
+            </div>
+
+            <div class="o_my_barcode_body flex-grow-1 overflow-auto">
+                <t t-if="state.screen === 'home'">
+                    <div class="o_my_barcode_home container py-4">
+                        <p class="text-center text-muted mb-4">
+                            <i class="fa fa-barcode me-1"/>
+                            Scan a product, a location or a transfer reference to open it directly,
+                            or pick what you want to do.
+                        </p>
+                        <div class="o_my_barcode_tiles">
+                            <button t-foreach="tiles" t-as="tile" t-key="tile_index"
+                                    class="o_my_barcode_tile btn btn-light border"
+                                    t-on-click="() => this.navigate(tile.screen, tile.params)">
+                                <i t-attf-class="fa {{tile.icon}} fa-2x mb-2"/>
+                                <span t-esc="tile.label"/>
+                            </button>
+                        </div>
+                    </div>
+                </t>
+                <t t-else="" t-component="screen.Component" t-key="state.screenKey"
+                   api="api" params="state.params"/>
+            </div>
+        </div>
+    </t>
+
+</templates>

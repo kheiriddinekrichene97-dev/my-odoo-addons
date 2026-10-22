@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="my_barcode.AssignBarcode">
+        <div class="o_my_barcode_screen">
+            <div class="alert d-flex align-items-center gap-2"
+                 t-att-class="state.selected or state.pendingBarcode ? 'alert-primary' : 'alert-secondary'">
+                <i class="fa fa-barcode fa-2x"/>
+                <div class="flex-grow-1">
+                    <t t-if="state.selected">
+                        Scan the barcode for <strong t-esc="state.selected.display_name"/>.
+                    </t>
+                    <t t-elif="state.pendingBarcode">
+                        Barcode <strong t-esc="state.pendingBarcode"/> scanned: pick the product it belongs to.
+                    </t>
+                    <t t-else="">
+                        Pick a product then scan its barcode, or scan a barcode then pick the product.
+                    </t>
+                </div>
+                <button t-if="state.selected or state.pendingBarcode" class="btn btn-light btn-sm" t-on-click="cancel">
+                    Cancel
+                </button>
+            </div>
+
+            <div class="d-flex flex-wrap align-items-center gap-3 mb-2">
+                <input type="search" class="form-control flex-grow-1 w-auto"
+                       placeholder="Search products by name or reference"
+                       t-att-value="state.search" t-on-input="onSearchInput"/>
+                <div class="form-check mb-0">
+                    <input class="form-check-input" type="checkbox" id="o_my_barcode_only_missing"
+                           t-att-checked="state.onlyMissing" t-on-change="toggleOnlyMissing"/>
+                    <label class="form-check-label" for="o_my_barcode_only_missing">Only without barcode</label>
+                </div>
+            </div>
+            <p class="small text-muted">
+                Tip: click outside the search box before scanning with a handheld scanner.
+            </p>
+
+            <div t-if="!state.products.length" class="o_my_barcode_empty">
+                <i class="fa fa-check-circle d-block"/>
+                No products found.
+            </div>
+            <div t-else="" class="list-group">
+                <a t-foreach="state.products" t-as="product" t-key="product.id" href="#"
+                   class="list-group-item list-group-item-action d-flex align-items-center gap-2"
+                   t-att-class="{ active: state.selected and state.selected.id === product.id }"
+                   t-on-click.prevent="() => this.select(product)">
+                    <div class="flex-grow-1">
+                        <div class="fw-bold" t-esc="product.display_name"/>
+                        <div class="small" t-if="product.barcode">
+                            <i class="fa fa-barcode me-1"/><t t-esc="product.barcode"/>
+                        </div>
+                    </div>
+                    <i class="fa fa-chevron-right"/>
+                </a>
+            </div>
+        </div>
+    </t>
+
+</templates>

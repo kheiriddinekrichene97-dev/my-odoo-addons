@@ -1,0 +1,88 @@
+.o_my_barcode {
+    background-color: #f5f5f7;
+
+    .o_my_barcode_manual {
+        max-width: 320px;
+        flex: 1 1 220px;
+    }
+
+    .o_my_barcode_tiles {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 1rem;
+        max-width: 760px;
+        margin: 0 auto;
+    }
+
+    .o_my_barcode_tile {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 120px;
+        font-size: 1.05rem;
+        background-color: #fff;
+
+        .fa {
+            color: #875a7b;
+        }
+    }
+
+    .o_my_barcode_screen {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 1rem;
+    }
+
+    .o_my_barcode_empty {
+        text-align: center;
+        color: #6c757d;
+        padding: 3rem 1rem;
+
+        > .fa {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: .5;
+        }
+    }
+
+    .o_my_barcode_product_image {
+        width: 128px;
+        height: 128px;
+        object-fit: contain;
+        background-color: #fff;
+    }
+
+    .o_my_barcode_qty_input {
+        width: 5.5rem;
+        text-align: center;
+    }
+
+    .o_my_barcode_line {
+        transition: background-color .4s;
+
+        &.o_my_barcode_line_done {
+            background-color: #e6f4ea;
+        }
+
+        &.o_my_barcode_line_over {
+            background-color: #fff4e5;
+        }
+
+        &.o_my_barcode_line_last {
+            box-shadow: inset 4px 0 0 #875a7b;
+        }
+    }
+
+    .o_my_barcode_clickable {
+        cursor: pointer;
+    }
+
+    .o_my_barcode_footer {
+        position: sticky;
+        bottom: 0;
+        background-color: #f5f5f7;
+        padding: .75rem 0;
+        border-top: 1px solid #dee2e6;
+    }
+}

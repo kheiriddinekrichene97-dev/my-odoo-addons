@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_barcode_app" model="ir.actions.client">
+        <field name="name">Barcode</field>
+        <field name="tag">my_barcode.app</field>
+        <field name="path">barcode</field>
+    </record>
+
+    <menuitem id="menu_barcode_root"
+              name="Barcode"
+              action="action_barcode_app"
+              web_icon="my_barcode,static/description/icon.svg"
+              groups="stock.group_stock_user"
+              sequence="25"/>
+</odoo>
