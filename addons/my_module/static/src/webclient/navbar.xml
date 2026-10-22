@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-inherit="web.NavBar.AppsMenu" t-inherit-mode="extension">
+        <xpath expr="//t[@t-if='this.ui.isSmall']" position="before">
+            <a t-if="!isScopedApp" href="/odoo/home" class="o_my_home_button" title="Home"
+               aria-label="Home" t-on-click.prevent="onHomeButtonClick">
+                <i class="fa fa-home"/>
+            </a>
+        </xpath>
+    </t>
+
+</templates>

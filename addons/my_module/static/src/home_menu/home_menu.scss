@@ -1,0 +1,62 @@
+.o_my_home_menu {
+    background: linear-gradient(180deg, #ede7f1 0%, #f8f9fa 60%);
+}
+
+.o_my_home_menu_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 2rem 1rem;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 3rem 1rem;
+}
+
+.o_my_home_menu_app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
+    padding: .75rem .25rem;
+    border-radius: .75rem;
+    color: #374151;
+    text-decoration: none;
+    transition: background-color .15s, transform .15s;
+
+    &:hover, &:focus-visible {
+        background-color: rgba(255, 255, 255, .7);
+        color: #111827;
+        transform: translateY(-2px);
+    }
+}
+
+.o_my_home_menu_icon {
+    width: 64px;
+    height: 64px;
+    border-radius: .75rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .12);
+    object-fit: cover;
+
+    > i {
+        font-size: 32px;
+    }
+}
+
+.o_my_home_menu_caption {
+    font-size: .95rem;
+    text-align: center;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+}
+
+.o_main_navbar .o_my_home_button {
+    display: flex;
+    align-items: center;
+    padding: 0 .75rem;
+    color: inherit;
+    font-size: 1.15em;
+    text-decoration: none;
+
+    &:hover {
+        background-color: rgba(0, 0, 0, .08);
+    }
+}
