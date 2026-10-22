@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="model_x_marche" model="ir.model">
+        <field name="name">Marche</field>
+        <field name="model">x_marche</field>
+        <field name="state">manual</field>
+    </record>
+    <record id="field_x_marche__x_name" model="ir.model.fields">
+        <field name="model_id" ref="model_x_marche"/>
+        <field name="name">x_name</field>
+        <field name="field_description">Nome</field>
+        <field name="ttype">char</field>
+        <field name="required" eval="True"/>
+        <field name="state">manual</field>
+    </record>
+    <record id="field_product_template__x_studio_prodotti2marca" model="ir.model.fields">
+        <field name="model_id" ref="product.model_product_template"/>
+        <field name="name">x_studio_Prodotti2Marca</field>
+        <field name="field_description">Marca</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_marche</field>
+        <field name="on_delete">set null</field>
+        <field name="state">manual</field>
+    </record>
+    <record id="model_x_stagioni" model="ir.model">
+        <field name="name">Stagioni</field>
+        <field name="model">x_stagioni</field>
+        <field name="state">manual</field>
+    </record>
+    <record id="field_x_stagioni__x_name" model="ir.model.fields">
+        <field name="model_id" ref="model_x_stagioni"/>
+        <field name="name">x_name</field>
+        <field name="field_description">Nome</field>
+        <field name="ttype">char</field>
+        <field name="required" eval="True"/>
+        <field name="state">manual</field>
+    </record>
+    <record id="field_product_template__x_studio_prodotti2stagione" model="ir.model.fields">
+        <field name="model_id" ref="product.model_product_template"/>
+        <field name="name">x_studio_prodotti2stagione</field>
+        <field name="field_description">Stagione</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_stagioni</field>
+        <field name="on_delete">set null</field>
+        <field name="state">manual</field>
+    </record>
+    <record id="model_x_reparto" model="ir.model">
+        <field name="name">Reparto</field>
+        <field name="model">x_reparto</field>
+        <field name="state">manual</field>
+    </record>
+    <record id="field_x_reparto__x_name" model="ir.model.fields">
+        <field name="model_id" ref="model_x_reparto"/>
+        <field name="name">x_name</field>
+        <field name="field_description">Nome</field>
+        <field name="ttype">char</field>
+        <field name="required" eval="True"/>
+        <field name="state">manual</field>
+    </record>
+    <record id="field_product_template__x_studio_prodotti2reparto" model="ir.model.fields">
+        <field name="model_id" ref="product.model_product_template"/>
+        <field name="name">x_studio_prodotti2reparto</field>
+        <field name="field_description">Reparto</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_reparto</field>
+        <field name="on_delete">set null</field>
+        <field name="state">manual</field>
+    </record>
+    <record id="model_x_posizionamenti" model="ir.model">
+        <field name="name">Posizionamenti</field>
+        <field name="model">x_posizionamenti</field>
+        <field name="state">manual</field>
+    </record>
+    <record id="field_x_posizionamenti__x_name" model="ir.model.fields">
+        <field name="model_id" ref="model_x_posizionamenti"/>
+        <field name="name">x_name</field>
+        <field name="field_description">Nome</field>
+        <field name="ttype">char</field>
+        <field name="required" eval="True"/>
+        <field name="state">manual</field>
+    </record>
+    <record id="field_product_template__x_prodotti2posizionamento" model="ir.model.fields">
+        <field name="model_id" ref="product.model_product_template"/>
+        <field name="name">x_prodotti2posizionamento</field>
+        <field name="field_description">Posizionamento</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">x_posizionamenti</field>
+        <field name="on_delete">set null</field>
+        <field name="state">manual</field>
+    </record>
+</odoo>

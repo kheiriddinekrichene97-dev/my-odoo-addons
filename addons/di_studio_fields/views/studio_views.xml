@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_studio_classification" name="Classificazione Prodotti"
+              parent="stock.menu_stock_config_settings" sequence="40"/>
+    <record id="view_x_marche_list" model="ir.ui.view">
+        <field name="name">x_marche.list</field>
+        <field name="model">x_marche</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="x_name"/>
+            </list>
+        </field>
+    </record>
+    <record id="action_x_marche" model="ir.actions.act_window">
+        <field name="name">Marche</field>
+        <field name="res_model">x_marche</field>
+        <field name="view_mode">list</field>
+    </record>
+    <menuitem id="menu_x_marche" name="Marche" parent="menu_studio_classification"
+              action="action_x_marche" sequence="10"/>
+    <record id="view_x_stagioni_list" model="ir.ui.view">
+        <field name="name">x_stagioni.list</field>
+        <field name="model">x_stagioni</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="x_name"/>
+            </list>
+        </field>
+    </record>
+    <record id="action_x_stagioni" model="ir.actions.act_window">
+        <field name="name">Stagioni</field>
+        <field name="res_model">x_stagioni</field>
+        <field name="view_mode">list</field>
+    </record>
+    <menuitem id="menu_x_stagioni" name="Stagioni" parent="menu_studio_classification"
+              action="action_x_stagioni" sequence="20"/>
+    <record id="view_x_reparto_list" model="ir.ui.view">
+        <field name="name">x_reparto.list</field>
+        <field name="model">x_reparto</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="x_name"/>
+            </list>
+        </field>
+    </record>
+    <record id="action_x_reparto" model="ir.actions.act_window">
+        <field name="name">Reparto</field>
+        <field name="res_model">x_reparto</field>
+        <field name="view_mode">list</field>
+    </record>
+    <menuitem id="menu_x_reparto" name="Reparto" parent="menu_studio_classification"
+              action="action_x_reparto" sequence="30"/>
+    <record id="view_x_posizionamenti_list" model="ir.ui.view">
+        <field name="name">x_posizionamenti.list</field>
+        <field name="model">x_posizionamenti</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="x_name"/>
+            </list>
+        </field>
+    </record>
+    <record id="action_x_posizionamenti" model="ir.actions.act_window">
+        <field name="name">Posizionamenti</field>
+        <field name="res_model">x_posizionamenti</field>
+        <field name="view_mode">list</field>
+    </record>
+    <menuitem id="menu_x_posizionamenti" name="Posizionamenti" parent="menu_studio_classification"
+              action="action_x_posizionamenti" sequence="40"/>
+</odoo>

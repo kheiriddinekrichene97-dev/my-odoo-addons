@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_x_marche_user,x_marche user,model_x_marche,base.group_user,1,0,0,0
+access_x_marche_stock_manager,x_marche stock manager,model_x_marche,stock.group_stock_manager,1,1,1,1
+access_x_stagioni_user,x_stagioni user,model_x_stagioni,base.group_user,1,0,0,0
+access_x_stagioni_stock_manager,x_stagioni stock manager,model_x_stagioni,stock.group_stock_manager,1,1,1,1
+access_x_reparto_user,x_reparto user,model_x_reparto,base.group_user,1,0,0,0
+access_x_reparto_stock_manager,x_reparto stock manager,model_x_reparto,stock.group_stock_manager,1,1,1,1
+access_x_posizionamenti_user,x_posizionamenti user,model_x_posizionamenti,base.group_user,1,0,0,0
+access_x_posizionamenti_stock_manager,x_posizionamenti stock manager,model_x_posizionamenti,stock.group_stock_manager,1,1,1,1
