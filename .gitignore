@@ -1,2 +1,6 @@
 __pycache__/
 *.pyc
+
+# Local credentials and data exports
+.env
+tools/esc_import/*.json.gz
