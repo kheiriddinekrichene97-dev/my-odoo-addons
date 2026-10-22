@@ -1,0 +1,37 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* di_pos_roles
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+"Language: it\n"
+
+#. module: di_pos_roles
+#. odoo-javascript
+#: code:addons/di_pos_roles/static/src/app/services/pos_store.js:0
+msgid "You are not allowed to view orders."
+msgstr "Non sei autorizzato a vedere gli ordini."
+
+#. module: di_pos_roles
+#. odoo-javascript
+#: code:addons/di_pos_roles/static/src/app/services/pos_store.js:0
+msgid "The till is not open yet"
+msgstr "La cassa non è ancora aperta"
+
+#. module: di_pos_roles
+#. odoo-javascript
+#: code:addons/di_pos_roles/static/src/app/services/pos_store.js:0
+msgid ""
+"Only a cashier or an administrator can open the till. Ask one of them to log"
+" in and open it."
+msgstr ""
+"Solo un cassiere o un amministratore può aprire la cassa. Chiedi a uno di "
+"loro di accedere e aprirla."

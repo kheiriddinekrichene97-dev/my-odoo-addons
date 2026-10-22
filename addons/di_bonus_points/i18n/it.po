@@ -1,0 +1,824 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* di_bonus_points
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: di_bonus_points
+#. odoo-javascript
+#: code:addons/di_bonus_points/static/src/app/screens/product_screen/control_buttons/control_buttons.js:0
+msgid ""
+"%(available)s point(s) available - up to %(cap)s can be used on this line"
+msgstr "%(available)s buono/i acquisto disponibile/i - su questa riga se ne possono usare fino a %(cap)s"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,help:di_bonus_points.field_product_product__bonus_discount_pct
+#: model:ir.model.fields,help:di_bonus_points.field_product_template__bonus_discount_pct
+msgid ""
+"(Sales Price - Promo Price) / Sales Price - the same calculation the bonus-"
+"points eligibility gate uses."
+msgstr "(Prezzo di Vendita - Prezzo Promo) / Prezzo di Vendita - lo stesso calcolo usato dal controllo di idoneità dei buoni acquisto."
+
+#. module: di_bonus_points
+#. odoo-python
+#: code:addons/di_bonus_points/models/bonus_point_service.py:0
+msgid ""
+"A fidelity card (customer) must be set on the order before bonus points can "
+"be applied."
+msgstr "Prima di applicare i buoni acquisto è necessario impostare una tessera fedeltà (cliente) sull'ordine."
+
+#. module: di_bonus_points
+#: model_terms:ir.actions.act_window,help:di_bonus_points.product_template_action_bonus_eligible
+msgid ""
+"A product shows up here when (Sales Price - Promo Price) / Sales Price\n"
+"                is within its Reparto's Donna/Uomo discount cap."
+msgstr "Un prodotto compare qui quando (Prezzo di Vendita - Prezzo Promo) / Prezzo di Vendita\n                rientra nel limite di sconto Donna/Uomo del suo Reparto."
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_bracket__active
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_category_rule__active
+#: model:ir.model.fields.selection,name:di_bonus_points.selection__bonus_point_batch__state__active
+msgid "Active"
+msgstr "Attivo"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_category_rule__allow_manager_override
+msgid "Allow Manager Override"
+msgstr "Consenti Deroga Responsabile"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,help:di_bonus_points.field_bonus_point_movement__points
+msgid "Always a positive count; the movement_type gives the direction."
+msgstr "Sempre un valore positivo; la direzione è data da movement_type."
+
+#. module: di_bonus_points
+#: model_terms:ir.ui.view,arch_db:di_bonus_points.product_template_view_list_bonus_eligible
+msgid "BA"
+msgstr "BA"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_movement__batch_id
+msgid "Batch"
+msgstr "Lotto"
+
+#. module: di_bonus_points
+#: model:ir.ui.menu,name:di_bonus_points.menu_bonus_point_batch
+msgid "Batches"
+msgstr "Lotti"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_product_product__bonus_discount_pct
+#: model:ir.model.fields,field_description:di_bonus_points.field_product_template__bonus_discount_pct
+msgid "Bonus Discount %"
+msgstr "Sconto Buoni Acquisto %"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_res_partner__bonus_point_batch_ids
+#: model:ir.model.fields,field_description:di_bonus_points.field_res_users__bonus_point_batch_ids
+msgid "Bonus Point Batches"
+msgstr "Lotti Buoni Acquisto"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_pos_order_line__bonus_movement_ids
+msgid "Bonus Point Movements"
+msgstr "Movimenti Buoni Acquisto"
+
+#. module: di_bonus_points
+#. odoo-javascript
+#: code:addons/di_bonus_points/static/src/app/components/orderline/orderline.xml:0
+#: code:addons/di_bonus_points/static/src/app/components/product_card/product_card.xml:0
+#: code:addons/di_bonus_points/static/src/app/screens/product_screen/control_buttons/control_buttons.xml:0
+#: model:ir.ui.menu,name:di_bonus_points.menu_bonus_point_root
+#: model_terms:ir.ui.view,arch_db:di_bonus_points.view_partner_form_bonus_points
+msgid "Bonus Points"
+msgstr "Buoni Acquisto"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_product_product__bonus_ba_code
+#: model:ir.model.fields,field_description:di_bonus_points.field_product_template__bonus_ba_code
+msgid "Bonus Points (BA)"
+msgstr "Buoni Acquisto (BA)"
+
+#. module: di_bonus_points
+#: model:ir.model,name:di_bonus_points.model_bonus_point_category_rule
+msgid "Bonus Points - Category Eligibility Rule"
+msgstr "Buoni Acquisto - Regola di Idoneità per Categoria"
+
+#. module: di_bonus_points
+#: model:ir.model,name:di_bonus_points.model_bonus_point_batch
+msgid "Bonus Points - Earned Batch"
+msgstr "Buoni Acquisto - Lotto Maturato"
+
+#. module: di_bonus_points
+#: model:ir.model,name:di_bonus_points.model_bonus_point_movement
+msgid "Bonus Points - Movement Ledger"
+msgstr "Buoni Acquisto - Registro Movimenti"
+
+#. module: di_bonus_points
+#: model:ir.model,name:di_bonus_points.model_bonus_point_bracket
+msgid "Bonus Points - Price Bracket"
+msgstr "Buoni Acquisto - Fascia di Prezzo"
+
+#. module: di_bonus_points
+#: model:ir.model,name:di_bonus_points.model_bonus_point_service
+msgid "Bonus Points - Service Layer"
+msgstr "Buoni Acquisto - Livello di Servizio"
+
+#. module: di_bonus_points
+#: model:ir.model,name:di_bonus_points.model_bonus_point_settings
+msgid "Bonus Points - Settings"
+msgstr "Buoni Acquisto - Impostazioni"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_pos_order_line__bonus_points_applied
+msgid "Bonus Points Applied"
+msgstr "Buoni Acquisto Applicati"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_res_partner__bonus_points_available
+#: model:ir.model.fields,field_description:di_bonus_points.field_res_users__bonus_points_available
+msgid "Bonus Points Available"
+msgstr "Buoni Acquisto Disponibili"
+
+#. module: di_bonus_points
+#: model_terms:ir.ui.view,arch_db:di_bonus_points.bonus_point_batch_view_form
+msgid "Bonus Points Batch"
+msgstr "Lotto Buoni Acquisto"
+
+#. module: di_bonus_points
+#: model:ir.actions.act_window,name:di_bonus_points.bonus_point_batch_action
+#: model_terms:ir.ui.view,arch_db:di_bonus_points.bonus_point_batch_view_list
+msgid "Bonus Points Batches"
+msgstr "Lotti Buoni Acquisto"
+
+#. module: di_bonus_points
+#: model_terms:ir.ui.view,arch_db:di_bonus_points.bonus_point_bracket_view_form
+msgid "Bonus Points Bracket"
+msgstr "Fascia Buoni Acquisto"
+
+#. module: di_bonus_points
+#: model_terms:ir.ui.view,arch_db:di_bonus_points.bonus_point_bracket_view_list
+msgid "Bonus Points Brackets"
+msgstr "Fasce Buoni Acquisto"
+
+#. module: di_bonus_points
+#: model_terms:ir.ui.view,arch_db:di_bonus_points.bonus_point_category_rule_view_form
+msgid "Bonus Points Category Rule"
+msgstr "Regola di Categoria Buoni Acquisto"
+
+#. module: di_bonus_points
+#: model_terms:ir.ui.view,arch_db:di_bonus_points.bonus_point_category_rule_view_list
+msgid "Bonus Points Category Rules"
+msgstr "Regole di Categoria Buoni Acquisto"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_pos_order__bonus_points_credited
+msgid "Bonus Points Credited"
+msgstr "Buoni Acquisto Accreditati"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_product_product__bonus_points_eligible
+#: model:ir.model.fields,field_description:di_bonus_points.field_product_template__bonus_points_eligible
+msgid "Bonus Points Eligible"
+msgstr "Idoneo ai Buoni Acquisto"
+
+#. module: di_bonus_points
+#: model_terms:ir.ui.view,arch_db:di_bonus_points.product_template_search_bonus_eligible
+#: model_terms:ir.ui.view,arch_db:di_bonus_points.product_template_view_list_bonus_eligible
+msgid "Bonus Points Eligible Products"
+msgstr "Prodotti Idonei ai Buoni Acquisto"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_pos_order_line__bonus_points_ledger_consumed
+msgid "Bonus Points Ledger Consumed"
+msgstr "Buoni Acquisto Consumati a Registro"
+
+#. module: di_bonus_points
+#: model:ir.actions.act_window,name:di_bonus_points.bonus_point_movement_action
+#: model_terms:ir.ui.view,arch_db:di_bonus_points.bonus_point_movement_view_list
+msgid "Bonus Points Movements"
+msgstr "Movimenti Buoni Acquisto"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_pos_order_line__bonus_reduction_amount
+msgid "Bonus Points Reduction (€)"
+msgstr "Riduzione Buoni Acquisto (€)"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_pos_order__bonus_points_refund_processed
+msgid "Bonus Points Refund Processed"
+msgstr "Reso Buoni Acquisto Elaborato"
+
+#. module: di_bonus_points
+#: model:ir.actions.act_window,name:di_bonus_points.bonus_point_settings_action
+#: model_terms:ir.ui.view,arch_db:di_bonus_points.bonus_point_settings_view_form
+#: model_terms:ir.ui.view,arch_db:di_bonus_points.bonus_point_settings_view_list
+msgid "Bonus Points Settings"
+msgstr "Impostazioni Buoni Acquisto"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_pos_order_line__bonus_campaign_discount_pct
+msgid "Campaign Discount %"
+msgstr "Sconto Campagna %"
+
+#. module: di_bonus_points
+#: model:ir.actions.act_window,name:di_bonus_points.bonus_point_category_rule_action
+#: model:ir.ui.menu,name:di_bonus_points.menu_bonus_point_category_rule
+msgid "Category Rules"
+msgstr "Regole di Categoria"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,help:di_bonus_points.field_bonus_point_bracket__no_upper_limit
+msgid ""
+"Check for the top bracket (e.g. 150 € and above); 'To' is ignored when this "
+"is set."
+msgstr "Selezionare per la fascia più alta (es. da 150 € in su); se attivo, il campo 'A' viene ignorato."
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_batch__company_id
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_bracket__company_id
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_category_rule__company_id
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_movement__company_id
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_settings__company_id
+msgid "Company"
+msgstr "Azienda"
+
+#. module: di_bonus_points
+#: model:ir.ui.menu,name:di_bonus_points.menu_bonus_point_configuration
+msgid "Configuration"
+msgstr "Configurazione"
+
+#. module: di_bonus_points
+#: model:ir.model,name:di_bonus_points.model_res_partner
+msgid "Contact"
+msgstr "Contatto"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_batch__create_uid
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_bracket__create_uid
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_category_rule__create_uid
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_movement__create_uid
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_settings__create_uid
+msgid "Created by"
+msgstr "Creato da"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_batch__create_date
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_bracket__create_date
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_category_rule__create_date
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_movement__create_date
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_settings__create_date
+msgid "Created on"
+msgstr "Creato il"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_movement__date
+msgid "Date"
+msgstr "Data"
+
+#. module: di_bonus_points
+#: model_terms:ir.actions.act_window,help:di_bonus_points.bonus_point_bracket_action
+msgid ""
+"Define the price → points table used to calculate bonus points on eligible "
+"items."
+msgstr "Definisce la tabella prezzo → buoni acquisto usata per calcolare i buoni acquisto sugli articoli idonei."
+
+#. module: di_bonus_points
+#: model:ir.model.fields,help:di_bonus_points.field_bonus_point_category_rule__reparto_ids
+msgid "Department(s) (Reparto) this eligibility rule applies to."
+msgstr "Reparto/i a cui si applica questa regola di idoneità."
+
+#. module: di_bonus_points
+#: model:ir.model.fields.selection,name:di_bonus_points.selection__bonus_point_batch__state__depleted
+msgid "Depleted"
+msgstr "Esaurito"
+
+#. module: di_bonus_points
+#: model_terms:ir.ui.view,arch_db:di_bonus_points.product_template_view_list_bonus_eligible
+msgid "Discount %"
+msgstr "Sconto %"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,help:di_bonus_points.field_pos_order_line__bonus_campaign_discount_pct
+msgid ""
+"Discount % vs. list price at the Dettaglio price, snapshotted before bonus "
+"points are applied."
+msgstr "Sconto % rispetto al prezzo di listino, al prezzo Dettaglio, registrato prima dell'applicazione dei buoni acquisto."
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_batch__display_name
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_bracket__display_name
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_category_rule__display_name
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_movement__display_name
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_service__display_name
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_settings__display_name
+#: model:ir.model.fields,field_description:di_bonus_points.field_pos_order__display_name
+#: model:ir.model.fields,field_description:di_bonus_points.field_pos_order_line__display_name
+#: model:ir.model.fields,field_description:di_bonus_points.field_pos_session__display_name
+#: model:ir.model.fields,field_description:di_bonus_points.field_product_product__display_name
+#: model:ir.model.fields,field_description:di_bonus_points.field_product_template__display_name
+#: model:ir.model.fields,field_description:di_bonus_points.field_res_partner__display_name
+msgid "Display Name"
+msgstr "Nome Visualizzato"
+
+#. module: di_bonus_points
+#: model:ir.model.fields.selection,name:di_bonus_points.selection__bonus_point_movement__movement_type__earn
+msgid "Earn"
+msgstr "Maturazione"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_batch__earn_date
+msgid "Earn Date"
+msgstr "Data di Maturazione"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_settings__earn_divisor
+msgid "Earning Divisor (€)"
+msgstr "Divisore di Maturazione (€)"
+
+#. module: di_bonus_points
+#: model:ir.actions.act_window,name:di_bonus_points.product_template_action_bonus_eligible
+#: model:ir.ui.menu,name:di_bonus_points.menu_bonus_point_eligible_products
+msgid "Eligible Products"
+msgstr "Prodotti Idonei"
+
+#. module: di_bonus_points
+#. odoo-javascript
+#: code:addons/di_bonus_points/static/src/app/components/orderline/orderline.xml:0
+#: code:addons/di_bonus_points/static/src/app/components/product_card/product_card.xml:0
+#: model:ir.model.fields,field_description:di_bonus_points.field_pos_order_line__bonus_eligible
+msgid "Eligible for Bonus Points"
+msgstr "Idoneo ai Buoni Acquisto"
+
+#. module: di_bonus_points
+#: model:ir.model.fields.selection,name:di_bonus_points.selection__bonus_point_movement__movement_type__expire
+msgid "Expire"
+msgstr "Scadenza"
+
+#. module: di_bonus_points
+#: model:ir.model.fields.selection,name:di_bonus_points.selection__bonus_point_batch__state__expired
+msgid "Expired"
+msgstr "Scaduto"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_settings__expiry_days
+msgid "Expiry (days)"
+msgstr "Scadenza (giorni)"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_batch__expiry_date
+msgid "Expiry Date"
+msgstr "Data di Scadenza"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_bracket__price_from
+msgid "From (€)"
+msgstr "Da (€)"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_bracket__price_from_inclusive
+msgid "From Inclusive"
+msgstr "Da Incluso"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,help:di_bonus_points.field_pos_order__bonus_points_credited
+msgid ""
+"Guards against crediting earned bonus points twice: _process_saved_order "
+"runs again on every later resync of an already-paid order (e.g. invoice "
+"generation), not just once."
+msgstr "Impedisce di accreditare due volte i buoni acquisto maturati: _process_saved_order viene rieseguito a ogni successiva risincronizzazione di un ordine già pagato (ad es. generazione fattura), non una sola volta."
+
+#. module: di_bonus_points
+#: model:ir.model.fields,help:di_bonus_points.field_pos_order__bonus_points_refund_processed
+msgid ""
+"Guards against reversing bonus points twice for the same refund order, for "
+"the same reason as bonus_points_credited."
+msgstr "Impedisce di stornare due volte i buoni acquisto per lo stesso ordine di reso, per lo stesso motivo di bonus_points_credited."
+
+#. module: di_bonus_points
+#: model:ir.model.fields,help:di_bonus_points.field_product_product__bonus_ba_code
+#: model:ir.model.fields,help:di_bonus_points.field_product_template__bonus_ba_code
+msgid ""
+"How many bonus points this item is worth, in the form printed on the price "
+"tag (0BA ... 4BA). Taken from the price bracket matching its Promo Price, or"
+" 0BA when the item isn't eligible at all (too discounted for its Reparto, "
+"per the category rule)."
+msgstr "Quanti buoni acquisto vale questo articolo, nella forma stampata sul cartellino (0BA ... 4BA). Deriva dalla fascia di prezzo corrispondente al suo Prezzo Promo, oppure 0BA quando l'articolo non è idoneo (troppo scontato per il suo Reparto, secondo la regola di categoria)."
+
+#. module: di_bonus_points
+#: model:ir.model.fields,help:di_bonus_points.field_pos_order_line__bonus_points_ledger_consumed
+msgid ""
+"How many points have actually been drawn from the customer's real batches "
+"for this line so far. Backend-only bookkeeping, never sent to the POS "
+"frontend: the frontend owns bonus_points_applied/price_unit (it must work "
+"offline), this field is what the backend reconciles it against at order "
+"validation time so points are never double-spent."
+msgstr "Quanti buoni acquisto sono stati effettivamente prelevati dai lotti reali del cliente per questa riga finora. Contabilità solo lato server, mai inviata al frontend POS: il frontend gestisce bonus_points_applied/price_unit (deve funzionare offline), mentre questo campo è ciò con cui il server li riconcilia al momento della validazione dell'ordine, così i buoni acquisto non vengono mai spesi due volte."
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_batch__id
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_bracket__id
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_category_rule__id
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_movement__id
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_service__id
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_settings__id
+#: model:ir.model.fields,field_description:di_bonus_points.field_pos_order__id
+#: model:ir.model.fields,field_description:di_bonus_points.field_pos_order_line__id
+#: model:ir.model.fields,field_description:di_bonus_points.field_pos_session__id
+#: model:ir.model.fields,field_description:di_bonus_points.field_product_product__id
+#: model:ir.model.fields,field_description:di_bonus_points.field_product_template__id
+#: model:ir.model.fields,field_description:di_bonus_points.field_res_partner__id
+msgid "ID"
+msgstr "ID"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_batch__write_uid
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_bracket__write_uid
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_category_rule__write_uid
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_movement__write_uid
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_settings__write_uid
+msgid "Last Updated by"
+msgstr "Ultimo aggiornamento di"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_batch__write_date
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_bracket__write_date
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_category_rule__write_date
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_movement__write_date
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_settings__write_date
+msgid "Last Updated on"
+msgstr "Ultimo aggiornamento il"
+
+#. module: di_bonus_points
+#: model_terms:ir.actions.act_window,help:di_bonus_points.bonus_point_category_rule_action
+msgid ""
+"Link groups of Reparto values (e.g. Donna, Uomo) to the maximum\n"
+"                discount % an item can already have and still earn bonus points."
+msgstr "Collega gruppi di valori Reparto (es. Donna, Uomo) allo sconto massimo\n                che un articolo può già avere continuando a maturare buoni acquisto."
+
+#. module: di_bonus_points
+#: model_terms:ir.ui.view,arch_db:di_bonus_points.product_template_search_bonus_eligible
+msgid "Marca"
+msgstr "Marca"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_pos_order_line__bonus_max_points_per_unit
+msgid "Max Bonus Points / Unit"
+msgstr "Buoni Acquisto Max / Unità"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_category_rule__max_discount_rate
+msgid "Max Discount Rate (%)"
+msgstr "Sconto Massimo (%)"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,help:di_bonus_points.field_bonus_point_category_rule__max_discount_rate
+msgid ""
+"Maximum discount percentage (vs. list price, before any bonus points are "
+"applied) an item can have and still be eligible for bonus point redemption. "
+"Above this, the item earns 0 spendable points regardless of price."
+msgstr "Percentuale di sconto massima (rispetto al prezzo di listino, prima dell'applicazione dei buoni acquisto) che un articolo può avere restando idoneo all'utilizzo dei buoni acquisto. Oltre questa soglia l'articolo matura 0 buoni acquisto spendibili, indipendentemente dal prezzo."
+
+#. module: di_bonus_points
+#: model:ir.model.fields,help:di_bonus_points.field_pos_order_line__bonus_reduction_amount
+msgid ""
+"Monetary amount this line's price was reduced by via spent bonus points. "
+"Applied directly to this line's price; the Dettaglio pricelist itself is "
+"never modified."
+msgstr "Importo di cui è stato ridotto il prezzo di questa riga tramite i buoni acquisto spesi. Applicato direttamente al prezzo della riga; il listino Dettaglio non viene mai modificato."
+
+#. module: di_bonus_points
+#: model:ir.model.fields,help:di_bonus_points.field_bonus_point_settings__point_value
+msgid "Monetary reduction granted by spending one point."
+msgstr "Riduzione monetaria concessa spendendo un buono acquisto."
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_batch__movement_ids
+msgid "Movement"
+msgstr "Movimento"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_movement__movement_type
+msgid "Movement Type"
+msgstr "Tipo di Movimento"
+
+#. module: di_bonus_points
+#: model:ir.ui.menu,name:di_bonus_points.menu_bonus_point_movement
+#: model_terms:ir.ui.view,arch_db:di_bonus_points.bonus_point_batch_view_form
+msgid "Movements"
+msgstr "Movimenti"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_bracket__name
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_category_rule__name
+msgid "Name"
+msgstr "Nome"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_res_partner__bonus_points_next_expiry_date
+#: model:ir.model.fields,field_description:di_bonus_points.field_res_users__bonus_points_next_expiry_date
+msgid "Next Points Expiry"
+msgstr "Prossima Scadenza Buoni Acquisto"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_bracket__no_upper_limit
+msgid "No Upper Limit"
+msgstr "Nessun Limite Superiore"
+
+#. module: di_bonus_points
+#: model_terms:ir.actions.act_window,help:di_bonus_points.product_template_action_bonus_eligible
+msgid "No product currently qualifies for bonus points."
+msgstr "Al momento nessun prodotto è idoneo ai buoni acquisto."
+
+#. module: di_bonus_points
+#. odoo-javascript
+#: code:addons/di_bonus_points/static/src/app/screens/product_screen/control_buttons/control_buttons.js:0
+msgid "Not eligible"
+msgstr "Non idoneo"
+
+#. module: di_bonus_points
+#. odoo-python
+#: code:addons/di_bonus_points/models/bonus_point_service.py:0
+msgid ""
+"Not enough bonus points: %(available)d available, %(requested)d requested."
+msgstr "Buoni acquisto insufficienti: %(available)d disponibili, %(requested)d richiesti."
+
+#. module: di_bonus_points
+#: model:ir.model.fields,help:di_bonus_points.field_bonus_point_settings__expiry_days
+msgid ""
+"Number of days after which an earned batch of points expires. Exactly N days"
+" after the earn date, not 'next month'."
+msgstr "Numero di giorni dopo i quali un lotto di buoni acquisto maturati scade. Esattamente N giorni dopo la data di maturazione, non 'il mese successivo'."
+
+#. module: di_bonus_points
+#: model_terms:ir.ui.view,arch_db:di_bonus_points.product_template_view_list_bonus_eligible
+msgid "On Hand"
+msgstr "Giacenza"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,help:di_bonus_points.field_bonus_point_settings__earn_divisor
+msgid ""
+"One point is earned for every this many euros paid (after all discounts, "
+"including points spent)."
+msgstr "Si matura un buono acquisto ogni tot euro pagati (al netto di tutti gli sconti, compresi i buoni acquisto spesi)."
+
+#. module: di_bonus_points
+#. odoo-python
+#: code:addons/di_bonus_points/models/bonus_point_service.py:0
+msgid ""
+"Only %(max)d bonus point(s) can be applied to this line (requested "
+"%(requested)d)."
+msgstr "Su questa riga si possono applicare solo %(max)d buono/i acquisto (richiesti %(requested)d)."
+
+#. module: di_bonus_points
+#. odoo-python
+#: code:addons/di_bonus_points/models/bonus_point_service.py:0
+msgid ""
+"Only %(remaining)d more bonus point(s) can be applied to this line "
+"(%(already)d already applied, cap is %(max)d; requested %(requested)d more)."
+msgstr "Su questa riga si possono applicare solo altri %(remaining)d buono/i acquisto (%(already)d già applicati, limite %(max)d; richiesti altri %(requested)d)."
+
+#. module: di_bonus_points
+#: model:ir.model.constraint,message:di_bonus_points.constraint_bonus_point_settings_company_uniq
+msgid "Only one settings record is allowed per company."
+msgstr "È consentito un solo record di impostazioni per azienda."
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_movement__pos_order_id
+msgid "POS Order"
+msgstr "Ordine POS"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_movement__pos_order_line_id
+msgid "POS Order Line"
+msgstr "Riga Ordine POS"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_batch__partner_id
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_movement__partner_id
+msgid "Partner"
+msgstr "Partner"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_settings__point_value
+msgid "Point Value (€)"
+msgstr "Valore Buono Acquisto (€)"
+
+#. module: di_bonus_points
+#: model:ir.model,name:di_bonus_points.model_pos_order_line
+msgid "Point of Sale Order Lines"
+msgstr "Righe Ordine Punto Vendita"
+
+#. module: di_bonus_points
+#: model:ir.model,name:di_bonus_points.model_pos_order
+msgid "Point of Sale Orders"
+msgstr "Ordini Punto Vendita"
+
+#. module: di_bonus_points
+#: model:ir.model,name:di_bonus_points.model_pos_session
+msgid "Point of Sale Session"
+msgstr "Sessione Punto Vendita"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_bracket__points
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_movement__points
+msgid "Points"
+msgstr "Buoni Acquisto"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_batch__points_earned
+msgid "Points Earned"
+msgstr "Buoni Acquisto Maturati"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_res_partner__bonus_points_next_expiry_amount
+#: model:ir.model.fields,field_description:di_bonus_points.field_res_users__bonus_points_next_expiry_amount
+msgid "Points Expiring Next"
+msgstr "Buoni Acquisto in Scadenza"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_batch__points_remaining
+msgid "Points Remaining"
+msgstr "Buoni Acquisto Residui"
+
+#. module: di_bonus_points
+#: model:ir.actions.act_window,name:di_bonus_points.bonus_point_bracket_action
+#: model:ir.ui.menu,name:di_bonus_points.menu_bonus_point_bracket
+msgid "Price Brackets"
+msgstr "Fasce di Prezzo"
+
+#. module: di_bonus_points
+#: model:ir.model,name:di_bonus_points.model_product_template
+msgid "Product"
+msgstr "Prodotto"
+
+#. module: di_bonus_points
+#: model:ir.model,name:di_bonus_points.model_product_product
+msgid "Product Variant"
+msgstr "Variante Prodotto"
+
+#. module: di_bonus_points
+#: model_terms:ir.ui.view,arch_db:di_bonus_points.product_template_view_list_bonus_eligible
+msgid "Promo Price"
+msgstr "Prezzo Promo"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_product_product__bonus_promo_price
+#: model:ir.model.fields,field_description:di_bonus_points.field_product_template__bonus_promo_price
+msgid "Promo Price (Bonus Points)"
+msgstr "Prezzo Promo (Buoni Acquisto)"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_settings__promo_pricelist_id
+msgid "Promo Pricelist"
+msgstr "Listino Promo"
+
+#. module: di_bonus_points
+#: model_terms:ir.ui.view,arch_db:di_bonus_points.product_template_view_list_bonus_eligible
+msgid "Ref"
+msgstr "Rif."
+
+#. module: di_bonus_points
+#: model:ir.model.fields,help:di_bonus_points.field_bonus_point_settings__promo_pricelist_id
+msgid ""
+"Reference pricelist for the bonus-points eligibility check: an item's "
+"discount %% is now (Sales Price - price on this pricelist) / Sales Price, "
+"compared to its category's max (Donna/Uomo). Falls back to the Sales Price "
+"itself (0%% discount) if left empty."
+msgstr "Listino di riferimento per il controllo di idoneità dei buoni acquisto: lo sconto %% di un articolo è ora (Prezzo di Vendita - prezzo su questo listino) / Prezzo di Vendita, confrontato con il massimo della sua categoria (Donna/Uomo). Se lasciato vuoto si usa il Prezzo di Vendita stesso (sconto 0%%)."
+
+#. module: di_bonus_points
+#: model:ir.model.fields.selection,name:di_bonus_points.selection__bonus_point_movement__movement_type__refund_reverse_earn
+msgid "Refund - Earned Points Reversed"
+msgstr "Reso - Buoni Acquisto Maturati Stornati"
+
+#. module: di_bonus_points
+#: model:ir.model.fields.selection,name:di_bonus_points.selection__bonus_point_movement__movement_type__refund_return
+msgid "Refund - Points Returned"
+msgstr "Reso - Buoni Acquisto Restituiti"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_category_rule__reparto_ids
+#: model_terms:ir.ui.view,arch_db:di_bonus_points.product_template_search_bonus_eligible
+msgid "Reparto"
+msgstr "Reparto"
+
+#. module: di_bonus_points
+#: model:ir.ui.menu,name:di_bonus_points.menu_bonus_point_reporting
+msgid "Reporting"
+msgstr "Rendicontazione"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,help:di_bonus_points.field_bonus_point_category_rule__allow_manager_override
+msgid ""
+"Reserved for future use: let a manager bypass this threshold for a specific "
+"sale. Not implemented in this version."
+msgstr "Riservato a uso futuro: consente a un responsabile di derogare a questa soglia per una vendita specifica. Non implementato in questa versione."
+
+#. module: di_bonus_points
+#: model_terms:ir.ui.view,arch_db:di_bonus_points.product_template_view_list_bonus_eligible
+msgid "Sales Price"
+msgstr "Prezzo di Vendita"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,help:di_bonus_points.field_product_template__bonus_promo_price
+msgid ""
+"Same as product.product.bonus_promo_price, computed at the template level "
+"for the POS product grid."
+msgstr "Come product.product.bonus_promo_price, calcolato a livello di modello prodotto per la griglia prodotti del POS."
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_bracket__sequence
+msgid "Sequence"
+msgstr "Sequenza"
+
+#. module: di_bonus_points
+#: model:ir.ui.menu,name:di_bonus_points.menu_bonus_point_settings
+msgid "Settings"
+msgstr "Impostazioni"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_batch__source_pos_order_id
+msgid "Source POS Order"
+msgstr "Ordine POS di Origine"
+
+#. module: di_bonus_points
+#: model:ir.model.fields.selection,name:di_bonus_points.selection__bonus_point_movement__movement_type__spend
+msgid "Spend"
+msgstr "Utilizzo"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_batch__state
+msgid "State"
+msgstr "Stato"
+
+#. module: di_bonus_points
+#. odoo-python
+#: code:addons/di_bonus_points/models/bonus_point_bracket.py:0
+msgid "The 'To' price must be greater than the 'From' price (bracket: %s)."
+msgstr "Il prezzo 'A' deve essere maggiore del prezzo 'Da' (fascia: %s)."
+
+#. module: di_bonus_points
+#. odoo-javascript
+#: code:addons/di_bonus_points/static/src/app/screens/product_screen/control_buttons/control_buttons.js:0
+msgid ""
+"This item isn't eligible for bonus points on this order, or the customer has"
+" none available."
+msgstr "Questo articolo non è idoneo ai buoni acquisto su questo ordine, oppure il cliente non ne ha a disposizione."
+
+#. module: di_bonus_points
+#: model:ir.model.fields,help:di_bonus_points.field_product_product__bonus_promo_price
+msgid ""
+"This variant's price under bonus.point.settings.promo_pricelist_id - the "
+"reference price the bonus-points eligibility gate compares against Sales "
+"Price, instead of whatever is actually charged on the order line. Falls back"
+" to Sales Price itself (0% discount) if no Promo pricelist is configured."
+msgstr "Prezzo di questa variante secondo bonus.point.settings.promo_pricelist_id - il prezzo di riferimento che il controllo di idoneità dei buoni acquisto confronta con il Prezzo di Vendita, invece di quanto effettivamente addebitato sulla riga d'ordine. Se non è configurato alcun listino Promo si usa il Prezzo di Vendita stesso (sconto 0%)."
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_bracket__price_to
+msgid "To (€)"
+msgstr "A (€)"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,field_description:di_bonus_points.field_bonus_point_bracket__price_to_inclusive
+msgid "To Inclusive"
+msgstr "A Incluso"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,help:di_bonus_points.field_pos_order_line__bonus_points_applied
+msgid "Total points spent on this line, across all units."
+msgstr "Totale buoni acquisto spesi su questa riga, su tutte le unità."
+
+#. module: di_bonus_points
+#. odoo-javascript
+#: code:addons/di_bonus_points/static/src/app/screens/product_screen/control_buttons/control_buttons.js:0
+msgid "Use bonus points"
+msgstr "Utilizza buoni acquisto"
+
+#. module: di_bonus_points
+#: model:ir.model.fields,help:di_bonus_points.field_pos_order_line__bonus_eligible
+msgid ""
+"Whether this line's campaign discount is within its category's max discount "
+"rate."
+msgstr "Indica se lo sconto campagna di questa riga rientra nello sconto massimo della sua categoria."
+
+#. module: di_bonus_points
+#: model:ir.model.fields,help:di_bonus_points.field_product_product__bonus_points_eligible
+#: model:ir.model.fields,help:di_bonus_points.field_product_template__bonus_points_eligible
+msgid ""
+"Whether this product currently qualifies for bonus points: within its "
+"Reparto's Donna/Uomo discount cap AND its Promo Price actually lands in a "
+"non-zero price bracket (an item under the lowest bracket's floor would "
+"earn/redeem 0 points either way, so isn't worth flagging as eligible here)."
+msgstr "Indica se questo prodotto è attualmente idoneo ai buoni acquisto: entro il limite di sconto Donna/Uomo del suo Reparto E con il Prezzo Promo che ricade in una fascia di prezzo diversa da zero (un articolo sotto la soglia minima della fascia più bassa maturerebbe/spenderebbe comunque 0 buoni acquisto, quindi non ha senso segnalarlo come idoneo)."

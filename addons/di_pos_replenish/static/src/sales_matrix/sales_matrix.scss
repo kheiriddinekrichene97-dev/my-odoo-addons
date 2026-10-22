@@ -1,0 +1,165 @@
+// The sales grid borrows di_stock_arrival's layout wholesale through the
+// shared .di_matrix classes - containment, sticky column, cell borders, the
+// --di-* tokens - and adds only what this screen needs: shop tabs, group
+// headings, a source cell that pairs what to take with what is there, and a
+// shortfall that reads as one.
+//
+// No colour is declared as a var(--bs-*): Odoo's backend bundle does not
+// expose Bootstrap's custom properties, so every one of those resolves to its
+// fallback and a sticky cell goes white with invisible text under a dark
+// theme. See the note at the top of distribution_matrix.scss - the tokens
+// this file uses come from there, and every tint added here is a translucent
+// rgba that reads correctly over either ground.
+
+// Odoo's own wrapper around this field. It carries o_field_empty, which
+// collapses the box to zero width, because the field never holds a real
+// value - the grid reads through get_sales_matrix() instead. Undoing that
+// collapse is what actually stretches the grid across the tab.
+.o_field_di_pos_sales_matrix {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0;
+}
+
+.di_sales {
+    // -- shop tabs --------------------------------------------------------
+    .di_sales_tab {
+        white-space: nowrap;
+    }
+
+    // -- the table --------------------------------------------------------
+    .di_sales_table {
+        white-space: nowrap;
+    }
+
+    // Posizionamento / category heading. It spans the table, so it needs the
+    // full-row treatment rather than a cell one: no right border to cut it in
+    // half, and a rule above to separate it from the block before.
+    .di_matrix_table tbody tr.di_sales_group td {
+        background-color: var(--di-hover);
+        border-right: 0;
+        border-top: 2px solid var(--di-rule-strong);
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        letter-spacing: 0.02em;
+    }
+
+    // A heading is not a row of goods; hovering it should not suggest it is.
+    .di_matrix_table tbody tr.di_sales_group:hover td {
+        box-shadow: none;
+    }
+
+    // -- product column ---------------------------------------------------
+    .di_sales_name {
+        max-width: 320px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .di_sales_code,
+    .di_sales_barcode {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.85em;
+        letter-spacing: 0.01em;
+    }
+
+    .di_sales_info {
+        max-width: 160px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 0.88em;
+    }
+
+    // -- source cells -----------------------------------------------------
+    // The heading carries the full warehouse name, which is long enough to
+    // need wrapping - "MAG - CENTRALE PISTUNINA" on one line would set the
+    // column width for every row under it. The table is nowrap by default,
+    // so this undoes that for the header only.
+    .di_matrix_table th.di_sales_source {
+        border-left: 2px solid var(--di-rule-strong);
+        white-space: normal;
+        max-width: 10rem;
+        line-height: 1.2;
+    }
+
+    .di_matrix_table td.di_sales_cell {
+        border-left: 2px solid var(--di-rule-strong);
+        padding: 0.2rem 0.4rem;
+    }
+
+    // A source that holds none of this variant. Dimmed rather than hidden:
+    // the cell still has to be typable, because a worker moving a quantity
+    // between the two warehouses types into exactly this cell.
+    .di_matrix_table td.di_sales_empty {
+        opacity: 0.55;
+    }
+
+    .di_sales_input {
+        width: 4.5rem;
+        min-width: 4.5rem;
+        text-align: center;
+        font-variant-numeric: tabular-nums;
+        // Transparent rather than a surface colour: the cell underneath is
+        // already the right ground in both themes, and the input inherits
+        // the form's own text colour.
+        background-color: transparent;
+    }
+
+    .di_sales_input:focus {
+        border-color: var(--di-focus);
+        box-shadow: 0 0 0 2px rgba(127, 127, 127, 0.18);
+    }
+
+    // More asked for than that one warehouse has free. The server refuses it
+    // again on save, across the whole run rather than one row; this is only
+    // the warning while the worker is still looking at the cell.
+    .di_sales_input.di_sales_over {
+        background-color: var(--di-danger-bg);
+        font-weight: 700;
+    }
+
+    .di_sales_avail {
+        font-size: 0.85em;
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
+    }
+
+    // -- what came back, and what is missing ------------------------------
+    .di_sales_returned {
+        margin-left: 0.35rem;
+        font-size: 0.8em;
+        font-weight: 400;
+        opacity: 0.75;
+    }
+
+    // The number nobody must miss: sold more than both warehouses can
+    // replace, so the shop stays short. Amber, like the gap highlight on the
+    // stock comparison, so the two screens warn in the same colour.
+    .di_sales_short {
+        margin-left: 0.35rem;
+        padding: 0 0.3rem;
+        border-radius: 3px;
+        background-color: var(--di-warning-bg);
+        box-shadow: inset 2px 0 0 0 var(--di-warning-line);
+        font-size: 0.85em;
+        font-variant-numeric: tabular-nums;
+    }
+
+    .di_sales_total {
+        font-variant-numeric: tabular-nums;
+    }
+
+    // -- dropped seasons --------------------------------------------------
+    // A chip that has been pressed off. Struck through as well as outlined:
+    // the two chip states have to be told apart at a glance across a row of
+    // them, and colour alone does not do that for everyone.
+    .di_matrix_chip.di_sales_dropped {
+        text-decoration: line-through;
+        opacity: 0.75;
+    }
+
+    .di_sales_count {
+        font-variant-numeric: tabular-nums;
+        opacity: 0.85;
+    }
+}

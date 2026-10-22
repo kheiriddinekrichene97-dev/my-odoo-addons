@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="di_bonus_points.ControlButtons" t-inherit="point_of_sale.ControlButtons" t-inherit-mode="extension">
+        <xpath
+            expr="//t[@t-if='props.showRemainingButtons']/div/button[hasclass('o_pricelist_button')]"
+            position="before">
+            <t t-if="this.displayBonusPointsBtn()">
+                <button class="o_bonus_points_button" t-att-class="buttonClass" t-on-click="() => this.clickBonusPoints()">
+                    <i class="fa fa-gift me-1" role="img" aria-label="Bonus Points" title="Bonus Points" />
+                    Bonus Points
+                </button>
+            </t>
+        </xpath>
+    </t>
+</templates>

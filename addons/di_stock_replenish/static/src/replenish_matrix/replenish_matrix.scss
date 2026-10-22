@@ -1,0 +1,228 @@
+// The comparison grid borrows the distribution grid's layout wholesale from
+// di_stock_arrival - containment, sticky column, cell borders - and adds only
+// what this report needs: a source column that reads as a source, and a zero
+// that reads as a gap.
+//
+// Colours go through the --di-* tokens defined on .di_matrix: one opaque
+// surface from Odoo's SCSS, everything else a translucent rgba. No text
+// colour is declared here either - the cells inherit the form's.
+.di_replenish {
+    // --di-danger-bg comes from di_stock_arrival's token block on .di_matrix;
+    // the line that goes beside it does not exist there, so it is declared
+    // here rather than added to a block two modules share. A literal, not a
+    // var(--bs-*): Bootstrap's custom properties are not in Odoo's backend
+    // bundle.
+    --di-danger-line: #b02a37;
+
+    // Both of these are written against the cell, with the table in the
+    // selector, so they outrank the th/td colour rule in the shared grid.
+    .di_matrix_table .di_replenish_source {
+        background-color: var(--di-hover);
+        border-right: 2px solid var(--di-rule);
+        font-weight: 700;
+    }
+
+    // The point of the whole screen: nothing on the shelf, stock at the
+    // source. It has to be the most legible cell in the row, not the least.
+    .di_matrix_table tbody td.di_replenish_gap {
+        background-color: var(--di-warning-bg);
+        font-weight: 700;
+        box-shadow: inset 3px 0 0 0 var(--di-warning-line);
+    }
+
+    // Row hover must not wash the gap highlight out: the inset shadow that
+    // tints a hovered cell would otherwise replace the amber edge.
+    .di_matrix_table tbody tr:hover td.di_replenish_gap {
+        box-shadow: inset 3px 0 0 0 var(--di-warning-line);
+    }
+
+    // Below zero is a different fact from empty, so it gets a different
+    // colour: the shelf did not just run out, it sold stock that was never
+    // counted in - which is what the Only Negative mode selects on.
+    .di_matrix_table tbody td.di_replenish_negative {
+        background-color: var(--di-danger-bg);
+        font-weight: 700;
+        box-shadow: inset 3px 0 0 0 var(--di-danger-line);
+    }
+
+    .di_matrix_table tbody tr:hover td.di_replenish_negative {
+        box-shadow: inset 3px 0 0 0 var(--di-danger-line);
+    }
+
+    .di_replenish_sub {
+        font-family: inherit;
+        font-size: 0.88em;
+        font-weight: 400;
+        opacity: 0.9;
+        text-transform: lowercase;
+    }
+
+    // The header shares its column's tint, but the tint is translucent and
+    // the header is sticky: with nothing opaque under it the quantities
+    // scrolled up through the "ICONT" heading. The destination headers keep
+    // the surface colour and never had the problem. The surface goes back
+    // underneath and the tint is layered over it, so it still reads as the
+    // source column.
+    .di_matrix_table thead th.di_replenish_source {
+        background-color: var(--di-surface);
+        background-image: linear-gradient(var(--di-hover), var(--di-hover));
+    }
+
+    // Nothing here is editable in this phase; keep the pointer honest.
+    .di_matrix_table td {
+        cursor: default;
+    }
+}
+
+// The frozen product column. A sticky cell paints above its neighbours, so a
+// name that overflowed it was drawn straight over the barcode. The column
+// gets a fixed width (a min/max pair is only a hint to a table), the name
+// wraps inside it, and the cell clips whatever still would not fit.
+.di_replenish {
+    .di_matrix_table .di_matrix_product {
+        width: 300px;
+        min-width: 300px;
+        max-width: 300px;
+        overflow: hidden;
+    }
+
+    .di_matrix_table .di_replenish_pick {
+        white-space: normal;
+
+        span {
+            min-width: 0;
+            overflow-wrap: anywhere;
+        }
+    }
+}
+
+// Product detail columns. They scroll with the warehouses rather than joining
+// the frozen block: four more sticky columns would leave no room for shops.
+.di_replenish {
+    .di_replenish_info {
+        min-width: 92px;
+        max-width: 170px;
+        font-size: 0.88em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .di_replenish_barcode {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.85em;
+        letter-spacing: 0.01em;
+    }
+}
+
+.di_replenish {
+    .di_replenish_range {
+        font-variant-numeric: tabular-nums;
+        opacity: 0.85;
+    }
+}
+
+.di_replenish {
+    // The tick box rides inside the frozen product column rather than adding
+    // a second sticky column, which would need its own left offset.
+    .di_replenish_pick {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.5rem;
+        margin: 0;
+        cursor: pointer;
+
+        input {
+            margin-top: 0.15rem;
+            flex: 0 0 auto;
+            cursor: pointer;
+        }
+    }
+}
+
+.di_replenish {
+    // A destination cell carries two numbers: what the shop has (small and
+    // quiet) and what to send it (the box the worker types in).
+    .di_replenish_cell {
+        min-width: 100px;
+        padding: 0.1rem 0.15rem;
+    }
+
+    // A quantity box that reads as a number until it is worked with: no
+    // border at rest, the shop's stock showing through as the placeholder.
+    .di_replenish_qty {
+        width: 100%;
+        border: 1px solid transparent;
+        border-radius: 3px;
+        background: transparent;
+        color: inherit;
+        text-align: center;
+        padding: 0.2rem 0.1rem;
+
+        &::placeholder {
+            color: inherit;
+            opacity: 0.55;
+        }
+
+        &:hover {
+            border-color: var(--di-rule);
+        }
+
+        &:focus {
+            outline: none;
+            border-color: var(--di-focus);
+            box-shadow: 0 0 0 2px var(--di-hover);
+        }
+    }
+
+    // Typed in: it is a decision now, not a reading.
+    .di_replenish_filled {
+        font-weight: 700;
+        border-color: var(--di-rule);
+    }
+}
+
+// The arrow that opens a row onto the style's colours and sizes, and the
+// rows it reveals. The sub-rows are quieter than the row they belong to -
+// smaller, dimmed, indented under it - so the page still reads as one line
+// per gap with detail tucked beneath, not as twice as many rows.
+.di_replenish {
+    .di_replenish_expand {
+        flex: 0 0 auto;
+        width: 1.25rem;
+        padding: 0;
+        margin-top: 0.05rem;
+        border: 0;
+        background: transparent;
+        color: inherit;
+        opacity: 0.7;
+        cursor: pointer;
+
+        &:hover {
+            opacity: 1;
+        }
+
+        &:focus-visible {
+            outline: 2px solid var(--di-focus);
+            outline-offset: 1px;
+        }
+    }
+
+    .di_matrix_table tbody tr.di_replenish_variant td {
+        font-size: 0.88em;
+        padding-top: 0.15rem;
+        padding-bottom: 0.15rem;
+        opacity: 0.85;
+    }
+
+    .di_matrix_table .di_replenish_variant_label {
+        padding-left: 2.6rem;
+        font-weight: 400;
+    }
+
+    // The variant the row itself is about, so the eye finds it in the list.
+    .di_matrix_table tbody tr.di_replenish_variant_current td {
+        font-weight: 700;
+        opacity: 1;
+    }
+}

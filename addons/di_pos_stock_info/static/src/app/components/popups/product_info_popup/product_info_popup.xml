@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <!-- Replaces only the body of the Inventory section. Its heading, and the
+         t-if that hides the section when no warehouse came back at all, stay
+         core's. -->
+    <t t-name="di_pos_stock_info.ProductInfoPopup" t-inherit="point_of_sale.ProductInfoPopup" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('section-inventory-body')]" position="replace">
+            <div class="section-inventory-body di-stock">
+
+                <p class="di-stock-summary">
+                    In stock at
+                    <b t-esc="stockedWarehouses.length"/> of <b t-esc="allWarehouses.length"/> shops
+                    <t t-if="stockedWarehouses.length">
+                        · <b t-esc="stockedTotal"/> <t t-esc="stockUom"/> in total
+                    </t>
+                </p>
+
+                <div t-if="!stockedWarehouses.length" class="di-stock-row di-stock-empty">
+                    None of the shops hold this item.
+                </div>
+
+                <t t-foreach="stockedWarehouses" t-as="warehouse" t-key="warehouse.name">
+                    <div class="di-stock-row di-stock-has"
+                         t-att-class="{'di-stock-own': isOwnWarehouse(warehouse)}">
+                        <span class="di-stock-name">
+                            <t t-esc="warehouse.name"/>
+                            <span t-if="isOwnWarehouse(warehouse)" class="di-stock-flag">this shop</span>
+                        </span>
+                        <span class="di-stock-qty">
+                            <t t-esc="warehouse.free_qty"/> <t t-esc="warehouse.uom"/>
+                        </span>
+                    </div>
+                </t>
+
+                <button t-if="emptyWarehouses.length" type="button" class="di-stock-toggle"
+                        t-att-aria-expanded="stockState.showEmpty ? 'true' : 'false'"
+                        t-on-click="toggleEmptyWarehouses">
+                    <t t-if="stockState.showEmpty">Hide the </t>
+                    <t t-else="">Show the </t>
+                    <t t-esc="emptyWarehouses.length"/> shops with none
+                </button>
+
+                <t t-if="stockState.showEmpty">
+                    <t t-foreach="emptyWarehouses" t-as="warehouse" t-key="warehouse.name">
+                        <div class="di-stock-row di-stock-zero"
+                             t-att-class="{'di-stock-own': isOwnWarehouse(warehouse)}">
+                            <span class="di-stock-name">
+                                <t t-esc="warehouse.name"/>
+                                <span t-if="isOwnWarehouse(warehouse)" class="di-stock-flag">this shop</span>
+                            </span>
+                            <span class="di-stock-qty">0</span>
+                        </div>
+                    </t>
+                </t>
+
+            </div>
+        </xpath>
+    </t>
+
+</templates>

@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_odoo_agent_deployment_measurement,odoo.agent.deployment.measurement read,model_odoo_agent_deployment_measurement,odoo_agent_attestation.group_deployment_measurement,1,0,0,0

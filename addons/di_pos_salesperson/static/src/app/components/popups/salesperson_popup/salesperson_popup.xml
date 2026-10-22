@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="di_pos_salesperson.SalespersonPopup">
+        <Dialog title="props.title" footer="false" size="'lg'" bodyClass="'d-flex flex-column gap-2'">
+            <div t-if="props.lineName" class="form-check form-switch fs-5 mb-2 pb-2 border-bottom">
+                <input type="checkbox" class="form-check-input" id="di_only_this_line"
+                       t-model="state.onlyThisLine"/>
+                <label class="form-check-label" for="di_only_this_line">
+                    Only this line: <b t-esc="props.lineName"/>
+                </label>
+            </div>
+            <button t-foreach="props.list" t-as="item" t-key="item.id"
+                    class="selection-item d-flex align-items-center justify-content-between btn btn-lg btn-outline-secondary w-100 p-3 text-start"
+                    t-att-class="{ 'selected active': item.isSelected }"
+                    t-on-click="() => this.selectItem(item)">
+                <span t-esc="item.label"/>
+                <i t-if="item.isSelected" class="fa fa-check" role="img"/>
+            </button>
+        </Dialog>
+    </t>
+</templates>

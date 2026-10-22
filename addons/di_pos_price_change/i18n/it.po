@@ -1,0 +1,84 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* di_pos_price_change
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+"Language: it\n"
+
+#. module: di_pos_price_change
+#. odoo-javascript
+#: code:addons/di_pos_price_change/static/src/app/screens/product_screen/order_summary/order_summary.js:0
+msgid "Why did the price change?"
+msgstr "Perché è cambiato il prezzo?"
+
+#. module: di_pos_price_change
+#. odoo-javascript
+#: code:addons/di_pos_price_change/static/src/app/services/pos_store.js:0
+msgid "Why this discount?"
+msgstr "Perché questo sconto?"
+
+#. module: di_pos_price_change
+#. odoo-javascript
+#: code:addons/di_pos_price_change/static/src/app/services/pos_store.js:0
+msgid "Write the reason for this change..."
+msgstr "Scrivi il motivo di questa modifica..."
+
+#. module: di_pos_price_change
+#. odoo-javascript
+#: code:addons/di_pos_price_change/static/src/app/services/pos_store.js:0
+msgid "A reason is required to change the price."
+msgstr "Per modificare il prezzo è obbligatorio indicare un motivo."
+
+#. module: di_pos_price_change
+#: model:ir.model.fields,field_description:di_pos_price_change.field_pos_config__di_allow_price_change
+#: model:ir.model.fields,field_description:di_pos_price_change.field_res_config_settings__pos_di_allow_price_change
+#: model_terms:ir.ui.view,arch_db:di_pos_price_change.res_config_settings_view_form_di_price_change
+msgid "Allow Price Changes"
+msgstr "Consenti modifica prezzo"
+
+#. module: di_pos_price_change
+#: model_terms:ir.ui.view,arch_db:di_pos_price_change.res_config_settings_view_form_di_price_change
+msgid ""
+"Cashiers and administrators may change a price or a discount at this till; "
+"each change asks for a reason."
+msgstr ""
+"Cassieri e amministratori possono modificare prezzo o sconto in questa "
+"cassa; ogni modifica richiede un motivo."
+
+#. module: di_pos_price_change
+#: model:ir.actions.act_window,name:di_pos_price_change.action_di_price_changes
+#: model:ir.ui.menu,name:di_pos_price_change.menu_di_price_changes
+#: model_terms:ir.ui.view,arch_db:di_pos_price_change.view_pos_order_line_price_change_list
+#: model_terms:ir.ui.view,arch_db:di_pos_price_change.view_pos_order_line_price_change_search
+msgid "Price Changes"
+msgstr "Modifiche prezzo"
+
+#. module: di_pos_price_change
+#: model:ir.model.fields,field_description:di_pos_price_change.field_pos_order_line__di_price_note
+msgid "Price Change Reason"
+msgstr "Motivo modifica prezzo"
+
+#. module: di_pos_price_change
+#: model:ir.model.fields,field_description:di_pos_price_change.field_pos_order_line__di_original_price_unit
+msgid "Original Price"
+msgstr "Prezzo originale"
+
+#. module: di_pos_price_change
+#: model:ir.model.fields,field_description:di_pos_price_change.field_pos_order_line__di_original_discount
+msgid "Original Discount (%)"
+msgstr "Sconto originale (%)"
+
+#. module: di_pos_price_change
+#: model:ir.model.fields,field_description:di_pos_price_change.field_pos_order_line__di_price_changed_by_id
+#: model_terms:ir.ui.view,arch_db:di_pos_price_change.view_pos_order_line_price_change_search
+msgid "Changed By"
+msgstr "Modificato da"

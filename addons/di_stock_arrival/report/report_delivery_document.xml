@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- The delivery slip, as this warehouse uses it.
+
+         Every picking here is internal paperwork: a goods receipt note for an
+         arrival, or a transfer note for one of our own shops. Nobody outside
+         reads it, so it carries what the warehouse checks against the goods -
+         the quantity that actually moved, and the barcode printed on the
+         cartellino - and not the ordered/delivered pair, which only ever
+         repeated the same number twice.
+
+         The columns are changed in three places at once: the header here, and
+         the two row templates the table can choose between (aggregated lines,
+         and one line per lot when lot printing is switched on). They have to
+         stay in the same order or the cells slide under the wrong heading. -->
+
+    <template id="report_delivery_document_di"
+              inherit_id="stock.report_delivery_document">
+
+        <!-- Not yet validated: one row per move. Replacing the ordered cell
+             with the barcode drops the column and adds the new one in a
+             single step. -->
+        <xpath expr="//table[@name='stock_move_table']/thead/tr" position="replace">
+            <tr>
+                <th name="th_sm_product"><strong>Product</strong></th>
+                <th name="th_sm_barcode"><strong>Barcode</strong></th>
+                <th name="th_sm_quantity" class="text-end"><strong>Delivered</strong></th>
+            </tr>
+        </xpath>
+        <xpath expr="//table[@name='stock_move_table']/tbody/tr/td[2]" position="replace">
+            <td class="text-nowrap" name="move_barcode">
+                <span t-out="move.product_id.barcode"/>
+            </td>
+        </xpath>
+
+        <!-- Where the goods are going. An internal transfer note is the only
+             one of these with no address block of its own - the receipt shows
+             the warehouse, a delivery shows the customer - so the shop it is
+             bound for appeared nowhere on the page. Named by its warehouse,
+             the way the destination is named everywhere else in the module,
+             falling back to the location for a transfer that ends somewhere
+             outside a warehouse. -->
+        <xpath expr="//div[@name='div_origin']" position="after">
+            <div t-if="o.picking_type_id.code == 'internal'"
+                 class="col col-3 mw-100 mb-2" name="div_destination">
+                <strong>Destination</strong>
+                <div class="m-0"
+                     t-out="o.location_dest_id.warehouse_id.name or o.location_dest_id.complete_name">PV - TORRE FARO</div>
+            </div>
+        </xpath>
+
+        <!-- How many pieces the document moves in total, once, in the
+             header beside the destination. It used to be a table footer,
+             and wkhtmltopdf repeats a footer at the bottom of every page, so
+             a long transfer printed the same total on each sheet. Counted
+             from the records rather than from the rows, which are merged by
+             product and would need adding up twice over; the same moves or
+             move lines the table below lists, depending on the state. -->
+        <xpath expr="//div[@name='div_operator']" position="after">
+            <t t-set="di_total" t-value="sum(o.move_line_ids.mapped('quantity')) if o.state == 'done' else sum(o.move_ids.filtered(lambda m: m.product_uom_qty).mapped('quantity'))"/>
+            <div class="col-auto mw-100 mb-2" name="div_total_quantity">
+                <strong>Total</strong>
+                <div class="m-0" t-out="int(di_total) if di_total == int(di_total) else di_total">207</div>
+            </div>
+        </xpath>
+
+        <!-- Validated: one row per move line. The package and lot headings
+             keep their conditions so the row templates, which still emit
+             those cells, stay aligned with them. -->
+        <xpath expr="//table[@name='stock_move_line_table']/thead/tr" position="replace">
+            <tr>
+                <th name="th_sml_product">Product</th>
+                <th name="th_sml_package" t-if="has_multi_level_packages">Package</th>
+                <th name="th_sml_barcode">Barcode</th>
+                <th name="lot_serial" class="text-end" t-if="has_serial_number">
+                    Lot/Serial Number
+                </th>
+                <th name="th_sml_quantity" class="text-end">Delivered</th>
+            </tr>
+        </xpath>
+    </template>
+
+    <!-- Rows of the validated table: the ordered cell becomes the barcode. -->
+    <template id="stock_report_delivery_aggregated_move_lines_di"
+              inherit_id="stock.stock_report_delivery_aggregated_move_lines">
+        <xpath expr="//td[@name='move_line_aggregated_qty_ordered']" position="replace">
+            <td class="text-nowrap" name="move_line_aggregated_barcode">
+                <span t-out="aggregated_lines[line]['product'].barcode"/>
+            </td>
+        </xpath>
+    </template>
+
+    <!-- Same column, for the rows printed when lots are shown on the slip.
+         This warehouse tracks no lots, but the two row templates must agree
+         with one header. -->
+    <template id="stock_report_delivery_has_serial_move_line_di"
+              inherit_id="stock.stock_report_delivery_has_serial_move_line">
+        <xpath expr="//t[@name='move_line_lot']" position="before">
+            <td class="text-nowrap" name="move_line_barcode">
+                <span t-out="move_line.product_id.barcode"/>
+            </td>
+        </xpath>
+    </template>
+
+</odoo>

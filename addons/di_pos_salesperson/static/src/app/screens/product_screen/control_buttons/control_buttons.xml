@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="di_pos_salesperson.ControlButtons" t-inherit="point_of_sale.ControlButtons" t-inherit-mode="extension">
+        <xpath
+            expr="//t[@t-if='props.showRemainingButtons']/div/button[hasclass('o_pricelist_button')]"
+            position="before">
+            <t t-if="this.displaySalespersonBtn()">
+                <button class="o_salesperson_button" t-att-class="buttonClass" t-on-click="() => this.clickSalesperson()">
+                    <i class="fa fa-user-o me-1" role="img" aria-label="Salesperson" title="Salesperson" />
+                    <t t-esc="this.getSalespersonLabel()" />
+                </button>
+            </t>
+        </xpath>
+    </t>
+</templates>

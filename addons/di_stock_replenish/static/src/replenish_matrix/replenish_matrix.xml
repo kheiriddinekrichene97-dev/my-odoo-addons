@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="di_stock_replenish.ReplenishMatrix">
+        <div class="di_matrix di_replenish">
+
+            <div class="di_matrix_toolbar d-flex flex-wrap align-items-center gap-2 mb-2">
+                <!-- t-att-placeholder, not placeholder: the web client only
+                     auto-translates data-tooltip, so a static placeholder
+                     would stay English. See rowFilterPlaceholder. -->
+                <input type="text" class="form-control form-control-sm di_matrix_search"
+                       t-att-placeholder="rowFilterPlaceholder"
+                       t-model="state.rowFilter"/>
+                <!-- Ticked, the two price columns appear; unticked the row is
+                     just the goods and the quantities. Labelled with the
+                     column headings themselves, so the tick says the same
+                     words as the columns it brings back, in either language. -->
+                <label t-if="state.loaded and state.lines.length"
+                       class="di_replenish_pick align-items-center small mb-0">
+                    <input type="checkbox"
+                           t-att-checked="state.showPrices"
+                           t-on-change="togglePrices"/>
+                    <span>
+                        <t t-esc="state.labels.list_price"/> / <t t-esc="state.labels.promo"/>
+                    </span>
+                </label>
+                <div class="flex-grow-1"/>
+                <span t-if="state.loaded and state.lines.length"
+                      class="text-muted small di_replenish_range"
+                      t-att-title="state.labels.product"
+                      t-esc="gapSummary"/>
+                <span t-if="state.picked.length" class="badge text-bg-primary di_replenish_range">
+                    <t t-esc="state.picked.length"/>
+                </span>
+                <button t-if="state.picked.length" class="btn btn-secondary btn-sm"
+                        t-att-disabled="state.loading"
+                        t-on-click="clearPicked">&#215;</button>
+                <button t-if="state.editable and hasEdits" class="btn btn-primary btn-sm"
+                        t-att-disabled="state.saving"
+                        t-on-click="saveQuantities">Save Quantities</button>
+                <button t-if="state.editable and hasEdits" class="btn btn-secondary btn-sm"
+                        t-att-disabled="state.saving"
+                        t-on-click="discardQuantities">Discard</button>
+                <button t-if="state.canPrint" class="btn btn-secondary btn-sm"
+                        t-att-disabled="!state.picked.length or state.loading"
+                        t-on-click="printTags"
+                        t-esc="state.labels.print"/>
+                <!-- Only once something has been moved: back to the order
+                     the grid opens in. -->
+                <button t-if="columnOrder.hasCustomOrder and state.lines.length"
+                        class="btn btn-secondary btn-sm"
+                        t-att-title="resetColumnsTitle"
+                        t-att-aria-label="resetColumnsTitle"
+                        t-on-click="() => this.columnOrder.reset()">
+                    <i class="fa fa-undo"/>
+                </button>
+                <button class="btn btn-primary btn-sm"
+                        t-att-disabled="state.loading"
+                        t-on-click="refresh">Refresh</button>
+            </div>
+
+            <div t-if="state.seasons.length" class="di_matrix_picker mb-2">
+                <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
+                    <span class="fw-bold small" t-esc="state.labels.season"/>
+                    <input type="text" class="form-control form-control-sm di_matrix_search"
+                           t-att-placeholder="state.labels.season"
+                           t-model="state.seasonFilter"/>
+                    <button class="btn btn-link btn-sm p-0"
+                            t-att-disabled="!state.selectedSeasons.length or state.loading"
+                            t-on-click="clearSeasons">&#215;</button>
+                </div>
+                <div class="di_matrix_chips">
+                    <button t-foreach="pickableSeasons" t-as="season"
+                            t-key="season.id"
+                            class="btn btn-sm di_matrix_chip"
+                            t-att-class="isSeasonSelected(season.id) ? 'btn-primary' : 'btn-outline-secondary'"
+                            t-att-disabled="state.loading"
+                            t-on-click="() => this.toggleSeason(season.id)"
+                            t-esc="season.name"/>
+                </div>
+            </div>
+
+            <!-- Posizionamento chips: APP and SCA only - see POSITION_ORDER.
+                 Otherwise identical to the seasons. -->
+            <div t-if="state.positions.length" class="di_matrix_picker mb-2">
+                <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
+                    <span class="fw-bold small" t-esc="state.labels.position"/>
+                    <button class="btn btn-link btn-sm p-0"
+                            t-att-disabled="!state.selectedPositions.length or state.loading"
+                            t-on-click="clearPositions">&#215;</button>
+                </div>
+                <div class="di_matrix_chips">
+                    <button t-foreach="state.positions" t-as="position"
+                            t-key="position.id"
+                            class="btn btn-sm di_matrix_chip"
+                            t-att-class="isPositionSelected(position.id) ? 'btn-primary' : 'btn-outline-secondary'"
+                            t-att-disabled="state.loading"
+                            t-on-click="() => this.togglePosition(position.id)"
+                            t-esc="position.name"/>
+                </div>
+            </div>
+
+            <!-- A plain select, not chips like the season picker: only one
+                 discount tier applies to a product at a time, so there is
+                 nothing to combine. The option list is computed server-side
+                 from what is currently in the comparison, not a fixed list -
+                 see get_comparison_matrix. -->
+            <div t-if="state.discountBuckets.length" class="di_matrix_picker mb-2">
+                <div class="d-flex flex-wrap align-items-center gap-2">
+                    <span class="fw-bold small" t-esc="state.labels.discount"/>
+                    <select class="form-select form-select-sm"
+                            style="width: auto;"
+                            t-att-disabled="state.loading"
+                            t-on-change="onDiscountChange">
+                        <option value=""
+                                t-att-selected="!state.selectedDiscountBucket"
+                                t-esc="allDiscountsLabel"/>
+                        <option t-foreach="state.discountBuckets" t-as="bucket"
+                                t-key="bucket.value"
+                                t-att-value="bucket.value"
+                                t-att-selected="state.selectedDiscountBucket === bucket.value"
+                                t-esc="bucket.label"/>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Exact Promo prices, unlike the rounded discount tiers: a tag
+                 says 9.95, not "about 10". Options are what the comparison
+                 holds right now - see _available_prices. -->
+            <div t-if="state.prices.length" class="di_matrix_picker mb-2">
+                <div class="d-flex flex-wrap align-items-center gap-2">
+                    <span class="fw-bold small" t-esc="state.labels.promo"/>
+                    <select class="form-select form-select-sm"
+                            style="width: auto;"
+                            t-att-disabled="state.loading"
+                            t-on-change="onPriceChange">
+                        <option value=""
+                                t-att-selected="!state.selectedPrice"
+                                t-esc="allDiscountsLabel"/>
+                        <option t-foreach="state.prices" t-as="price"
+                                t-key="price.value"
+                                t-att-value="price.value"
+                                t-att-selected="state.selectedPrice === price.value"
+                                t-esc="price.label"/>
+                    </select>
+                </div>
+            </div>
+
+            <div t-if="state.loading" class="text-muted p-3">Comparing stock...</div>
+
+            <div t-elif="!resId" class="alert alert-info" role="alert">Save the comparison to run it.</div>
+
+            <div t-elif="state.message" class="alert alert-info" role="alert">
+                <t t-esc="state.message"/>
+            </div>
+
+            <t t-elif="state.lines.length">
+
+                <div t-if="hasOverSource" class="alert alert-warning py-2" role="alert">A row in red sends out more than the source has free, and will be refused when saved.</div>
+
+                <div class="di_matrix_scroll">
+                    <!-- Read once here: columns is rebuilt on every call,
+                         and every row below walks it. -->
+                    <t t-set="cols" t-value="columns"/>
+                    <table class="di_matrix_table">
+                        <thead>
+                            <tr>
+                                <th class="di_matrix_sticky di_matrix_product">
+                                    <label class="di_replenish_pick">
+                                        <input type="checkbox"
+                                               t-att-checked="allVisiblePicked"
+                                               t-on-change="toggleVisible"/>
+                                        <span t-esc="state.labels.product"/>
+                                    </label>
+                                </th>
+                                <!-- Every heading after the product one can
+                                     be dragged onto another to move its
+                                     column there; the order is remembered in
+                                     this browser. See column_order.js. -->
+                                <th t-foreach="cols" t-as="col" t-key="col.key"
+                                    draggable="true"
+                                    class="di_col_draggable"
+                                    t-att-class="{
+                                        'di_replenish_info': col.type === 'info' or col.type === 'price',
+                                        'text-end': col.type === 'price',
+                                        'di_matrix_wh': col.type === 'source' or col.type === 'dest',
+                                        'di_replenish_source': col.type === 'source',
+                                    }"
+                                    t-att-title="col.title"
+                                    t-on-dragstart="(ev) => this.columnOrder.onDragStart(col.key, ev)"
+                                    t-on-dragover="(ev) => this.columnOrder.onDragOver(col.key, ev)"
+                                    t-on-dragleave="(ev) => this.columnOrder.onDragLeave(ev)"
+                                    t-on-drop="(ev) => this.columnOrder.onDrop(col.key, defaultKeys, ev)"
+                                    t-on-dragend="(ev) => this.columnOrder.onDragEnd(ev)">
+                                    <t t-esc="col.label"/>
+                                    <div t-if="col.type === 'source'" class="di_replenish_sub"
+                                         t-esc="state.labels.source_hint"/>
+                                    <div t-if="col.type === 'dest'" class="di_replenish_sub"
+                                         t-esc="state.labels.dest_hint"/>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="visibleLines" t-as="line" t-key="line.id">
+                            <tr t-att-class="isOverSource(line) ? 'di_matrix_over' : ''">
+                                <td class="di_matrix_sticky di_matrix_product">
+                                    <div class="di_replenish_pick">
+                                        <button type="button"
+                                                class="di_replenish_expand"
+                                                t-att-aria-expanded="isExpanded(line.id) ? 'true' : 'false'"
+                                                t-att-disabled="state.loading"
+                                                t-on-click="() => this.toggleExpand(line)">
+                                            <i t-att-class="isExpanded(line.id) ? 'fa fa-caret-down' : 'fa fa-caret-right'"/>
+                                        </button>
+                                        <label class="di_replenish_pick">
+                                            <input type="checkbox"
+                                                   t-att-checked="isPicked(line.id)"
+                                                   t-on-change="() => this.togglePick(line.id)"/>
+                                            <span t-esc="line.name"/>
+                                        </label>
+                                    </div>
+                                </td>
+                                <t t-foreach="cols" t-as="col" t-key="col.key">
+                                    <td t-if="col.type === 'info'"
+                                        class="di_replenish_info"
+                                        t-att-class="col.cellClass"
+                                        t-att-title="col.titled ? line[col.key] : false">
+                                        <t t-esc="line[col.key]"/>
+                                    </td>
+                                    <td t-elif="col.type === 'price'"
+                                        class="di_replenish_info text-end di_matrix_num">
+                                        <t t-esc="infoValue(line, col)"/>
+                                    </td>
+                                    <td t-elif="col.type === 'source'"
+                                        class="text-center di_matrix_num di_replenish_source">
+                                        <t t-esc="format(sourceCell(line, col.id))"/>
+                                    </td>
+                                    <!-- One number per cell. Empty, it shows
+                                         the shop's own stock as a
+                                         placeholder, so the zero a worker
+                                         wants to correct is the thing they
+                                         click on. Enter moves down the
+                                         column - see moveDownColumn. -->
+                                    <td t-else=""
+                                        class="text-center di_matrix_num di_replenish_cell"
+                                        t-att-class="cellClass(line, col.id)"
+                                        t-att-title="stockTitle(line, col.id)">
+                                        <input t-if="state.editable" type="text"
+                                               inputmode="decimal"
+                                               class="di_replenish_qty"
+                                               t-att-class="planned(line, col.id) ? 'di_replenish_filled' : ''"
+                                               t-att-data-column="col.key"
+                                               t-att-placeholder="cellDisplay(line, col.id)"
+                                               t-att-value="plannedDisplay(line, col.id)"
+                                               t-on-keydown="onQuantityKeydown"
+                                               t-on-change="(ev) => this.onQuantityChange(line, col.id, ev)"/>
+                                        <span t-else=""
+                                              t-esc="plannedDisplay(line, col.id) or cellDisplay(line, col.id)"/>
+                                    </td>
+                                </t>
+                            </tr>
+                            <!-- The style's every colour and size, read-only:
+                                 the same stock columns as the row above, so
+                                 a worker sees at a glance which sizes the
+                                 shop is missing and which the sources can
+                                 still give. -->
+                            <t t-if="isExpanded(line.id)">
+                                <tr t-if="!expandedRows(line.id)" class="di_replenish_variant">
+                                    <td class="di_matrix_sticky di_matrix_product di_replenish_variant_label"
+                                        t-esc="loadingLabel"/>
+                                    <td t-att-colspan="cols.length"/>
+                                </tr>
+                                <t t-else="">
+                                <tr t-foreach="expandedRows(line.id)" t-as="row"
+                                    t-key="row.id"
+                                    class="di_replenish_variant"
+                                    t-att-class="row.id === line.id ? 'di_replenish_variant_current' : ''">
+                                    <td class="di_matrix_sticky di_matrix_product di_replenish_variant_label"
+                                        t-esc="variantLabel(row)"/>
+                                    <t t-foreach="cols" t-as="col" t-key="col.key">
+                                        <td t-if="col.key === 'barcode'"
+                                            class="di_replenish_info di_replenish_barcode">
+                                            <t t-esc="row.barcode"/>
+                                        </td>
+                                        <td t-elif="col.type === 'info' or col.type === 'price'"/>
+                                        <td t-elif="col.type === 'source'"
+                                            class="text-center di_matrix_num di_replenish_source">
+                                            <t t-esc="format(sourceCell(row, col.id))"/>
+                                        </td>
+                                        <td t-else=""
+                                            class="text-center di_matrix_num"
+                                            t-att-class="variantCellClass(row, col.id)">
+                                            <t t-esc="format(variantCell(row, col.id))"/>
+                                        </td>
+                                    </t>
+                                </tr>
+                                </t>
+                            </t>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="d-flex flex-wrap align-items-center gap-2 mt-2">
+                    <!-- The first half moved into gapLegend: it has to name
+                         the quantity the Show mode is drawing the line at,
+                         which a fixed sentence cannot. -->
+                    <span t-if="gapLegend" class="text-muted small" t-esc="gapLegend"/>
+                    <span class="text-muted small">A red figure is below zero: the shop has sold more than it was ever counted in for.</span>
+                    <div class="flex-grow-1"/>
+                    <t t-if="isPaged">
+                        <span class="small di_replenish_range" t-esc="state.rangeLabel"/>
+                        <div class="btn-group btn-group-sm">
+                            <button class="btn btn-secondary"
+                                    t-att-disabled="!hasPrevious or state.loading"
+                                    t-on-click="previousPage">&#8592;</button>
+                            <button class="btn btn-secondary"
+                                    t-att-disabled="!hasNext or state.loading"
+                                    t-on-click="nextPage">&#8594;</button>
+                        </div>
+                    </t>
+                </div>
+            </t>
+
+            <div t-else="" class="alert alert-info" role="alert">Pick a source and at least one destination, then Refresh.</div>
+        </div>
+    </t>
+
+</templates>

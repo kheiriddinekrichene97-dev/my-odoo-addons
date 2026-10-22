@@ -1,0 +1,1299 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* di_stock_arrival
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-01 15:09+0000\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: di_stock_arrival
+#: model:ir.model,name:di_stock_arrival.model_di_stock_arrival_divide
+msgid "Divide an Arrival Across Warehouses"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival_divide__arrival_id
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival_import__arrival_id
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival_allocation__arrival_id
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival_line__arrival_id
+#: model:ir.model.fields,field_description:di_stock_arrival.field_stock_picking__di_arrival_id
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_view_form
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_allocation_view_search
+msgid "Arrival"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival_divide__arrival_warehouse_id
+#: model:ir.model.fields,field_description:di_stock_arrival.field_res_company__di_arrival_warehouse_id
+#: model:ir.model.fields,field_description:di_stock_arrival.field_res_config_settings__di_arrival_warehouse_id
+msgid "Arrival Warehouse"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival_divide__warehouse_id
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival_allocation__warehouse_id
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_allocation_view_search
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.report_delivery_document_di:0
+msgid "Destination"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,help:di_stock_arrival.field_di_stock_arrival_divide__warehouse_id
+msgid "Warehouse to send this share to."
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival_divide__method
+msgid "Distribute"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields.selection,name:di_stock_arrival.selection__di_stock_arrival_divide__method__percent
+msgid "Percentage of what is left"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields.selection,name:di_stock_arrival.selection__di_stock_arrival_divide__method__fixed
+msgid "Fixed quantity per line"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival_divide__percentage
+msgid "Percentage"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival_divide__quantity
+msgid "Quantity per Line"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival_divide__rounding
+msgid "Rounding"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,help:di_stock_arrival.field_di_stock_arrival_divide__rounding
+msgid ""
+"Applied when a percentage does not divide evenly. Rounding down never "
+"distributes more than arrived."
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields.selection,name:di_stock_arrival.selection__di_stock_arrival_divide__rounding__down
+msgid "Round down"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields.selection,name:di_stock_arrival.selection__di_stock_arrival_divide__rounding__nearest
+msgid "Round to nearest"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival_divide__only_undistributed
+msgid "Skip Fully Distributed Lines"
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/wizard/stock_arrival_divide.py:0
+msgid "This arrival can no longer be divided."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/wizard/stock_arrival_divide.py:0
+msgid "Stock staying at %s needs no transfer - simply leave it undistributed."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/wizard/stock_arrival_divide.py:0
+msgid "Nothing left to distribute on this arrival."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/wizard/stock_arrival_divide.py:0
+msgid "Distributed %(count)s line(s) to %(warehouse)s."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/wizard/stock_arrival_divide.py:0
+msgid "Percentage must be greater than 0 and at most 100."
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model,name:di_stock_arrival.model_di_stock_arrival_import
+msgid "Import Arrival Lines from a CSV or XLSX File"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival_import__file
+msgid "File"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,help:di_stock_arrival.field_di_stock_arrival_import__file
+msgid ""
+"A .csv or .xlsx file. The first sheet of a workbook is read; its first row "
+"is the header."
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival_import__filename
+msgid "File Name"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival_import__is_csv
+msgid "Is CSV"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,help:di_stock_arrival.field_di_stock_arrival_import__is_csv
+msgid "Separator and encoding only apply to CSV; a workbook carries its own."
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival_import__delimiter
+msgid "Separator"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,help:di_stock_arrival.field_di_stock_arrival_import__delimiter
+msgid "Excel in an Italian locale saves CSV with semicolons."
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields.selection,name:di_stock_arrival.selection__di_stock_arrival_import__delimiter___
+msgid "Comma  ,"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields.selection,name:di_stock_arrival.selection__di_stock_arrival_import__delimiter___
+msgid "Semicolon  ;"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields.selection,name:di_stock_arrival.selection__di_stock_arrival_import__delimiter___
+msgid "Tab"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival_import__encoding
+msgid "Encoding"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields.selection,name:di_stock_arrival.selection__di_stock_arrival_import__encoding__utf_8_sig
+msgid "UTF-8"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields.selection,name:di_stock_arrival.selection__di_stock_arrival_import__encoding__latin_1
+msgid "Latin-1 / Windows"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival_import__create_missing_products
+msgid "Create Missing Products"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,help:di_stock_arrival.field_di_stock_arrival_import__create_missing_products
+msgid ""
+"Create products and variants that do not exist yet. Turn this off to import "
+"only what is already in the catalogue and be told what was skipped."
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival_import__update_prices
+msgid "Update Prices"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,help:di_stock_arrival.field_di_stock_arrival_import__update_prices
+msgid ""
+"Write the cost, the sale price and the Dettaglio / Promo / Promo Franchising"
+" / Ingrosso pricelist rules from the file. Turn off to leave existing prices"
+" untouched."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/wizard/stock_arrival_import.py:0
+msgid "no product code"
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/wizard/stock_arrival_import.py:0
+msgid "the quantity is not a number"
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/wizard/stock_arrival_import.py:0
+msgid "the quantity is negative"
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/wizard/stock_arrival_import.py:0
+msgid "the product is not in the catalogue"
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/wizard/stock_arrival_import.py:0
+msgid ", and %s more"
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/wizard/stock_arrival_import.py:0
+msgid "row %s"
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/wizard/stock_arrival_import.py:0
+msgid "rows %s"
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/wizard/stock_arrival_import.py:0
+msgid ""
+"Could not create the variant of %s for that colour and size combination."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/wizard/stock_arrival_import.py:0
+msgid "Lines can only be imported into a draft arrival."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/wizard/stock_arrival_import.py:0
+msgid "The file contains no data rows."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/wizard/stock_arrival_import.py:0
+msgid "The file needs a product code column (one of: %s)."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/wizard/stock_arrival_import.py:0
+msgid "The file needs a quantity column (one of: %s)."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/wizard/stock_arrival_import.py:0
+msgid "%(created)s line(s) created, %(updated)s updated."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/wizard/stock_arrival_import.py:0
+msgid ""
+"%s has several variants; the row needs a Colore and/or Taglia to say which "
+"one."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/wizard/stock_arrival_import.py:0
+msgid "product does not exist and the row has no name to create it with."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/wizard/stock_arrival_import.py:0
+msgid "Import from %s"
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/wizard/stock_arrival_import.py:0
+msgid ""
+"This is a legacy .xls file, which cannot be read. Open it and save it as "
+".xlsx or as CSV, then import again."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/wizard/stock_arrival_import.py:0
+msgid ""
+"The file is not valid %(encoding)s text. Try the other encoding option, or save it as .xlsx.\n"
+"%(error)s"
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/wizard/stock_arrival_import.py:0
+msgid ""
+"Reading .xlsx files needs the Python library openpyxl, which is not "
+"installed on this server. Ask your administrator to install it, or save the "
+"file as CSV and import that."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/wizard/stock_arrival_import.py:0
+msgid ""
+"The file could not be read as an .xlsx workbook. If it came from LibreOffice or Google Sheets, export it as .xlsx or as CSV.\n"
+"%s"
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/wizard/stock_arrival_import.py:0
+msgid "The workbook has no sheets."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/wizard/stock_arrival_import.py:0
+msgid "%(attribute)s '%(value)s' is not available on %(product)s."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/wizard/stock_arrival_import.py:0
+msgid "%s row(s) skipped, nothing was imported for them:"
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/wizard/stock_arrival_import.py:0
+msgid "row %(row)s: %(warning)s"
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/wizard/stock_arrival_import.py:0
+msgid "%s warning(s):"
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/wizard/stock_arrival_import.py:0
+msgid "negative quantity for %s ignored"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,help:di_stock_arrival.field_res_company__di_arrival_warehouse_id
+msgid ""
+"Warehouse where incoming goods physically land before being divided. All "
+"arrival documents receive into this warehouse."
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model,name:di_stock_arrival.model_di_stock_arrival
+#: model:ir.sequence,name:di_stock_arrival.seq_di_stock_arrival
+msgid "Stock Arrival"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival__name
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_view_search
+msgid "Reference"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival__partner_id
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_view_search
+msgid "Supplier"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,help:di_stock_arrival.field_di_stock_arrival__partner_id
+msgid "Supplier the goods came from. A new supplier can be created inline."
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival__date
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_view_search
+msgid "Arrival Date"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival__warehouse_id
+msgid "Received At"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,help:di_stock_arrival.field_di_stock_arrival__warehouse_id
+msgid ""
+"Warehouse the goods physically arrived at. Configured in Inventory settings;"
+" goods always land here before division."
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival__location_id
+msgid "Arrival Location"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival__state
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_view_search
+msgid "Status"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields.selection,name:di_stock_arrival.selection__di_stock_arrival__state__draft
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_view_search
+msgid "Draft"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields.selection,name:di_stock_arrival.selection__di_stock_arrival__state__to_divide
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_view_search
+msgid "Not Divided"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields.selection,name:di_stock_arrival.selection__di_stock_arrival__state__divided
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_view_search
+msgid "Divided"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields.selection,name:di_stock_arrival.selection__di_stock_arrival__state__cancel
+msgid "Cancelled"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival__note
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_view_form
+msgid "Notes"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival__line_ids
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_view_list
+msgid "Lines"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival__allocation_ids
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival_line__allocation_ids
+#: model:ir.ui.menu,name:di_stock_arrival.menu_di_arrival_distribution
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_view_form
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_allocation_view_list
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_allocation_view_search
+#: model:ir.actions.act_window,name:di_stock_arrival.di_stock_arrival_allocation_action
+msgid "Distribution"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival__receipt_id
+msgid "Receipt"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,help:di_stock_arrival.field_di_stock_arrival__receipt_id
+msgid "Transfer that brought the goods into the arrival warehouse."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival__picking_ids
+#: code:addons/di_stock_arrival/models/stock_arrival.py:0
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_view_form
+msgid "Transfers"
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-javascript
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival__total_quantity
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival_allocation__line_quantity
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival_line__quantity
+#: code:addons/di_stock_arrival/static/src/distribution_matrix/distribution_matrix.xml:0
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_view_list
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_view_form
+msgid "Received"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival__total_allocated
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival_line__qty_allocated
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_view_list
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_view_form
+msgid "Distributed"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival__total_remaining
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival_line__qty_remaining
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_view_list
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_view_form
+msgid "Staying Here"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival__total_value
+msgid "Total Value"
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/models/stock_arrival.py:0
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_import_view_form
+msgid "Import Arrival Lines"
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/models/stock_arrival.py:0
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_divide_view_form
+msgid "Divide Across Warehouses"
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/models/stock_arrival.py:0
+msgid "New"
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/models/stock_arrival.py:0
+msgid ""
+"Only draft or cancelled arrivals can be deleted. An arrival that has been "
+"confirmed has already moved stock."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/models/stock_arrival.py:0
+msgid "Warehouse %(warehouse)s has no %(code)s operation type configured."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/models/stock_arrival.py:0
+msgid ""
+"Transfer %(picking)s could not be validated automatically (Odoo asked for "
+"'%(model)s'). Validate it manually from Inventory, then reopen this arrival."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/models/stock_arrival.py:0
+msgid "The distribution of this arrival can no longer be changed."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/models/stock_arrival.py:0
+msgid "Only a draft arrival can be confirmed."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/models/stock_arrival.py:0
+msgid "Add at least one line before confirming this arrival."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/models/stock_arrival.py:0
+msgid ""
+"Every line must have a quantity greater than zero.\n"
+"Check: %s"
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/models/stock_arrival.py:0
+msgid ""
+"Only an arrival that has been confirmed and not yet divided can be "
+"validated."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/models/stock_arrival.py:0
+msgid ""
+"Arrival %s has already received stock, so it cannot be cancelled. Reverse it"
+" with a return or an inventory adjustment instead, so the stock movement "
+"stays traceable."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/models/stock_arrival.py:0
+msgid "Only a cancelled arrival can be set back to draft."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/models/stock_arrival.py:0
+msgid "Line %s does not belong to this arrival."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/models/stock_arrival.py:0
+msgid "A distributed quantity cannot be negative (%(product)s)."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/models/stock_arrival.py:0
+msgid "Malformed distribution cell %r."
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model,name:di_stock_arrival.model_di_stock_arrival_allocation
+msgid "Stock Arrival Allocation"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival_allocation__line_id
+msgid "Arrival Line"
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-javascript
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival_allocation__product_id
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival_line__product_id
+#: code:addons/di_stock_arrival/static/src/distribution_matrix/distribution_matrix.xml:0
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_view_form
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_view_search
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_allocation_view_search
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.report_delivery_document_di:0
+msgid "Product"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,help:di_stock_arrival.field_di_stock_arrival_allocation__warehouse_id
+msgid ""
+"Warehouse this share of the line is transferred to. Shops (PV) and "
+"stockrooms (MAG) are both valid destinations."
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival_allocation__quantity
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_allocation_view_list
+msgid "Quantity"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival_allocation__line_qty_remaining
+msgid "Still Unassigned"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,help:di_stock_arrival.field_di_stock_arrival_allocation__line_qty_remaining
+msgid ""
+"Of what arrived, how much is not yet assigned to any destination. "
+"Distributing everything is not required: what is left simply stays at the "
+"arrival warehouse."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/models/stock_arrival_allocation.py:0
+msgid "More than arrived"
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/models/stock_arrival_allocation.py:0
+msgid ""
+"Only %(received)s of %(product)s arrived, but this row sends out "
+"%(quantity)s."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/models/stock_arrival_allocation.py:0
+msgid ""
+"The destination cannot be the arrival warehouse itself. Stock that stays at "
+"%s needs no transfer - just leave it undistributed."
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model,name:di_stock_arrival.model_di_stock_arrival_line
+msgid "Stock Arrival Line"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival_line__barcode
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.report_delivery_document_di:0
+msgid "Barcode"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival_line__default_code
+msgid "Internal Reference"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,help:di_stock_arrival.field_di_stock_arrival_line__quantity
+msgid "Quantity that physically arrived, for this variant."
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,field_description:di_stock_arrival.field_di_stock_arrival_line__price_unit
+msgid "Unit Cost"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,help:di_stock_arrival.field_di_stock_arrival_line__price_unit
+msgid ""
+"Purchase price per unit. Recorded for reporting; product categories use "
+"periodic valuation, so this posts no journal entry."
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,help:di_stock_arrival.field_di_stock_arrival_line__qty_remaining
+msgid ""
+"Quantity left at the arrival warehouse. This is informational: leaving stock"
+" here is normal and never blocks the document."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/models/stock_arrival_line.py:0
+msgid "New line"
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/models/stock_arrival_line.py:0
+msgid "Received quantity cannot be negative (%s)."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/models/stock_arrival_line.py:0
+msgid ""
+"You cannot distribute more of %(product)s than arrived: %(received)s received, %(allocated)s distributed.\n"
+"Reduce the distribution by %(excess)s, or correct the received quantity."
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.model.fields,help:di_stock_arrival.field_stock_picking__di_arrival_id
+msgid "Arrival document this transfer was generated from."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-javascript
+#: code:addons/di_stock_arrival/static/src/distribution_matrix/distribution_matrix.js:0
+msgid "Type a quantity of zero or more."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-javascript
+#: code:addons/di_stock_arrival/static/src/distribution_matrix/distribution_matrix.js:0
+msgid "Save the arrival before distributing it."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-javascript
+#: code:addons/di_stock_arrival/static/src/distribution_matrix/distribution_matrix.js:0
+msgid "Distribution saved."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-javascript
+#: code:addons/di_stock_arrival/static/src/distribution_matrix/distribution_matrix.xml:0
+msgid "Loading the distribution..."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-javascript
+#: code:addons/di_stock_arrival/static/src/distribution_matrix/distribution_matrix.xml:0
+msgid "Save the arrival first, then distribute what it received."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-javascript
+#: code:addons/di_stock_arrival/static/src/distribution_matrix/distribution_matrix.xml:0
+msgid "Nothing to distribute yet. Add the products received first."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-javascript
+#: code:addons/di_stock_arrival/static/src/distribution_matrix/distribution_matrix.xml:0
+msgid "Filter products..."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-javascript
+#: code:addons/di_stock_arrival/static/src/distribution_matrix/distribution_matrix.xml:0
+msgid "Unsaved changes"
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-javascript
+#: code:addons/di_stock_arrival/static/src/distribution_matrix/distribution_matrix.xml:0
+msgid "Save Distribution"
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-javascript
+#: code:addons/di_stock_arrival/static/src/distribution_matrix/distribution_matrix.xml:0
+msgid "Discard"
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-javascript
+#: code:addons/di_stock_arrival/static/src/distribution_matrix/distribution_matrix.xml:0
+msgid "Destinations"
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-javascript
+#: code:addons/di_stock_arrival/static/src/distribution_matrix/distribution_matrix.xml:0
+msgid "Filter destinations..."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-javascript
+#: code:addons/di_stock_arrival/static/src/distribution_matrix/distribution_matrix.xml:0
+msgid "Show all"
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-javascript
+#: code:addons/di_stock_arrival/static/src/distribution_matrix/distribution_matrix.xml:0
+msgid "Hide all"
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-javascript
+#: code:addons/di_stock_arrival/static/src/distribution_matrix/distribution_matrix.xml:0
+msgid "A row in red sends out more than arrived. Correct it before saving."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-javascript
+#: code:addons/di_stock_arrival/static/src/distribution_matrix/distribution_matrix.xml:0
+msgid "Pick the destinations you are sending to, above."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-javascript
+#: code:addons/di_stock_arrival/static/src/distribution_matrix/distribution_matrix.xml:0
+msgid "Remaining"
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-javascript
+#: code:addons/di_stock_arrival/static/src/distribution_matrix/distribution_matrix.xml:0
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.report_delivery_document_di:0
+msgid "Total"
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-javascript
+#: code:addons/di_stock_arrival/static/src/distribution_matrix/distribution_matrix.xml:0
+msgid ""
+"Empty cells send nothing. Whatever you leave undistributed stays at the "
+"arrival warehouse, which is normal and does not block the document."
+msgstr ""
+
+#. module: di_stock_arrival
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.res_config_settings_view_form_di_arrival
+msgid "Arrival documents always receive into this warehouse."
+msgstr ""
+
+#. module: di_stock_arrival
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.res_config_settings_view_form_di_arrival
+msgid ""
+"Warehouse incoming goods land in before being divided across shops and "
+"stockrooms."
+msgstr ""
+
+#. module: di_stock_arrival
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_divide_view_form
+msgid ""
+"This adds to the distribution rather than replacing it, so you can run it "
+"once per destination. Whatever you never distribute stays at the arrival "
+"warehouse."
+msgstr ""
+
+#. module: di_stock_arrival
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_divide_view_form
+msgid "Apply"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_divide_view_form
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_import_view_form
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_view_form
+msgid "Cancel"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_import_view_form
+msgid "File Format"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_import_view_form
+msgid "Products"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_import_view_form
+msgid ""
+"<strong>Required columns:</strong> <code>codice</code> and "
+"<code>quantita</code>."
+msgstr ""
+
+#. module: di_stock_arrival
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_import_view_form
+msgid ""
+"<strong>Prices</strong> (the four ESC listini): <code>prezzo_acquisto</code>"
+" → cost, <code>prezzo_dettaglio</code> → sale price + Dettaglio, "
+"<code>prezzo_promo</code> → Promo + Promo Franchising, "
+"<code>prezzo_ingrosso</code> → Ingrosso."
+msgstr ""
+
+#. module: di_stock_arrival
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_import_view_form
+msgid ""
+"<strong>Other optional columns:</strong> <code>nome</code>, "
+"<code>colore</code>, <code>taglia</code>, <code>categoria</code>, "
+"<code>marca</code>, <code>stagione</code>, <code>reparto</code>, "
+"<code>posizionamento</code>, <code>barcode</code>."
+msgstr ""
+
+#. module: di_stock_arrival
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_import_view_form
+msgid ""
+"You can also add one column per destination warehouse, named with its short "
+"code (<code>PTREM</code>, <code>PTF</code>, <code>MTREM</code>...), to pre-"
+"fill the distribution straight from the file. Barcodes are generated by "
+"Odoo, so leave that column out unless the product already has one."
+msgstr ""
+
+#. module: di_stock_arrival
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_import_view_form
+msgid ""
+"<strong>Accepted files:</strong> <code>.csv</code> and <code>.xlsx</code>. "
+"Only the first sheet of a workbook is read, and its first row must be the "
+"header."
+msgstr ""
+
+#. module: di_stock_arrival
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_import_view_form
+msgid "Import"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.ui.menu,name:di_stock_arrival.menu_di_arrival_root
+#: model:ir.ui.menu,name:di_stock_arrival.menu_di_arrival_arrivals
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_view_list
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_view_search
+#: model:ir.actions.act_window,name:di_stock_arrival.di_stock_arrival_action
+msgid "Arrivals"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_view_list
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_view_form
+msgid "Value"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_view_form
+msgid "Receive the goods into the arrival warehouse."
+msgstr ""
+
+#. module: di_stock_arrival
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_view_form
+msgid "Confirm Arrival"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_view_form
+msgid "Divide"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_view_form
+msgid ""
+"Generate the internal transfers for this distribution? Anything not "
+"distributed stays at the arrival warehouse."
+msgstr ""
+
+#. module: di_stock_arrival
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_view_form
+msgid "Mark as Divided"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_view_form
+msgid "Reset to Draft"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_view_form
+msgid "Products Received"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_view_form
+msgid "Import from CSV"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_view_form
+msgid ""
+"Distribute all or part of what arrived. Anything you leave undistributed "
+"simply stays at the arrival warehouse - that is normal and does not block "
+"the document."
+msgstr ""
+
+#. module: di_stock_arrival
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_view_form
+msgid "Distribution Rows"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_view_form
+msgid "Internal notes about this arrival..."
+msgstr ""
+
+#. module: di_stock_arrival
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_view_search
+msgid "Stock Left Behind"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_view_search
+msgid "Warehouse"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.actions.act_window,help:di_stock_arrival.di_stock_arrival_action
+msgid "Record your first arrival"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model:ir.actions.act_window,help:di_stock_arrival.di_stock_arrival_action
+msgid ""
+"When goods turn up from a supplier, record them here: what arrived, from "
+"whom, and on which delivery note. Confirming brings the stock into the "
+"arrival warehouse, then you divide it across your shops and stockrooms."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/models/stock_arrival.py:0
+msgid ""
+"Confirm the arrival before printing its tags: the goods have to be in before"
+" they can be labelled."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/models/stock_arrival.py:0
+msgid "The Cartellino report is not available on this database."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/models/stock_arrival.py:0
+msgid "There is nothing to print tags for."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/models/stock_arrival.py:0
+msgid ""
+"That would print %(total)s tags. Print them in smaller batches from the "
+"product list, or the printer and the PDF will both give up."
+msgstr ""
+
+#. module: di_stock_arrival
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_view_form:0
+msgid "Print Tags"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.di_stock_arrival_view_form:0
+msgid "One cartellino per piece received, ordered by barcode."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/models/stock_arrival.py:0
+msgid "Could not find a free arrival reference: every number the sequence gives is already used. Check the 'Stock Arrival' sequence under Settings > Technical > Sequences."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-javascript
+#: code:addons/di_stock_arrival/static/src/distribution_matrix/distribution_matrix.js:0
+msgid "Pick at least one destination first."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-javascript
+#: code:addons/di_stock_arrival/static/src/distribution_matrix/distribution_matrix.js:0
+msgid "Quantity copied into every cell shown."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-javascript
+#: code:addons/di_stock_arrival/static/src/distribution_matrix/distribution_matrix.js:0
+msgid "Cleared every cell shown."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-javascript
+#: code:addons/di_stock_arrival/static/src/distribution_matrix/distribution_matrix.xml:0
+msgid "Same quantity everywhere"
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-javascript
+#: code:addons/di_stock_arrival/static/src/distribution_matrix/distribution_matrix.xml:0
+msgid "Qty"
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-javascript
+#: code:addons/di_stock_arrival/static/src/distribution_matrix/distribution_matrix.xml:0
+msgid "OK"
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-javascript
+#: code:addons/di_stock_arrival/static/src/distribution_matrix/distribution_matrix.xml:0
+msgid "Writes the quantity into every destination column shown, on every product row listed, replacing what is already there. Nothing is saved until you press Save Distribution."
+msgstr ""
+
+#. module: di_stock_arrival
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.report_delivery_document_di:0
+msgid "Delivered"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.report_delivery_document_di:0
+msgid "Package"
+msgstr ""
+
+#. module: di_stock_arrival
+#: model_terms:ir.ui.view,arch_db:di_stock_arrival.report_delivery_document_di:0
+msgid "Lot/Serial Number"
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/models/stock_arrival_line.py:0
+msgid "Products can only be added while the arrival is a draft, and %s has already received its goods.\nCorrect the quantity of a line instead, or record what turned up later as an arrival of its own."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/models/stock_arrival_line.py:0
+msgid "A line cannot be removed once its goods have been received: the stock is already in the warehouse.\nCorrect the received quantity instead, or send the goods back with a return from Inventory."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/models/stock_arrival_line.py:0
+msgid "The receipt movement for %(product)s cannot be found on %(arrival)s, so correcting the quantity here would leave the stock behind. Adjust it from Inventory instead."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/models/stock_arrival_line.py:0
+msgid "The receipt of %(product)s was recorded in several detailed operations, which this correction cannot rewrite safely. Adjust it from Inventory instead."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/models/stock_arrival_line.py:0
+msgid "Correcting %(product)s to %(quantity)s would take more out of the receipt than it brought in."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/models/stock_arrival_line.py:0
+msgid "%(product)s: received quantity corrected from %(before)s to %(after)s. Receipt %(picking)s was updated to match."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/models/stock_arrival_line.py:0
+msgid "Arrival %s has already been divided, so what it received can no longer be corrected here. Adjust the transfers from Inventory instead."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/models/stock_arrival.py:0
+msgid "At least one line must have a quantity greater than zero: this arrival received nothing."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/models/stock_arrival_line.py:0
+msgid "Arrival %s has no receipt to add these goods to."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/models/stock_arrival_line.py:0
+msgid "%(product)s: %(quantity)s received after all, where the file said none. Added to receipt %(picking)s."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/wizard/stock_arrival_import.py:0
+msgid "several variants match that Colore and Taglia, so the row does not say which one arrived"
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/models/stock_arrival.py:0
+msgid "Malformed received quantity for line %r."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-python
+#: code:addons/di_stock_arrival/models/stock_arrival.py:0
+msgid "A received quantity cannot be negative (%(product)s)."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-javascript
+#: code:addons/di_stock_arrival/static/src/distribution_matrix/distribution_matrix.js:0
+msgid "Quantity copied down that destination."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-javascript
+#: code:addons/di_stock_arrival/static/src/distribution_matrix/distribution_matrix.js:0
+msgid "Cleared that destination."
+msgstr ""
+
+#. module: di_stock_arrival
+#. odoo-javascript
+#: code:addons/di_stock_arrival/static/src/distribution_matrix/distribution_matrix.xml:0
+msgid "Write a quantity here and press Enter to put it on this destination for every product listed."
+msgstr ""

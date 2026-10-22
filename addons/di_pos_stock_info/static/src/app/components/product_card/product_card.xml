@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="di_pos_stock_info.ProductCard" t-inherit="point_of_sale.ProductCard" t-inherit-mode="extension">
+        <xpath expr="//t[@t-slot='quantityButtons']" position="before">
+            <!-- Top RIGHT, not left: di_bonus_points already owns the top-left
+                 corner for its gift badge (top-0 start-0), and this one sat on
+                 top of it. The other corners are core's - comboExtraPrice takes
+                 top-right only inside the combo popup, which this badge skips,
+                 and the cart quantity takes bottom-right.
+
+                 Not shown inside the combo configurator, where the card stands
+                 for a combo choice rather than a product on the shelf. -->
+            <button t-if="!props.isComboPopup" type="button"
+                    class="di-stock-info-badge btn position-absolute top-0 end-0 m-1"
+                    t-attf-aria-label="Stock by shop for {{props.name}}"
+                    t-on-click.stop="openStockInfo"
+                    t-on-mousedown.stop="swallowPress"
+                    t-on-touchstart.stop="swallowPress">
+                <i class="fa fa-info" role="img" aria-hidden="true"/>
+            </button>
+        </xpath>
+    </t>
+
+</templates>

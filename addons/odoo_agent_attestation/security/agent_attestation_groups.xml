@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--
+          The authorization gate for the deployment measurement (ADR 0020).
+
+          The measurement method checks this group itself, because Odoo 19's `/json/2/` dispatch
+          (`get_public_method`, odoo/service/model.py:45) runs no access check before calling a
+          public method. The ACL row for the abstract model is not that gate.
+
+          DELIBERATELY UNASSIGNED: no `user_ids`, no `implied_ids`, no `privilege_id`. Nobody holds
+          it on install, nothing confers it, and it cannot be granted by accident from the user
+          form's privilege widgets.
+
+          FOR WHOEVER ASSIGNS IT. Exactly one identity: the deployment-side signer's measurement
+          user. Never the control plane's service user (the method refuses to measure its own
+          caller, and the control plane refuses a service user holding this group), never a person,
+          and never an administrator (the method refuses callers in Settings or Access Rights).
+          What it reveals (module list, source fingerprints, ACLs and record rules of the measured
+          models, the service user's groups) is private deployment metadata.
+        -->
+        <record id="group_deployment_measurement" model="res.groups">
+            <field name="name">Agent attestation: deployment measurement</field>
+            <field name="comment">Holds the right to measure this deployment for the attestation signer. Unassigned on install by design; grant it only to the signer's dedicated measurement user.</field>
+        </record>
+    </data>
+</odoo>

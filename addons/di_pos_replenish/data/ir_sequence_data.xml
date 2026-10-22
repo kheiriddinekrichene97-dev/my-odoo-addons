@@ -1,0 +1,11 @@
+<odoo>
+    <data noupdate="1">
+        <record id="seq_di_pos_replenish" model="ir.sequence">
+            <field name="name">Sales Replenishment</field>
+            <field name="code">di.pos.replenish</field>
+            <field name="prefix">RIV/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

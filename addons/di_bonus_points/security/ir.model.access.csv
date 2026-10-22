@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_bonus_point_settings_manager,bonus.point.settings.manager,model_bonus_point_settings,point_of_sale.group_pos_manager,1,1,1,1
+access_bonus_point_settings_user,bonus.point.settings.user,model_bonus_point_settings,point_of_sale.group_pos_user,1,0,0,0
+access_bonus_point_bracket_manager,bonus.point.bracket.manager,model_bonus_point_bracket,point_of_sale.group_pos_manager,1,1,1,1
+access_bonus_point_bracket_user,bonus.point.bracket.user,model_bonus_point_bracket,point_of_sale.group_pos_user,1,0,0,0
+access_bonus_point_category_rule_manager,bonus.point.category.rule.manager,model_bonus_point_category_rule,point_of_sale.group_pos_manager,1,1,1,1
+access_bonus_point_category_rule_user,bonus.point.category.rule.user,model_bonus_point_category_rule,point_of_sale.group_pos_user,1,0,0,0
+access_bonus_point_batch_manager,bonus.point.batch.manager,model_bonus_point_batch,point_of_sale.group_pos_manager,1,1,1,1
+access_bonus_point_batch_user,bonus.point.batch.user,model_bonus_point_batch,point_of_sale.group_pos_user,1,0,0,0
+access_bonus_point_movement_manager,bonus.point.movement.manager,model_bonus_point_movement,point_of_sale.group_pos_manager,1,1,1,1
+access_bonus_point_movement_user,bonus.point.movement.user,model_bonus_point_movement,point_of_sale.group_pos_user,1,0,0,0

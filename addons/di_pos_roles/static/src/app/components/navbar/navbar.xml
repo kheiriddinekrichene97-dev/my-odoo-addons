@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="di_pos_roles.Navbar" t-inherit="point_of_sale.Navbar" t-inherit-mode="extension">
+        <!-- The salesperson does not see orders at all. -->
+        <xpath expr="//button[hasclass('orders-button')]" position="attributes">
+            <attribute name="t-if">pos.diRole !== 'minimal'</attribute>
+        </xpath>
+    </t>
+</templates>

@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_di_pos_replenish_user,di.pos.replenish.user,model_di_pos_replenish,di_stock_arrival.group_di_arrival_user,1,1,1,1
+access_di_pos_replenish_manager,di.pos.replenish.manager,model_di_pos_replenish,di_stock_arrival.group_di_arrival_manager,1,1,1,1
+access_di_pos_replenish_line_user,di.pos.replenish.line.user,model_di_pos_replenish_line,di_stock_arrival.group_di_arrival_user,1,1,1,1
+access_di_pos_replenish_line_manager,di.pos.replenish.line.manager,model_di_pos_replenish_line,di_stock_arrival.group_di_arrival_manager,1,1,1,1
+access_di_pos_replenish_alloc_user,di.pos.replenish.allocation.user,model_di_pos_replenish_allocation,di_stock_arrival.group_di_arrival_user,1,1,1,1
+access_di_pos_replenish_alloc_manager,di.pos.replenish.allocation.manager,model_di_pos_replenish_allocation,di_stock_arrival.group_di_arrival_manager,1,1,1,1

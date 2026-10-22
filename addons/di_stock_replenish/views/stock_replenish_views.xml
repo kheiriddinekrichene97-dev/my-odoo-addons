@@ -1,0 +1,147 @@
+<odoo>
+
+    <record id="di_stock_replenish_view_form" model="ir.ui.view">
+        <field name="name">di.stock.replenish.form</field>
+        <field name="model">di.stock.replenish</field>
+        <field name="arch" type="xml">
+            <!-- di_full_width_form lifts the sheet's max width, and there is
+                 no chatter: the grid is the whole screen, and a side panel
+                 cost it a third of the width for a log nobody reads here.
+                 The model keeps mail.thread, so state changes are still
+                 tracked. -->
+            <form string="Replenishment Comparison" class="di_full_width_form">
+                <header>
+                    <button name="action_confirm" type="object" string="Confirm and Generate Transfers"
+                            class="btn-primary" invisible="state != 'draft'"
+                            confirm="Generate one internal transfer per source and destination? They are left Ready, with the stock reserved: the stock moves only when each transfer is validated in Inventory, after the pile has been checked."/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state != 'done'"
+                            confirm="Cancel this document? Its transfers must already be cancelled in Inventory."/>
+                    <button name="action_print_document" type="object" string="Print Document"
+                            invisible="not line_ids"/>
+                    <button name="action_print_document_tags" type="object" string="Print Tags"
+                            invisible="not line_ids"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state != 'draft'"/>
+                    <button name="action_reset_to_draft" type="object" string="Reset to Draft"
+                            invisible="state != 'cancel'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_transfers" type="object"
+                                class="oe_stat_button" icon="fa-truck"
+                                invisible="picking_count == 0">
+                            <field name="picking_count" widget="statinfo" string="Transfers"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <field name="company_id" invisible="1"/>
+                    <field name="line_ids" invisible="1"/>
+                    <group>
+                        <group string="Warehouses">
+                            <field name="source_warehouse_ids"
+                                   widget="many2many_tags"
+                                   options="{'no_create': True}"
+                                   domain="[('id', 'not in', destination_warehouse_ids)]"/>
+                            <field name="destination_warehouse_ids"
+                                   widget="many2many_tags"
+                                   options="{'no_create': True}"
+                                   domain="[('id', 'not in', source_warehouse_ids)]"/>
+                        </group>
+                        <group string="Filters">
+                            <field name="categ_ids" widget="many2many_tags"
+                                   options="{'no_create': True}"/>
+                            <!-- no_create like the categories: this is a
+                                 filter over the brands that exist, never a
+                                 place to invent one. -->
+                            <field name="brand_ids" widget="many2many_tags"
+                                   options="{'no_create': True}"/>
+                            <!-- Same no_create reasoning, and the field's own
+                                 domain keeps the autocomplete to vendors. -->
+                            <field name="supplier_ids" widget="many2many_tags"
+                                   options="{'no_create': True}"/>
+                            <field name="missing_mode" widget="radio"
+                                   options="{'horizontal': True}"/>
+                            <!-- Only meaningful for the one mode that reads
+                                 it. Not marked required: an Integer always
+                                 carries a value, and required would hand the
+                                 worker a blocking error for typing 0, which
+                                 is a legitimate if roundabout way of asking
+                                 for Only Negative. _check_below_quantity
+                                 catches the one value that is nonsense. -->
+                            <field name="below_quantity"
+                                   invisible="missing_mode != 'below'"/>
+                            <!-- Seasons and the discount bucket are both
+                                 picked in the grid itself; the stored
+                                 values are technical. -->
+                            <field name="season_keys" invisible="1"/>
+                            <field name="discount_bucket" invisible="1"/>
+                            <field name="price_bucket" invisible="1"/>
+                            <field name="position_keys" invisible="1"/>
+                        </group>
+                    </group>
+                    <!-- One line on purpose. Odoo exports a view term with
+                         its newlines and indentation intact, so a paragraph
+                         wrapped across lines here can never match the msgid
+                         a translator was given, and stays English forever. -->
+                    <div class="alert alert-info" role="alert">Products the source holds and a destination does not. Free to use is shown at the source and on hand at the destinations, so what you see is what can actually be moved onto a shelf. Narrow it by season, brand, supplier or category, and choose whether to see every row, only what a shop has run out of, what has gone below zero, or only what every shop is down to fewer than a number you type in. Confirming generates one transfer per source and destination, left Ready for the worker to check the pile against before validating it in Inventory.</div>
+                    <notebook>
+                        <page string="Comparison" name="comparison">
+                            <field name="comparison" widget="di_replenish_matrix"
+                                   nolabel="1" class="di_matrix_field"/>
+                        </page>
+                        <page string="To Transfer" name="lines">
+                            <field name="line_ids" readonly="state != 'draft'">
+                                <list editable="bottom">
+                                    <field name="product_id" options="{'no_create': True}"/>
+                                    <field name="default_code" optional="show"/>
+                                    <field name="barcode" optional="hide"/>
+                                    <field name="warehouse_id" options="{'no_create': True}"/>
+                                    <field name="quantity" sum="Total Quantity"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="di_stock_replenish_view_list" model="ir.ui.view">
+        <field name="name">di.stock.replenish.list</field>
+        <field name="model">di.stock.replenish</field>
+        <field name="arch" type="xml">
+            <list string="Replenishment Comparisons"
+                  decoration-muted="state == 'cancel'"
+                  decoration-success="state == 'done'">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="source_warehouse_ids" widget="many2many_tags"/>
+                <field name="destination_warehouse_ids" widget="many2many_tags"/>
+                <field name="line_count" string="Lines" optional="show"/>
+                <field name="total_quantity" optional="show"/>
+                <field name="categ_ids" widget="many2many_tags" optional="hide"/>
+                <field name="supplier_ids" widget="many2many_tags" optional="hide"/>
+                <field name="missing_mode" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-success="state == 'done'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="di_stock_replenish_action" model="ir.actions.act_window">
+        <field name="name">Replenishment</field>
+        <field name="res_model">di.stock.replenish</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Compare a shop against the warehouse</p>
+            <p>Pick where the stock is and which shops to look at, narrow it to a season, and see what has run out on the shop floor while the warehouse still has it.</p>
+        </field>
+    </record>
+
+</odoo>

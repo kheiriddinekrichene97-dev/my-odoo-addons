@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="di_stock_arrival.DistributionMatrix">
+        <div class="di_matrix">
+
+            <div t-if="state.loading" class="text-muted p-3">Loading the distribution...</div>
+
+            <div t-elif="!resId" class="alert alert-info" role="alert">Save the arrival first, then distribute what it received.</div>
+
+            <div t-elif="!state.lines.length" class="alert alert-info" role="alert">Nothing to distribute yet. Add the products received first.</div>
+
+            <t t-else="">
+                <div class="di_matrix_toolbar d-flex flex-wrap align-items-center gap-2 mb-2">
+                    <input type="text" class="form-control form-control-sm di_matrix_search"
+                           placeholder="Filter products..."
+                           t-model="state.rowFilter"/>
+                    <div t-if="state.editable" class="di_matrix_fill d-flex align-items-center gap-1"
+                         title="Writes the quantity into every destination column shown, on every product row listed, replacing what is already there. Nothing is saved until you press Save Distribution.">
+                        <span class="small fw-bold">Same quantity everywhere</span>
+                        <input type="text" inputmode="decimal"
+                               class="form-control form-control-sm di_matrix_fill_input"
+                               placeholder="Qty"
+                               t-model="state.fillValue"
+                               t-on-keydown="onFillKeydown"/>
+                        <button class="btn btn-secondary btn-sm"
+                                t-att-disabled="!visibleWarehouses.length"
+                                t-on-click="applyFill">OK</button>
+                    </div>
+                    <div class="flex-grow-1"/>
+                    <span t-if="state.dirty" class="badge text-bg-warning">Unsaved changes</span>
+                    <button t-if="state.editable" class="btn btn-primary btn-sm"
+                            t-att-disabled="state.saving or !state.dirty"
+                            t-on-click="save">Save Distribution</button>
+                    <button t-if="state.editable" class="btn btn-secondary btn-sm"
+                            t-att-disabled="state.saving or !state.dirty"
+                            t-on-click="discard">Discard</button>
+                </div>
+
+                <div class="di_matrix_picker mb-2">
+                    <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
+                        <span class="fw-bold small">Destinations</span>
+                        <input type="text" class="form-control form-control-sm di_matrix_search"
+                               placeholder="Filter destinations..."
+                               t-model="state.colFilter"/>
+                        <button class="btn btn-link btn-sm p-0" t-on-click="selectAll">Show all</button>
+                        <button class="btn btn-link btn-sm p-0" t-on-click="clearSelection">Hide all</button>
+                    </div>
+                    <div class="di_matrix_chips">
+                        <button t-foreach="pickableWarehouses" t-as="warehouse"
+                                t-key="warehouse.id"
+                                class="btn btn-sm di_matrix_chip"
+                                t-att-class="isSelected(warehouse.id) ? 'btn-primary' : (hasHiddenValues(warehouse.id) ? 'btn-outline-warning' : 'btn-outline-secondary')"
+                                t-att-title="warehouse.code"
+                                t-on-click="() => this.toggleWarehouse(warehouse.id)">
+                            <t t-esc="warehouse.name"/>
+                        </button>
+                    </div>
+                </div>
+
+                <div t-if="hasOverAllocation" class="alert alert-danger py-2" role="alert">A row in red sends out more than arrived. Correct it before saving.</div>
+
+                <div t-if="!visibleWarehouses.length" class="alert alert-info py-2" role="alert">Pick the destinations you are sending to, above.</div>
+
+                <div t-if="visibleWarehouses.length" class="di_matrix_scroll">
+                    <table class="di_matrix_table">
+                        <thead>
+                            <tr>
+                                <th class="di_matrix_sticky di_matrix_product">Product</th>
+                                <th class="text-end di_matrix_num">Received</th>
+                                <th class="text-end di_matrix_num">Remaining</th>
+                                <th t-foreach="visibleWarehouses" t-as="warehouse"
+                                    t-key="warehouse.id"
+                                    class="di_matrix_wh"
+                                    t-att-title="warehouse.code">
+                                    <div t-esc="warehouse.name"/>
+                                    <!-- Fills this destination alone, down every
+                                         product listed, leaving the other columns
+                                         as they stand. -->
+                                    <input t-if="state.editable"
+                                           type="text" inputmode="decimal"
+                                           class="di_matrix_colfill"
+                                           placeholder="Qty"
+                                           title="Write a quantity here and press Enter to put it on this destination for every product listed."
+                                           t-on-keydown="(ev) => this.onColumnFillKeydown(warehouse.id, ev)"
+                                           t-on-change="(ev) => this.onColumnFillChange(warehouse.id, ev)"/>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="visibleLines" t-as="line" t-key="line.id"
+                                t-att-class="isOver(line) ? 'di_matrix_over' : ''">
+                                <td class="di_matrix_sticky di_matrix_product">
+                                    <t t-esc="line.name"/>
+                                </td>
+                                <td class="text-end di_matrix_num">
+                                    <t t-esc="format(line.received)"/>
+                                </td>
+                                <td class="text-end di_matrix_num"
+                                    t-att-class="remaining(line) &lt; 0 ? 'text-danger fw-bold' : (remaining(line) ? 'text-warning' : 'text-muted')">
+                                    <t t-esc="format(remaining(line))"/>
+                                </td>
+                                <td t-foreach="visibleWarehouses" t-as="warehouse"
+                                    t-key="warehouse.id" class="p-0 di_matrix_cell">
+                                    <input type="text" inputmode="decimal"
+                                           class="di_matrix_input"
+                                           t-att-readonly="!state.editable"
+                                           t-att-value="cellDisplay(line.id, warehouse.id)"
+                                           t-on-change="(ev) => this.onCellChange(line.id, warehouse.id, ev)"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr class="fw-bold">
+                                <td class="di_matrix_sticky di_matrix_product">Total</td>
+                                <td class="text-end di_matrix_num">
+                                    <t t-esc="format(totalReceived)"/>
+                                </td>
+                                <td class="text-end di_matrix_num">
+                                    <t t-esc="format(totalReceived - totalAllocated)"/>
+                                </td>
+                                <td t-foreach="visibleWarehouses" t-as="warehouse"
+                                    t-key="warehouse.id" class="text-center di_matrix_cell">
+                                    <t t-esc="totalDisplay(warehouse.id)"/>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div class="text-muted small mt-2">Empty cells send nothing. Whatever you leave undistributed stays at the arrival warehouse, which is normal and does not block the document.</div>
+            </t>
+        </div>
+    </t>
+
+</templates>

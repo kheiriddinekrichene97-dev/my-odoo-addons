@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_pos_order_line_price_change_list" model="ir.ui.view">
+        <field name="name">pos.order.line.price.change.list</field>
+        <field name="model">pos.order.line</field>
+        <field name="arch" type="xml">
+            <list string="Price Changes" create="0" edit="0" delete="0">
+                <field name="create_date" string="Date"/>
+                <field name="di_config_id"/>
+                <field name="order_id"/>
+                <field name="product_id"/>
+                <field name="di_original_price_unit"/>
+                <field name="price_unit" string="New Price"/>
+                <field name="di_original_discount" optional="hide"/>
+                <field name="discount" string="Discount (%)"/>
+                <field name="di_price_changed_by_id"/>
+                <field name="di_price_note"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- point_of_sale ships no search view for pos.order.line. Odoo 19
+         rejects attributes on a search-view <group>, so it stays bare. -->
+    <record id="view_pos_order_line_price_change_search" model="ir.ui.view">
+        <field name="name">pos.order.line.price.change.search</field>
+        <field name="model">pos.order.line</field>
+        <field name="arch" type="xml">
+            <search string="Price Changes">
+                <field name="di_config_id"/>
+                <field name="di_price_changed_by_id"/>
+                <field name="product_id"/>
+                <field name="order_id"/>
+                <field name="di_price_note"/>
+                <group>
+                    <filter string="Point of Sale" name="di_group_config" context="{'group_by': 'di_config_id'}"/>
+                    <filter string="Changed By" name="di_group_changed_by" context="{'group_by': 'di_price_changed_by_id'}"/>
+                    <filter string="Day" name="di_group_day" context="{'group_by': 'create_date:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_di_price_changes" model="ir.actions.act_window">
+        <field name="name">Price Changes</field>
+        <field name="res_model">pos.order.line</field>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_pos_order_line_price_change_list"/>
+        <field name="search_view_id" ref="view_pos_order_line_price_change_search"/>
+        <field name="domain">[('di_price_note', '!=', False)]</field>
+        <field name="context">{'search_default_di_group_config': 1}</field>
+    </record>
+
+    <menuitem id="menu_di_price_changes"
+              parent="point_of_sale.menu_point_of_sale"
+              action="action_di_price_changes"
+              sequence="7"
+              groups="point_of_sale.group_pos_manager"/>
+</odoo>

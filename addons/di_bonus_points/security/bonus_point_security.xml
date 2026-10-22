@@ -1,0 +1,35 @@
+<odoo>
+    <data noupdate="0">
+
+        <record id="bonus_point_settings_company_rule" model="ir.rule">
+            <field name="name">Bonus Point Settings: multi-company</field>
+            <field name="model_id" ref="model_bonus_point_settings"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="bonus_point_bracket_company_rule" model="ir.rule">
+            <field name="name">Bonus Point Bracket: multi-company</field>
+            <field name="model_id" ref="model_bonus_point_bracket"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="bonus_point_category_rule_company_rule" model="ir.rule">
+            <field name="name">Bonus Point Category Rule: multi-company</field>
+            <field name="model_id" ref="model_bonus_point_category_rule"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="bonus_point_batch_company_rule" model="ir.rule">
+            <field name="name">Bonus Point Batch: multi-company</field>
+            <field name="model_id" ref="model_bonus_point_batch"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="bonus_point_movement_company_rule" model="ir.rule">
+            <field name="name">Bonus Point Movement: multi-company</field>
+            <field name="model_id" ref="model_bonus_point_movement"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        </record>
+
+    </data>
+</odoo>

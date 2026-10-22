@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="di_bonus_points.ProductCard" t-inherit="point_of_sale.ProductCard" t-inherit-mode="extension">
+        <xpath expr="//article" position="inside">
+            <span t-if="this.isBonusPointsEligible"
+                  class="o_bonus_points_badge position-absolute top-0 start-0 mt-1 ms-1 rounded-circle text-bg-warning d-flex align-items-center justify-content-center"
+                  style="width: 22px; height: 22px; font-size: 0.75rem;"
+                  title="Eligible for Bonus Points">
+                <i class="fa fa-gift" role="img" aria-label="Bonus Points" />
+            </span>
+        </xpath>
+    </t>
+</templates>

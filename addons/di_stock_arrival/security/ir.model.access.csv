@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_di_stock_arrival_user,di.stock.arrival.user,model_di_stock_arrival,group_di_arrival_user,1,1,1,0
+access_di_stock_arrival_manager,di.stock.arrival.manager,model_di_stock_arrival,group_di_arrival_manager,1,1,1,1
+access_di_stock_arrival_line_user,di.stock.arrival.line.user,model_di_stock_arrival_line,group_di_arrival_user,1,1,1,1
+access_di_stock_arrival_line_manager,di.stock.arrival.line.manager,model_di_stock_arrival_line,group_di_arrival_manager,1,1,1,1
+access_di_stock_arrival_allocation_user,di.stock.arrival.allocation.user,model_di_stock_arrival_allocation,group_di_arrival_user,1,1,1,1
+access_di_stock_arrival_allocation_manager,di.stock.arrival.allocation.manager,model_di_stock_arrival_allocation,group_di_arrival_manager,1,1,1,1
+access_di_stock_arrival_import,di.stock.arrival.import,model_di_stock_arrival_import,group_di_arrival_user,1,1,1,1
+access_di_stock_arrival_divide,di.stock.arrival.divide,model_di_stock_arrival_divide,group_di_arrival_user,1,1,1,1

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="di_stock_locations.ColorSizeMatrix">
+        <div class="di_csm">
+            <div class="di_csm_titlebar d-flex align-items-center gap-2">
+                <span class="di_csm_titletext" t-if="state.product">
+                    <t t-esc="titlePrefix"/>
+                    <span t-if="state.product.code" t-esc="state.product.code"/>
+                    <span t-if="state.product.code"> - </span>
+                    <span t-esc="state.product.name"/>
+                </span>
+                <span class="flex-grow-1"/>
+                <button type="button"
+                        class="btn btn-sm di_csm_instock_btn"
+                        t-att-class="state.onlyInStock ? 'active' : ''"
+                        t-att-aria-pressed="state.onlyInStock ? 'true' : 'false'"
+                        t-att-title="onlyInStockLabel"
+                        t-on-click="toggleOnlyInStock">
+                    <i class="fa fa-filter me-1"/>
+                    <t t-esc="onlyInStockLabel"/>
+                </button>
+                <select class="form-select form-select-sm di_csm_filiale"
+                        t-if="state.warehouses.length"
+                        t-att-aria-label="warehouseFilterLabel"
+                        t-on-change="onWarehouseChange">
+                    <option value="" t-esc="allWarehousesLabel"/>
+                    <option t-foreach="state.warehouses" t-as="warehouse" t-key="warehouse.id"
+                            t-att-value="warehouse.id" t-esc="warehouse.name"/>
+                </select>
+                <button type="button" class="di_csm_collapse_btn"
+                        t-att-title="collapseLabel"
+                        t-att-aria-label="collapseLabel"
+                        t-on-click="toggleCollapsed">
+                    <i t-att-class="state.collapsed ? 'fa fa-chevron-down' : 'fa fa-chevron-up'"/>
+                </button>
+            </div>
+
+            <t t-if="!state.collapsed">
+                <div t-if="state.loading" class="di_csm_status" t-esc="loadingLabel"/>
+
+                <div t-elif="!state.colours.length" class="di_csm_status" t-esc="emptyLabel"/>
+
+                <div t-else="" class="di_csm_scroll">
+                    <table class="di_csm_table">
+                        <thead>
+                            <tr>
+                                <th class="di_csm_sticky di_csm_row_label" t-esc="state.colourLabel"/>
+                                <th t-foreach="state.sizes" t-as="size" t-key="size"
+                                    class="text-end" t-esc="size"/>
+                                <th class="text-end di_csm_total_col" t-esc="totalLabel"/>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="state.colours" t-as="colour" t-key="colour">
+                                <tr class="di_csm_colour_row">
+                                    <td class="di_csm_sticky di_csm_row_label" t-esc="colour"/>
+                                    <td t-foreach="state.sizes" t-as="size" t-key="size"
+                                        class="text-end" t-esc="colourCell(colour, size)"/>
+                                    <td class="text-end di_csm_total_col"
+                                        t-esc="colourTotal(colour)"/>
+                                </tr>
+                                <tr t-foreach="visibleRows(colour)" t-as="row"
+                                    t-key="row.warehouse"
+                                    class="di_csm_location_row"
+                                    t-att-class="isEmptyRow(row) ? 'di_csm_empty' : ''">
+                                    <td class="di_csm_sticky di_csm_row_label di_csm_location_label"
+                                        t-esc="row.warehouse"/>
+                                    <td t-foreach="state.sizes" t-as="size" t-key="size"
+                                        class="text-end" t-esc="rowCell(row, size)"/>
+                                    <td class="text-end di_csm_total_col"
+                                        t-esc="format(row.total)"/>
+                                </tr>
+                            </t>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td class="di_csm_sticky di_csm_row_label" t-esc="totalLabel"/>
+                                <td t-foreach="state.sizes" t-as="size" t-key="size"
+                                    class="text-end" t-esc="sizeColumnTotal(size)"/>
+                                <td class="text-end di_csm_total_col" t-esc="grandTotal"/>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </t>
+        </div>
+    </t>
+
+</templates>

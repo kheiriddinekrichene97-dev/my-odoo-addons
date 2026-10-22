@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="odoo_agent_ui.FailureCard">
+        <div t-attf-class="o_agent_failure o_agent_failure_{{ failure.kind }}" role="alert"
+             t-att-data-failure-kind="failure.kind" t-att-data-failure-code="failure.code">
+            <div class="o_agent_failure_heading">
+                <i t-if="failure.kind === 'permission'" class="fa fa-lock" aria-hidden="true"/>
+                <i t-elif="failure.kind === 'policy_blocked'" class="fa fa-ban" aria-hidden="true"/>
+                <i t-else="" class="fa fa-exclamation-triangle" aria-hidden="true"/>
+                <strong t-esc="failure.title"/>
+                <span class="o_agent_failure_kind">
+                    <t t-if="failure.kind === 'permission'">Permission</t>
+                    <t t-elif="failure.kind === 'policy_blocked'">Blocked by policy</t>
+                    <t t-else="">Temporary problem</t>
+                </span>
+            </div>
+            <p class="mb-1" t-esc="failure.detail"/>
+            <p class="o_agent_failure_safe mb-0">No Odoo action was performed.</p>
+        </div>
+    </t>
+
+    <t t-name="odoo_agent_ui.AgentApp">
+        <div class="o_agent_ui o_action" aria-labelledby="o_agent_title">
+            <header class="o_agent_header">
+                <h1 id="o_agent_title" class="o_agent_title">Autonomous Agent</h1>
+                <span class="o_agent_badge o_agent_badge_readonly">Read-only</span>
+                <span t-if="state.bootstrap and state.bootstrap.demo_mode"
+                      class="o_agent_badge o_agent_badge_demo">Demo data</span>
+                <span t-if="state.bootstrap" class="o_agent_connection" role="status">
+                    <t t-if="state.bootstrap.control_plane === 'connected'">Agent link configured</t>
+                    <t t-else="">Agent not connected</t>
+                </span>
+            </header>
+
+            <div t-if="state.bootstrap and state.bootstrap.demo_mode" class="o_agent_demo_notice" role="note">
+                <strong>Demo mode.</strong>
+                Everything shown in the demo workflow is invented demonstration data, not records from
+                this database. Demo mode is on because an operator set <code>ODOO_AGENT_UI_DEMO=1</code>
+                and marked this database as neutralized; it must never be switched on for a
+                production database.
+            </div>
+
+            <div t-if="state.phase === 'loading'" class="o_agent_loading" role="status">
+                <i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"/>
+                <span>Loading the workflows available to you…</span>
+            </div>
+
+            <div t-elif="state.phase === 'bootstrap-failed'" class="o_agent_bootstrap_failed">
+                <t t-call="odoo_agent_ui.FailureCard">
+                    <t t-set="failure" t-value="state.bootstrapFailure"/>
+                </t>
+                <button t-if="state.bootstrapFailure.retryable" type="button"
+                        class="btn btn-secondary mt-2" t-on-click="() => this.loadBootstrap()">Try again</button>
+            </div>
+
+            <div t-else="" class="o_agent_layout">
+                <section class="o_agent_main" aria-label="Chat">
+                    <div class="o_agent_toolbar">
+                        <label for="o_agent_workflow" class="o_agent_label">Workflow</label>
+                        <select id="o_agent_workflow" class="form-select o_agent_workflow"
+                                t-model="state.workflowId" t-att-disabled="state.running"
+                                aria-describedby="o_agent_workflow_help">
+                            <option value="" disabled="disabled">Choose a workflow</option>
+                            <t t-foreach="groups" t-as="group" t-key="group.name">
+                                <optgroup t-att-label="group.name">
+                                    <t t-foreach="group.workflows" t-as="workflow" t-key="workflow.id">
+                                        <option t-att-value="workflow.id"
+                                                t-att-disabled="workflow.availability !== 'available'"
+                                                t-esc="optionLabel(workflow)"/>
+                                    </t>
+                                </optgroup>
+                            </t>
+                        </select>
+                        <p id="o_agent_workflow_help" class="o_agent_help">
+                            <t t-if="selectedWorkflow and selectedWorkflow.demo">Demo workflow: answers use invented data.</t>
+                            <t t-elif="selectedWorkflow">Selecting a workflow grants no access; the server decides what runs.</t>
+                            <t t-else="">No workflow is available yet: the agent is not connected to this database.</t>
+                        </p>
+                    </div>
+
+                    <div class="o_agent_conversation" t-ref="log" role="log" aria-live="polite" aria-label="Conversation">
+                        <div t-if="!state.turns.length" class="o_agent_empty">
+                            <p class="o_agent_empty_title">Ask a read-only question about your Odoo data.</p>
+                            <div t-if="state.bootstrap.demo_mode and selectedWorkflow and selectedWorkflow.demo"
+                                 class="o_agent_suggestions" role="group" aria-label="Demo questions">
+                                <t t-foreach="demoSuggestions" t-as="suggestion" t-key="suggestion">
+                                    <button type="button" class="btn btn-light o_agent_suggestion"
+                                            t-att-disabled="state.running"
+                                            t-on-click="() => this.useSuggestion(suggestion)"
+                                            t-esc="suggestion"/>
+                                </t>
+                            </div>
+                        </div>
+
+                        <t t-foreach="state.turns" t-as="turn" t-key="turn.id">
+                            <div t-if="turn.role === 'user'" class="o_agent_turn o_agent_turn_user">
+                                <span class="visually-hidden">You said:</span>
+                                <p class="mb-0" t-esc="turn.text"/>
+                            </div>
+                            <div t-else="" class="o_agent_turn o_agent_turn_agent"
+                                 t-att-aria-busy="turn.waiting or turn.run.status === 'running' ? 'true' : 'false'">
+                                <span class="visually-hidden">Agent:</span>
+                                <span t-if="turn.run.demo" class="o_agent_badge o_agent_badge_demo">Demo data</span>
+                                <p t-if="turn.waiting" class="o_agent_waiting mb-0">
+                                    <i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"/>
+                                    Contacting the server…
+                                </p>
+                                <ol t-if="turn.run.steps.length" class="o_agent_steps" aria-label="Steps">
+                                    <li t-foreach="turn.run.steps" t-as="step" t-key="step.id"
+                                        t-attf-class="o_agent_step o_agent_step_{{ step.state }}">
+                                        <i t-if="step.state === 'done'" class="fa fa-check" aria-hidden="true"/>
+                                        <i t-elif="step.state === 'running'" class="fa fa-circle-o-notch fa-spin" aria-hidden="true"/>
+                                        <i t-else="" class="fa fa-minus-circle" aria-hidden="true"/>
+                                        <span t-esc="step.label"/>
+                                        <span class="visually-hidden" t-esc="', ' + stepStateLabel(step.state)"/>
+                                    </li>
+                                </ol>
+                                <p t-if="turn.run.message" class="o_agent_message" t-esc="turn.run.message"/>
+                                <div t-if="turn.run.records.length" class="o_agent_records">
+                                    <article t-foreach="turn.run.records" t-as="record" t-key="record.key"
+                                             class="o_agent_record" t-att-aria-label="record.displayName">
+                                        <header class="o_agent_record_header">
+                                            <h2 class="o_agent_record_name" t-esc="record.displayName"/>
+                                            <span t-if="record.demo" class="o_agent_badge o_agent_badge_demo">Demo record</span>
+                                        </header>
+                                        <dl class="o_agent_record_fields">
+                                            <t t-foreach="record.fields" t-as="field" t-key="field.key">
+                                                <dt t-esc="field.label"/>
+                                                <dd t-esc="field.value"/>
+                                            </t>
+                                        </dl>
+                                        <p class="o_agent_record_citation mb-0">
+                                            <span t-esc="record.model"/> · #<span t-esc="record.recordId"/>
+                                        </p>
+                                        <button t-if="!record.demo" type="button" class="btn btn-link p-0"
+                                                t-on-click="() => this.openRecord(record)">Open in Odoo</button>
+                                    </article>
+                                </div>
+                                <t t-if="turn.run.failure">
+                                    <t t-call="odoo_agent_ui.FailureCard">
+                                        <t t-set="failure" t-value="turn.run.failure"/>
+                                    </t>
+                                    <button t-if="canRetry(turn)" type="button" class="btn btn-secondary mt-2"
+                                            t-on-click="() => this.retry(turn)">
+                                        Retry (attempt <t t-esc="turn.request.attempt + 1"/> of 3)
+                                    </button>
+                                </t>
+                            </div>
+                        </t>
+                    </div>
+
+                    <form class="o_agent_composer" t-on-submit="onSubmit">
+                        <label for="o_agent_message" class="visually-hidden">Message</label>
+                        <textarea id="o_agent_message" class="form-control o_agent_input" rows="2"
+                                  t-model="state.draft" t-att-maxlength="maxMessageLength"
+                                  t-att-disabled="!selectedWorkflow or selectedWorkflow.availability !== 'available'"
+                                  placeholder="Ask a read-only question… (Ctrl+Enter to send)"
+                                  t-on-keydown="onKeydown"/>
+                        <button type="submit" class="btn btn-primary o_agent_send" t-att-disabled="!canSend">
+                            <i class="fa fa-paper-plane" aria-hidden="true"/>
+                            <span>Send</span>
+                        </button>
+                    </form>
+                </section>
+
+                <aside class="o_agent_side" aria-label="Workflow status">
+                    <h2 class="o_agent_side_title">Workflow status</h2>
+                    <t t-set="current" t-value="latestRun"/>
+                    <p t-if="!current" class="o_agent_help">No run yet.</p>
+                    <t t-else="">
+                        <p class="o_agent_side_state" role="status">
+                            <t t-if="current.waiting or current.run.status === 'running'">Running</t>
+                            <t t-elif="current.run.status === 'completed'">Completed</t>
+                            <t t-else="">Stopped: <t t-esc="current.run.failure.title"/></t>
+                        </p>
+                        <p t-if="current.run.runId" class="o_agent_help mb-1">Run <code t-esc="current.run.runId"/></p>
+                        <p class="o_agent_help">Attempt <t t-esc="current.request.attempt"/> of 3 · no Odoo writes</p>
+                    </t>
+                </aside>
+            </div>
+        </div>
+    </t>
+
+</templates>

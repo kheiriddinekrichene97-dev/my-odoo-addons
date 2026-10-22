@@ -1,0 +1,25 @@
+// Headings a worker drags to rearrange a replenishment grid's columns - see
+// column_order.js. Shared by the stock comparison and di_pos_replenish's
+// sales grid. The marker is an inset edge on the side the column will land,
+// drawn with box-shadow because the cell's own borders are the grid's rules
+// and must not move.
+.di_matrix_table thead th.di_col_draggable {
+    cursor: grab;
+    user-select: none;
+
+    &:active {
+        cursor: grabbing;
+    }
+}
+
+.di_matrix_table thead th.di_col_dragging {
+    opacity: 0.5;
+}
+
+.di_matrix_table thead th.di_col_drop_before {
+    box-shadow: inset 3px 0 0 0 var(--di-focus);
+}
+
+.di_matrix_table thead th.di_col_drop_after {
+    box-shadow: inset -3px 0 0 0 var(--di-focus);
+}

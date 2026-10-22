@@ -1,0 +1,13 @@
+<odoo>
+
+    <!-- Under the Riassortimento root di_stock_replenish already puts in
+         Inventory: the two screens answer the same question from opposite
+         ends - what a shop has run out of, and what a shop has just sold -
+         and the same workers use both. -->
+    <menuitem id="menu_di_pos_replenish_sales"
+              name="Sales Replenishment"
+              parent="di_stock_replenish.menu_di_replenish_root"
+              action="di_pos_replenish_action"
+              sequence="20"/>
+
+</odoo>

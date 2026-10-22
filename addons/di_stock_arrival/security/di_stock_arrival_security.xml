@@ -1,0 +1,49 @@
+<odoo>
+    <data noupdate="0">
+
+        <!-- Odoo 19 replaced res.groups.category_id with a res.groups.privilege
+             record, which itself points at an ir.module.category. A privilege
+             renders as one selector on the user form, so this module gets its
+             own rather than joining stock's "Inventory" privilege, where its
+             groups would become alternatives to Inventory User/Administrator. -->
+        <record id="res_groups_privilege_di_arrival" model="res.groups.privilege">
+            <field name="name">Stock Arrivals</field>
+            <field name="category_id" ref="base.module_category_supply_chain"/>
+            <field name="description">Recording incoming goods and dividing them across warehouses.</field>
+            <field name="sequence">110</field>
+        </record>
+
+        <record id="group_di_arrival_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="privilege_id" ref="res_groups_privilege_di_arrival"/>
+            <field name="implied_ids" eval="[(4, ref('stock.group_stock_user'))]"/>
+            <field name="comment">Record arrivals, import lines, divide across warehouses and validate. Workers validate their own arrivals; no manager counter-signature is required.</field>
+        </record>
+
+        <record id="group_di_arrival_manager" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="privilege_id" ref="res_groups_privilege_di_arrival"/>
+            <field name="implied_ids" eval="[(4, ref('group_di_arrival_user'))]"/>
+            <field name="comment">Everything a user can do, plus deleting draft or cancelled arrivals.</field>
+        </record>
+
+        <record id="di_arrival_company_rule" model="ir.rule">
+            <field name="name">Stock Arrival: multi-company</field>
+            <field name="model_id" ref="model_di_stock_arrival"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="di_arrival_line_company_rule" model="ir.rule">
+            <field name="name">Stock Arrival Line: multi-company</field>
+            <field name="model_id" ref="model_di_stock_arrival_line"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="di_arrival_allocation_company_rule" model="ir.rule">
+            <field name="name">Stock Arrival Allocation: multi-company</field>
+            <field name="model_id" ref="model_di_stock_arrival_allocation"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        </record>
+
+    </data>
+</odoo>

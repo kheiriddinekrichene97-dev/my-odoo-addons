@@ -1,0 +1,11 @@
+<odoo>
+    <data noupdate="1">
+        <record id="seq_di_stock_replenish" model="ir.sequence">
+            <field name="name">Stock Replenishment</field>
+            <field name="code">di.stock.replenish</field>
+            <field name="prefix">RIA/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

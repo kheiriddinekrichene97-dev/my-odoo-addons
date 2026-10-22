@@ -1,0 +1,38 @@
+<odoo>
+    <record id="bonus_point_settings_view_form" model="ir.ui.view">
+        <field name="name">bonus.point.settings.form</field>
+        <field name="model">bonus.point.settings</field>
+        <field name="arch" type="xml">
+            <form string="Bonus Points Settings">
+                <sheet>
+                    <group>
+                        <field name="company_id" groups="base.group_multi_company"/>
+                        <field name="point_value"/>
+                        <field name="earn_divisor"/>
+                        <field name="expiry_days"/>
+                        <field name="promo_pricelist_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="bonus_point_settings_view_list" model="ir.ui.view">
+        <field name="name">bonus.point.settings.list</field>
+        <field name="model">bonus.point.settings</field>
+        <field name="arch" type="xml">
+            <list string="Bonus Points Settings">
+                <field name="company_id"/>
+                <field name="point_value"/>
+                <field name="earn_divisor"/>
+                <field name="expiry_days"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="bonus_point_settings_action" model="ir.actions.act_window">
+        <field name="name">Bonus Points Settings</field>
+        <field name="res_model">bonus.point.settings</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

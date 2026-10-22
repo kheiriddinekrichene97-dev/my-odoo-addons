@@ -1,0 +1,53 @@
+<odoo>
+    <record id="bonus_point_bracket_view_list" model="ir.ui.view">
+        <field name="name">bonus.point.bracket.list</field>
+        <field name="model">bonus.point.bracket</field>
+        <field name="arch" type="xml">
+            <list string="Bonus Points Brackets" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="price_from"/>
+                <field name="price_from_inclusive"/>
+                <field name="price_to" invisible="no_upper_limit"/>
+                <field name="price_to_inclusive" invisible="no_upper_limit"/>
+                <field name="no_upper_limit"/>
+                <field name="points"/>
+                <field name="active"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="bonus_point_bracket_view_form" model="ir.ui.view">
+        <field name="name">bonus.point.bracket.form</field>
+        <field name="model">bonus.point.bracket</field>
+        <field name="arch" type="xml">
+            <form string="Bonus Points Bracket">
+                <sheet>
+                    <group>
+                        <field name="company_id" groups="base.group_multi_company"/>
+                        <field name="sequence"/>
+                        <field name="price_from"/>
+                        <field name="price_from_inclusive"/>
+                        <field name="no_upper_limit"/>
+                        <field name="price_to" invisible="no_upper_limit"/>
+                        <field name="price_to_inclusive" invisible="no_upper_limit"/>
+                        <field name="points"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="bonus_point_bracket_action" model="ir.actions.act_window">
+        <field name="name">Price Brackets</field>
+        <field name="res_model">bonus.point.bracket</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Define the price → points table used to calculate bonus points on eligible items.
+            </p>
+        </field>
+    </record>
+</odoo>

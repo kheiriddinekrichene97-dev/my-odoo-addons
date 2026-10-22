@@ -1,0 +1,53 @@
+<odoo>
+    <!-- web_icon is what the app launcher tile actually reads: ir.ui.menu
+         stores the image in web_icon_data, computed from this "module,path"
+         value when the menu record is written (i.e. on module upgrade).
+         Shipping static/description/icon.png alone only changes the Apps
+         list card, not the tile. -->
+    <menuitem id="menu_bonus_point_root"
+              name="Bonus Points"
+              web_icon="di_bonus_points,static/description/icon.png"
+              sequence="70"
+              groups="point_of_sale.group_pos_user"/>
+
+    <menuitem id="menu_bonus_point_reporting"
+              name="Reporting"
+              parent="menu_bonus_point_root"
+              sequence="10"/>
+    <menuitem id="menu_bonus_point_batch"
+              name="Batches"
+              parent="menu_bonus_point_reporting"
+              action="bonus_point_batch_action"
+              sequence="10"/>
+    <menuitem id="menu_bonus_point_movement"
+              name="Movements"
+              parent="menu_bonus_point_reporting"
+              action="bonus_point_movement_action"
+              sequence="20"/>
+    <menuitem id="menu_bonus_point_eligible_products"
+              name="Eligible Products"
+              parent="menu_bonus_point_reporting"
+              action="product_template_action_bonus_eligible"
+              sequence="30"/>
+
+    <menuitem id="menu_bonus_point_configuration"
+              name="Configuration"
+              parent="menu_bonus_point_root"
+              groups="point_of_sale.group_pos_manager"
+              sequence="20"/>
+    <menuitem id="menu_bonus_point_bracket"
+              name="Price Brackets"
+              parent="menu_bonus_point_configuration"
+              action="bonus_point_bracket_action"
+              sequence="10"/>
+    <menuitem id="menu_bonus_point_category_rule"
+              name="Category Rules"
+              parent="menu_bonus_point_configuration"
+              action="bonus_point_category_rule_action"
+              sequence="20"/>
+    <menuitem id="menu_bonus_point_settings"
+              name="Settings"
+              parent="menu_bonus_point_configuration"
+              action="bonus_point_settings_action"
+              sequence="30"/>
+</odoo>

@@ -1,0 +1,16 @@
+// A form whose grid is the whole screen: <form class="di_full_width_form">.
+// Used by the stock comparison here and by di_pos_replenish's sales run,
+// both of which drop the chatter for the width.
+//
+// Odoo caps the renderer and the sheet ($o-form-renderer-max-width,
+// $o-form-view-sheet-max-width) and pins them left, so without the chatter a
+// blank strip runs down the right. The arch's class lands on the view root
+// beside .o_form_view (computeViewClassName in web/static/src/views/utils.js),
+// so this reaches only the forms that ask for it, and one class more than
+// core's own rules is enough to win.
+.o_form_view.di_full_width_form {
+    .o_form_renderer,
+    .o_form_sheet_bg {
+        max-width: none;
+    }
+}

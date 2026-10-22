@@ -1,0 +1,3 @@
+﻿codice;nome;colore;taglia;quantita;prezzo_acquisto;prezzo_dettaglio;prezzo_promo;prezzo_ingrosso;categoria;marca;stagione;reparto;posizionamento
+ESEMPIO-001;Felpa con cappuccio;Nero;M;10;12,50;39,90;29,90;19,90;Abbigliamento;Marca Esempio;AI 25/26;Uomo;Medio
+ESEMPIO-002;Felpa con cappuccio;Nero;L;6;12,50;39,90;29,90;19,90;Abbigliamento;Marca Esempio;AI 25/26;Uomo;Medio

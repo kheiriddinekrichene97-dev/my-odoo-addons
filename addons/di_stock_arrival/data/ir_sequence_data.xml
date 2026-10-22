@@ -1,0 +1,15 @@
+<odoo>
+    <data noupdate="1">
+
+        <record id="seq_di_stock_arrival" model="ir.sequence">
+            <field name="name">Stock Arrival</field>
+            <field name="code">di.stock.arrival</field>
+            <field name="prefix">ARR/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+            <field name="implementation">standard</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

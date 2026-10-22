@@ -1,0 +1,78 @@
+<odoo>
+
+    <record id="di_stock_arrival_import_view_form" model="ir.ui.view">
+        <field name="name">di.stock.arrival.import.form</field>
+        <field name="model">di.stock.arrival.import</field>
+        <field name="arch" type="xml">
+            <form string="Import Arrival Lines">
+                <field name="arrival_id" invisible="1"/>
+                <group>
+                    <field name="file" filename="filename" widget="binary"/>
+                    <field name="filename" invisible="1"/>
+                    <field name="is_csv" invisible="1"/>
+                </group>
+                <group>
+                    <group string="File Format" invisible="not is_csv">
+                        <field name="delimiter"/>
+                        <field name="encoding"/>
+                    </group>
+                    <group string="Products">
+                        <field name="create_missing_products"/>
+                        <field name="update_prices"/>
+                    </group>
+                </group>
+                <div class="alert alert-info" role="alert">
+                    <p class="mb-1"><strong>Required columns:</strong>
+                        <code>codice</code> and <code>quantita</code>.</p>
+                    <p class="mb-1"><strong>Prices</strong> (the four ESC listini):
+                        <code>prezzo_acquisto</code> → cost,
+                        <code>prezzo_dettaglio</code> → sale price + Dettaglio,
+                        <code>prezzo_promo</code> → Promo + Promo Franchising,
+                        <code>prezzo_ingrosso</code> → Ingrosso.</p>
+                    <p class="mb-1"><strong>Other optional columns:</strong>
+                        <code>nome</code>, <code>colore</code>, <code>taglia</code>,
+                        <code>categoria</code>, <code>marca</code>, <code>stagione</code>,
+                        <code>reparto</code>, <code>posizionamento</code>,
+                        <code>barcode</code>.</p>
+                    <p class="mb-1">You can also add one column per destination
+                        warehouse, named with its short code (<code>PTREM</code>,
+                        <code>PTF</code>, <code>MTREM</code>...), to pre-fill the
+                        distribution straight from the file. Barcodes are generated
+                        by Odoo, so leave that column out unless the product already
+                        has one.</p>
+                    <p class="mb-0"><strong>Accepted files:</strong>
+                        <code>.csv</code> and <code>.xlsx</code>. Only the first
+                        sheet of a workbook is read, and its first row must be the
+                        header.</p>
+                </div>
+                <footer>
+                    <button name="action_import" type="object" string="Import"
+                            class="btn-primary" data-hotkey="q"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"
+                            data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Shown after an import that landed on variants the catalogue already
+         held: what they are and where they are in stock, as a grid laid out
+         like the Distribution tab. Information, not a question - the lines
+         are already imported - so the only button closes it. The sentence
+         above the grid is built in Python with the grid, where _() translates
+         it whole, instead of being split around inline fields here. -->
+    <record id="di_stock_arrival_import_view_existing" model="ir.ui.view">
+        <field name="name">di.stock.arrival.import.existing</field>
+        <field name="model">di.stock.arrival.import</field>
+        <field name="priority">20</field>
+        <field name="arch" type="xml">
+            <form string="Already in the Catalogue" create="false" edit="false">
+                <field name="existing_html" nolabel="1" class="w-100"/>
+                <footer>
+                    <button string="OK" class="btn-primary" special="cancel" data-hotkey="q"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_di_price_change" model="ir.ui.view">
+        <field name="name">res.config.settings.form.inherit.di.price.change</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="point_of_sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <!-- Beside Odoo's own Price Control: that one decides WHO may
+                 change a price, this one WHETHER anyone may at this till. -->
+            <xpath expr="//setting[@id='price_control']" position="after">
+                <setting id="di_allow_price_change" string="Allow Price Changes"
+                         help="Cashiers and administrators may change a price or a discount at this till; each change asks for a reason.">
+                    <field name="pos_di_allow_price_change"/>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+</odoo>

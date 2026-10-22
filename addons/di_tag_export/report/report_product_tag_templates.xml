@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- The stylesheet, written once per document rather than once per label.
+         Every wrapper Odoo puts around the report is neutralised: the label
+         is positioned absolutely inside a fixed 70x38mm box so no inherited
+         margin or padding can shift it or push content off the page. -->
+    <template id="report_product_tag_style">
+        <style>
+            @page { margin: 0; size: 70mm 38mm; }
+            html, body, .article, .page, div.article {
+                margin: 0 !important; padding: 0 !important;
+                width: auto !important; background: #fff;
+            }
+            /* One card per page. Set on every card but the last of a
+               document, which would otherwise end on a blank page. */
+            .di_break { page-break-after: always; }
+
+            .di_tag_separator {
+                position: relative;
+                width: 70mm; height: 38mm;
+                box-sizing: border-box; overflow: hidden;
+                margin: 0; padding: 0;
+                font-family: Arial, Helvetica, sans-serif;
+                color: #000; background: #fff;
+            }
+            .di_tag_separator .frame {
+                position: absolute; left: 2mm; top: 2mm;
+                width: 66mm; height: 34mm;
+                box-sizing: border-box;
+                border: 1.2mm solid #000;
+            }
+            .di_tag_separator .arrow {
+                position: absolute; left: 0; top: 4.5mm; width: 70mm;
+                text-align: center; font-size: 9pt; letter-spacing: 0.2em;
+            }
+            .di_tag_separator .dest {
+                position: absolute; left: 4mm; top: 11mm; width: 62mm;
+                text-align: center; font-size: 17pt; font-weight: bold;
+                line-height: 1.1; word-wrap: break-word;
+            }
+            .di_tag_separator .count {
+                position: absolute; left: 0; top: 29mm; width: 70mm;
+                text-align: center; font-size: 8pt;
+            }
+
+            .di_tag {
+                position: relative;
+                width: 70mm; height: 38mm;
+                box-sizing: border-box; overflow: hidden;
+                margin: 0; padding: 0;
+                font-family: Arial, Helvetica, sans-serif;
+                color: #000; background: #fff;
+            }
+            .di_tag div { position: absolute; }
+            .di_tag .b { font-weight: bold; }
+
+            .di_tag .codice { left: 2.5mm; top: 1.6mm; font-size: 8.5pt; }
+            .di_tag .colore { left: 27mm;  top: 1.6mm; font-size: 8.5pt; }
+            .di_tag .mis-lbl { left: 46mm; top: 1.6mm; width: 19.5mm; text-align: center; font-size: 6.5pt; }
+            .di_tag .desc { left: 2.5mm; top: 6.2mm; width: 44mm; font-size: 8.5pt; line-height: 1.2; }
+            /* The size sits in a fixed 19.5mm box, so a long value such as
+               UNICA would wrap and print its last letter on a second line.
+               nowrap forbids the wrap and the mis-sm/mis-xs steps below
+               shrink the text until it fits; the fixed height keeps every
+               size vertically centred on the same band. */
+            .di_tag .mis-val { left: 46mm; top: 5mm; width: 19.5mm; height: 7mm; text-align: center; font-size: 18pt; line-height: 7mm; white-space: nowrap; }
+            .di_tag .mis-val.mis-sm { font-size: 14pt; }
+            .di_tag .mis-val.mis-xs { font-size: 10pt; }
+
+            .di_tag .was  { left: 2.5mm; top: 16.2mm; font-size: 13pt; text-decoration: line-through; white-space: nowrap; }
+            .di_tag .disc { left: 0;     top: 16.2mm; width: 66mm; text-align: center; font-size: 13pt; }
+            .di_tag .now  { left: 34mm;  top: 15.6mm; width: 31.5mm; text-align: right; font-size: 15pt; white-space: nowrap; }
+
+            .di_tag .bc { left: 2.5mm; top: 22.5mm; }
+            .di_tag .bcimg { width: 36mm; height: 9mm; display: block; }
+            .di_tag .bcnum { left: 2.5mm; top: 32.2mm; font-size: 8pt; letter-spacing: 0.6px; }
+
+            .di_tag .marca { left: 43mm; top: 22.4mm; font-size: 7.5pt; white-space: nowrap; }
+            .di_tag .g1 { left: 43mm; top: 26mm; font-size: 7.5pt; }
+            .di_tag .g2 { left: 43mm; top: 29.2mm; font-size: 7.5pt; }
+            .di_tag .g3 { left: 43mm; top: 32.4mm; font-size: 7.5pt; }
+            .di_tag .k2 { position: static; display: inline-block; width: 11mm; }
+        </style>
+    </template>
+
+    <template id="report_product_tag">
+        <t t-call="web.html_container">
+            <!-- ``sheets`` cuts the labels into a few large documents.
+                 basic_layout makes each one a single ``div.article``, which
+                 Odoo hands to wkhtmltopdf as one HTML file - one per label
+                 made thousands of files, each loading the whole report
+                 stylesheet, and a large arrival never came back. It also
+                 supplies the UTF-8 charset, so the euro sign renders. -->
+            <t t-foreach="sheets" t-as="sheet">
+                <t t-call="web.basic_layout">
+                    <t t-call="di_tag_export.report_product_tag_style"/>
+                    <!-- ``sheet`` carries one entry per label: a variant,
+                         repeated once per piece, or a separator card naming
+                         the shop whose pile starts here. -->
+                    <t t-foreach="sheet" t-as="entry">
+                        <t t-set="break_class" t-value="'' if entry_last else 'di_break'"/>
+                        <t t-if="entry.get('separator')">
+                            <!-- A blank card with the destination on it, same
+                                 paper as the labels: the printed stack is cut
+                                 at these, one pile per shop, without reading a
+                                 single tag. -->
+                            <div t-attf-class="page di_tag_separator #{break_class}">
+                                <div class="frame"/>
+                                <div class="arrow">&#9660; &#9660; &#9660;</div>
+                                <div class="dest" t-esc="entry['separator']"/>
+                                <div t-if="entry.get('count')" class="count">
+                                    <t t-esc="entry['count']"/> pz.
+                                </div>
+                            </div>
+                        </t>
+                        <t t-else="">
+                            <t t-set="tag" t-value="entry.get('tag') or entry['product']._get_tag_data()"/>
+                            <div t-attf-class="page di_tag #{break_class}">
+                                <div class="codice b" t-esc="tag['codice']"/>
+                                <div class="colore b" t-esc="tag['colore']"/>
+                                <div class="mis-lbl">Misura</div>
+                                <div class="desc b" t-esc="tag['descrizione']"/>
+                                <t t-set="misura" t-value="tag['misura'] or ''"/>
+                                <t t-set="mis_fit" t-value="len(misura) &gt; 5 and 'mis-xs' or (len(misura) &gt; 3 and 'mis-sm' or '')"/>
+                                <div t-attf-class="mis-val b #{mis_fit}" t-esc="misura"/>
+
+                                <t t-if="tag['discount'] &gt; 0">
+                                    <div class="was b">&#8364; <span t-esc="tag['prezzo']"/></div>
+                                    <div class="disc b" t-esc="tag['sconto']"/>
+                                </t>
+                                <div class="now b">&#8364; <span t-esc="tag['prezzo_scontato']"/></div>
+
+                                <div class="bc">
+                                    <img t-if="tag['barcode_image']" class="bcimg"
+                                         t-att-src="'data:image/png;base64,%s' % tag['barcode_image']"/>
+                                </div>
+                                <div class="bcnum" t-esc="tag['barcode']"/>
+
+                                <div class="marca b" t-esc="tag['marca']"/>
+                                <div class="g1 b"><span class="k2" t-esc="tag['stagione']"/><span t-esc="tag['reparto']"/></div>
+                                <div class="g2 b"><span class="k2" t-esc="tag['posizionamento']"/><span t-esc="tag['ingrosso']"/></div>
+                                <div class="g3 b" t-esc="tag['ba']"/>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

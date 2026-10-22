@@ -1,0 +1,16 @@
+<odoo>
+
+    <!-- Sits beside Arrivals: same workers, adjacent jobs. -->
+    <menuitem id="menu_di_replenish_root"
+              name="Replenishment"
+              parent="stock.menu_stock_root"
+              sequence="16"
+              groups="di_stock_arrival.group_di_arrival_user"/>
+
+    <menuitem id="menu_di_replenish_comparisons"
+              name="Comparisons"
+              parent="menu_di_replenish_root"
+              action="di_stock_replenish_action"
+              sequence="10"/>
+
+</odoo>

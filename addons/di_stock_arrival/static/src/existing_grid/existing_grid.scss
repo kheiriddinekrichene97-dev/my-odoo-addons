@@ -1,0 +1,113 @@
+// The grid in the dialog shown after an import: variants that were already
+// in the catalogue, warehouses across. Same colour rules as the Distribution
+// grid (see distribution_matrix.scss): text colour is never declared, the one
+// opaque background - the sticky header - comes from Odoo's SCSS variables
+// guarded with variable-exists, and every other tint is a translucent rgba
+// that reads over a light or a dark ground alike.
+
+$di-existing-surface: #fff;
+@if variable-exists(o-view-background-color) {
+    $di-existing-surface: $o-view-background-color;
+} @else if variable-exists(body-bg) {
+    $di-existing-surface: $body-bg;
+}
+
+// The Html field wraps the grid in its own widget div, which otherwise sizes
+// to its content and leaves a wide grid hanging off a narrow box.
+.o_field_html:has(.di_existing) {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0;
+}
+
+.di_existing {
+    --di-surface: #{$di-existing-surface};
+    --di-rule: rgba(127, 127, 127, 0.28);
+    --di-article-bg: rgba(127, 127, 127, 0.14);
+    --di-home-bg: rgba(255, 193, 7, 0.12);
+    --di-hover: rgba(127, 127, 127, 0.08);
+
+    max-height: 60vh;
+    overflow: auto;
+    border: 1px solid var(--di-rule);
+    border-radius: 4px;
+
+    // Cell rules sit inside the table so they outrank the html field's own
+    // readonly table styling.
+    .di_existing_table {
+        width: 100%;
+        margin: 0;
+        border-collapse: separate;
+        border-spacing: 0;
+        font-variant-numeric: tabular-nums;
+
+        th, td {
+            padding: 0.3rem 0.6rem;
+            border-bottom: 1px solid var(--di-rule);
+            white-space: nowrap;
+        }
+
+        thead th {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            background: var(--di-surface);
+            border-bottom-width: 2px;
+            font-weight: 600;
+            vertical-align: bottom;
+        }
+
+        // Warehouse names are long ("PV - MONTESILVANO"); let the heading wrap
+        // so the quantity columns stay narrow.
+        thead th.di_qty {
+            white-space: normal;
+            min-width: 4.5rem;
+            max-width: 7rem;
+            line-height: 1.15;
+        }
+
+        .di_qty {
+            text-align: center;
+        }
+
+        // The arrival's own warehouse, always the first column.
+        .di_home {
+            background: linear-gradient(var(--di-home-bg), var(--di-home-bg)), var(--di-surface);
+        }
+
+        .di_total {
+            font-weight: 600;
+            border-left: 1px solid var(--di-rule);
+        }
+
+        .di_empty,
+        .di_none {
+            opacity: 0.35;
+            font-weight: 400;
+        }
+
+        .di_barcode {
+            font-family: monospace;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+
+        tbody tr:not(.di_article):hover td {
+            background: var(--di-hover);
+        }
+
+        // One heading row per article, carrying its subtotals.
+        .di_article td {
+            background: var(--di-article-bg);
+            font-weight: 600;
+            padding-top: 0.45rem;
+            padding-bottom: 0.45rem;
+        }
+    }
+
+    .di_count {
+        margin-left: 0.5rem;
+        font-weight: 400;
+        opacity: 0.7;
+    }
+}

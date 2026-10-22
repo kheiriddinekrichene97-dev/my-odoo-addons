@@ -1,0 +1,270 @@
+// Colour strategy, arrived at the hard way.
+//
+// Odoo's backend bundle does not expose Bootstrap's CSS custom properties.
+// Every var(--bs-*) here was resolving to its fallback all along: that is why
+// the sticky column went white (#fff) with invisible text (CanvasText, white
+// under a dark color-scheme), and why --bs-secondary-bg gave a transparent
+// header before that. What Odoo does give a module is its SCSS variables,
+// compiled once per theme, so light and dark each get the right value at
+// build time.
+//
+// Three rules follow:
+//   * Text colour is never declared. With Bootstrap's .table gone, cells
+//     inherit the form's own colour, which is already right in both themes.
+//   * Only sticky cells need an opaque background, and that one value comes
+//     from SCSS, guarded with variable-exists so a renamed variable cannot
+//     break the bundle.
+//   * Every other tint is a translucent rgba, which reads correctly over a
+//     light or a dark ground without knowing which it is.
+
+$di-surface: #fff;
+@if variable-exists(o-view-background-color) {
+    $di-surface: $o-view-background-color;
+} @else if variable-exists(body-bg) {
+    $di-surface: $body-bg;
+}
+
+$di-focus: #714b67;
+@if variable-exists(o-brand-primary) {
+    $di-focus: $o-brand-primary;
+}
+
+.di_matrix {
+    --di-surface:      #{$di-surface};
+    --di-focus:        #{$di-focus};
+    --di-rule:         rgba(127, 127, 127, 0.32);
+    --di-rule-strong:  rgba(127, 127, 127, 0.55);
+    --di-hover:        rgba(127, 127, 127, 0.10);
+    --di-warning-bg:   rgba(255, 193, 7, 0.22);
+    --di-warning-line: #e0a800;
+    --di-danger-bg:    rgba(220, 53, 69, 0.20);
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+    min-width: 0;
+
+    .di_matrix_search {
+        max-width: 220px;
+    }
+
+    // Bulk fill. Narrow on purpose: it takes a quantity, not a search term,
+    // and sits beside the product filter without competing with it.
+    .di_matrix_fill_input {
+        width: 5rem;
+        text-align: center;
+    }
+
+    // The per-destination fill box, under its heading. Bordered, unlike the
+    // cells below it: it sits in the header and has to read as something to
+    // type in rather than as a value already there.
+    .di_matrix_colfill {
+        display: block;
+        width: 100%;
+        max-width: 5.5rem;
+        margin: 0.2rem auto 0;
+        padding: 0.05rem 0.2rem;
+        border: 1px solid var(--di-rule-strong);
+        border-radius: 3px;
+        background: transparent;
+        color: inherit;
+        text-align: center;
+        font-size: 1.05em;
+        font-weight: 400;
+
+        &::placeholder {
+            color: inherit;
+            opacity: 0.45;
+        }
+
+        &:hover {
+            background-color: var(--di-hover);
+        }
+
+        &:focus {
+            outline: 2px solid var(--di-focus);
+            outline-offset: -2px;
+        }
+    }
+
+    .di_matrix_scroll {
+        min-width: 0;
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: auto;
+        max-height: 65vh;
+        border: 1px solid var(--di-rule);
+        border-radius: 4px;
+    }
+
+    // Deliberately NOT a Bootstrap .table. Bootstrap paints cell text through
+    // --bs-table-color and swaps it for --bs-table-hover-color on hover, which
+    // is why every row read as dim grey while the hovered one looked bright.
+    // Fighting that from outside meant out-specifying rules that move between
+    // Bootstrap versions; dropping the classes removes the machinery instead,
+    // and the grid was already overriding the borders, padding and background
+    // that .table would have given it.
+    .di_matrix_table {
+        width: 100%;
+        margin-bottom: 0;
+        border-collapse: separate;
+        border-spacing: 0;
+
+        th,
+        td {
+            // No colour declared anywhere in this grid: cells inherit the
+            // form's, which the theme already gets right.
+            padding: 0.4rem 0.6rem;
+            border-right: 1px solid var(--di-rule);
+            border-bottom: 1px solid var(--di-rule);
+            vertical-align: middle;
+        }
+
+        // .table-hover's job, done without .table-hover. An inset shadow
+        // tints the cell without replacing a background the sticky column and
+        // the highlights depend on.
+        tbody tr:hover td {
+            box-shadow: inset 0 0 0 9999px var(--di-hover);
+        }
+
+        // Stacking, low to high: body cells (auto) < the frozen product
+        // column (1) < the header and footer rows (2) < the corner where the
+        // two meet (3). The frozen column used to outrank the header, so
+        // scrolling down painted product names over it.
+        thead th {
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            background-color: var(--di-surface);
+            // The header shares the body's background, so the rule and the
+            // weight are what separate them.
+            border-bottom: 2px solid var(--di-rule-strong);
+            font-weight: 600;
+            vertical-align: bottom;
+        }
+
+        tfoot td {
+            position: sticky;
+            bottom: 0;
+            z-index: 2;
+            background-color: var(--di-surface);
+            border-bottom: 0;
+        }
+    }
+
+    // The frozen product column, in header, body and footer alike. A sticky
+    // cell has to be opaque or the columns scroll through underneath it.
+    .di_matrix_sticky {
+        position: sticky;
+        left: 0;
+        z-index: 1;
+        background-color: var(--di-surface);
+        border-right: 2px solid var(--di-rule);
+    }
+
+    thead .di_matrix_sticky,
+    tfoot .di_matrix_sticky {
+        z-index: 3;
+        background-color: var(--di-surface);
+    }
+
+    // A translucent hover colour directly on a sticky cell makes the columns
+    // scrolling beneath it visible. Keep the opaque surface, then layer the
+    // same tint on top; the cell still reads as hovered without its product
+    // name or checkbox overlapping Barcode and the other detail columns.
+    .di_matrix_table tbody tr:hover td.di_matrix_sticky {
+        background-color: var(--di-surface);
+        background-image: linear-gradient(var(--di-hover), var(--di-hover));
+    }
+
+    // Same treatment for an over-allocated row. This selector intentionally
+    // outranks the general red-row cell rule below, which is translucent for
+    // ordinary scrolling cells but must be opaque for the frozen one.
+    .di_matrix_table tbody tr.di_matrix_over td.di_matrix_sticky {
+        background-color: var(--di-surface);
+        background-image: linear-gradient(
+            var(--di-danger-bg), var(--di-danger-bg));
+    }
+
+    .di_matrix_product {
+        min-width: 240px;
+        max-width: 320px;
+        font-size: 0.95em;
+        font-weight: 500;
+        line-height: 1.3;
+    }
+
+    .di_matrix_num {
+        min-width: 84px;
+        white-space: nowrap;
+    }
+
+    // Warehouse names are long, so the header wraps rather than forcing a
+    // column wide enough for "MAG - CENTRALE PISTUNINA".
+    .di_matrix_wh {
+        min-width: 118px;
+        max-width: 150px;
+        white-space: normal;
+        word-break: break-word;
+        font-size: 0.82em;
+        line-height: 1.2;
+        text-align: center;
+    }
+
+    .di_matrix_cell {
+        min-width: 118px;
+        padding: 0;
+    }
+
+    .di_matrix_input {
+        width: 100%;
+        border: 0;
+        background: transparent;
+        color: inherit;
+        text-align: center;
+        padding: 0.4rem 0.25rem;
+
+        &::placeholder {
+            color: inherit;
+            opacity: 0.5;
+        }
+
+        &:not([readonly]):hover {
+            background-color: var(--di-hover);
+        }
+
+        &:focus {
+            outline: 2px solid var(--di-focus);
+            outline-offset: -2px;
+            background-color: var(--di-surface);
+        }
+    }
+
+    // Over-allocated rows: tinted, not repainted, so the text stays readable
+    // in both themes. Written against the cell so it outranks the colour rule
+    // on th/td above - inheritance never beats a direct rule.
+    .di_matrix_table tbody tr.di_matrix_over td {
+        background-color: var(--di-danger-bg);
+        font-weight: 600;
+    }
+
+    // Destination picker. Capped and scrollable so thirty shops cannot push
+    // the grid itself off the screen.
+    .di_matrix_chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.25rem;
+        max-height: 8.5rem;
+        overflow-y: auto;
+        padding: 0.25rem;
+        border: 1px solid var(--di-rule);
+        border-radius: 4px;
+    }
+
+    .di_matrix_chip {
+        font-size: 0.78em;
+        padding: 0.15rem 0.5rem;
+        line-height: 1.3;
+        white-space: nowrap;
+    }
+}

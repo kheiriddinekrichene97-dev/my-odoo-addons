@@ -1,0 +1,918 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* di_stock_replenish
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-18 11:17+0000\n"
+"PO-Revision-Date: 2026-09-18 11:17+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+msgid ""
+"%(name)s has transfers that are not cancelled: %(pickings)s. Cancel those in "
+"Inventory first - or, if one is already validated, reverse it with a "
+"transfer of its own so the movement stays traceable."
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+msgid "%(product)s: %(planned)s planned but only %(free)s free at %(source)s."
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+msgid ""
+"%s has already generated transfers, so it cannot be deleted. Cancel it "
+"instead."
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+msgid "%s holds no free stock matching these filters."
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+msgid "%s is no longer a draft, so its quantities cannot be changed."
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.actions.report,print_report_name:di_stock_replenish.action_report_replenish
+msgid "'%s' % (object.name)"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model_terms:ir.ui.view,arch_db:di_stock_replenish.report_replenish_document
+msgid "<span class=\"mx-2\">→</span>"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model_terms:ir.ui.view,arch_db:di_stock_replenish.report_replenish_document
+msgid "<strong>Σ</strong>"
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-javascript
+#: code:addons/di_stock_replenish/static/src/replenish_matrix/replenish_matrix.js:0
+msgid ""
+"A highlighted zero is stock the shop has run out of while the source still "
+"holds it."
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+msgid "A quantity cannot be negative."
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.constraint,message:di_stock_replenish.constraint_di_stock_replenish_line_quantity_positive
+msgid "A quantity to send must be greater than zero."
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-javascript
+#: code:addons/di_stock_replenish/static/src/replenish_matrix/replenish_matrix.xml:0
+msgid ""
+"A red figure is below zero: the shop has sold more than it was ever counted "
+"in for."
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-javascript
+#: code:addons/di_stock_replenish/static/src/replenish_matrix/replenish_matrix.xml:0
+msgid ""
+"A row in red sends out more than the source has free, and will be refused "
+"when saved."
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+msgid "Add at least one quantity before confirming."
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-javascript
+#: code:addons/di_stock_replenish/static/src/replenish_matrix/replenish_matrix.js:0
+#: model:ir.model.fields.selection,name:di_stock_replenish.selection__di_stock_replenish__missing_mode__all
+msgid "All"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish_line__barcode
+msgid "Barcode"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish__below_quantity
+msgid "Below"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields.selection,name:di_stock_replenish.selection__di_stock_replenish__missing_mode__below
+msgid "Below a Quantity"
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+msgid "Brand"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model_terms:ir.ui.view,arch_db:di_stock_replenish.di_stock_replenish_view_form
+msgid "Cancel"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model_terms:ir.ui.view,arch_db:di_stock_replenish.di_stock_replenish_view_form
+msgid ""
+"Cancel this document? Its transfers must already be cancelled in Inventory."
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields.selection,name:di_stock_replenish.selection__di_stock_replenish__state__cancel
+msgid "Cancelled"
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+msgid "Choose at least one destination."
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+msgid "Choose the source warehouse first."
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish__company_id
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish_line__company_id
+msgid "Company"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model_terms:ir.actions.act_window,help:di_stock_replenish.di_stock_replenish_action
+msgid "Compare a shop against the warehouse"
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-javascript
+#: code:addons/di_stock_replenish/static/src/replenish_matrix/replenish_matrix.xml:0
+msgid "Comparing stock..."
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish__comparison
+#: model_terms:ir.ui.view,arch_db:di_stock_replenish.di_stock_replenish_view_form
+msgid "Comparison"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.ui.menu,name:di_stock_replenish.menu_di_replenish_comparisons
+msgid "Comparisons"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model_terms:ir.ui.view,arch_db:di_stock_replenish.di_stock_replenish_view_form
+msgid "Confirm and Generate Transfers"
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+msgid ""
+"Could not find a free reference: every number the sequence gives is already "
+"used. Check the replenishment sequence under Settings > Technical > "
+"Sequences."
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish__create_uid
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish_line__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish__create_date
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish_line__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish__date
+msgid "Date"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish_line__warehouse_id
+msgid "Destination"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish__destination_warehouse_ids
+msgid "Destinations"
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-javascript
+#: code:addons/di_stock_replenish/static/src/replenish_matrix/replenish_matrix.xml:0
+msgid "Discard"
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish__discount_bucket
+msgid "Discount %"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish__display_name
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish_line__display_name
+#: model:ir.model.fields,field_description:di_stock_replenish.field_stock_picking__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields.selection,name:di_stock_replenish.selection__di_stock_replenish__state__draft
+msgid "Draft"
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+msgid "Every destination already holds all of these products."
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-javascript
+#: code:addons/di_stock_replenish/static/src/replenish_matrix/replenish_matrix.js:0
+msgid "Every shop on screen holds fewer than %s of the row it is on."
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-javascript
+#: code:addons/di_stock_replenish/static/src/replenish_matrix/replenish_matrix.js:0
+msgid "Filter this page..."
+msgstr ""
+
+#. module: di_stock_replenish
+#: model_terms:ir.ui.view,arch_db:di_stock_replenish.di_stock_replenish_view_form
+msgid "Filters"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model_terms:ir.ui.view,arch_db:di_stock_replenish.di_stock_replenish_view_form
+msgid ""
+"Generate one internal transfer per source and destination? They are left "
+"Ready, with "
+"the stock reserved: the stock moves only when each transfer is validated in "
+"Inventory, after the pile has been checked."
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish__id
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish_line__id
+#: model:ir.model.fields,field_description:di_stock_replenish.field_stock_picking__id
+msgid "ID"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,help:di_stock_replenish.field_di_stock_replenish__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,help:di_stock_replenish.field_di_stock_replenish__message_has_error
+#: model:ir.model.fields,help:di_stock_replenish.field_di_stock_replenish__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish_line__default_code
+msgid "Internal Reference"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,help:di_stock_replenish.field_di_stock_replenish_line__barcode
+msgid "International Article Number used for product identification."
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish__write_uid
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish_line__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish__write_date
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish_line__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish__line_count
+msgid "Line Count"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model_terms:ir.ui.view,arch_db:di_stock_replenish.di_stock_replenish_view_list
+msgid "Lines"
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-javascript
+#: code:addons/di_stock_replenish/static/src/replenish_matrix/replenish_matrix.js:0
+msgid "Loading..."
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+msgid "Malformed cell %r."
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish__brand_ids
+msgid "Marca"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-javascript
+#: code:addons/di_stock_replenish/static/src/replenish_matrix/replenish_matrix.js:0
+msgid "More than the source has free."
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,help:di_stock_replenish.field_di_stock_replenish__price_bucket
+msgid ""
+"Narrow the comparison to products at exactly this price on the Promo "
+"pricelist - 4.95, 9.95, 19.95 and so on. A product with no Promo rule has no "
+"promo price and is left out once a price is picked."
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,help:di_stock_replenish.field_di_stock_replenish__supplier_ids
+msgid ""
+"Narrow the comparison to products bought from these suppliers. A product "
+"matches on any of its suppliers, while the Supplier column shows the "
+"preferred one - the two differ on the handful of products bought from more "
+"than one vendor."
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,help:di_stock_replenish.field_di_stock_replenish__discount_bucket
+msgid ""
+"Narrow the comparison to products discounted by roughly this much off Sales "
+"Price, on the Promo pricelist. Rounded to the nearest 10% - real promo "
+"prices land close to a round number but rarely exactly on one."
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,help:di_stock_replenish.field_di_stock_replenish__brand_ids
+msgid "Narrow the comparison to these brands."
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,help:di_stock_replenish.field_di_stock_replenish__categ_ids
+msgid ""
+"Narrow the comparison to these product categories. Child categories are "
+"included."
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+msgid "New"
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+msgid "No destination is below zero on any of these products."
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+msgid "No product in this comparison is at that discount."
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+msgid "No product in this comparison is at that price."
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+msgid ""
+"No product is under %s at every one of these destinations. One shop holding "
+"more than that is enough to drop a row, so a longer destination list needs a "
+"higher number."
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+msgid "None"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,help:di_stock_replenish.field_di_stock_replenish__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,help:di_stock_replenish.field_di_stock_replenish__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields.selection,name:di_stock_replenish.selection__di_stock_replenish__missing_mode__missing
+msgid "Only Missing"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields.selection,name:di_stock_replenish.selection__di_stock_replenish__missing_mode__negative
+msgid "Only Negative"
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+msgid "Only a cancelled document can be set back to draft."
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+msgid "Only a draft can be confirmed."
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-javascript
+#: code:addons/di_stock_replenish/static/src/replenish_matrix/replenish_matrix.xml:0
+msgid "Pick a source and at least one destination, then Refresh."
+msgstr ""
+
+#. module: di_stock_replenish
+#: model_terms:ir.actions.act_window,help:di_stock_replenish.di_stock_replenish_action
+msgid ""
+"Pick where the stock is and which shops to look at, narrow it to a season, "
+"and see what has run out on the shop floor while the warehouse still has it."
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish__picking_count
+msgid "Picking Count"
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish__position_keys
+msgid "Positioning"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model_terms:ir.ui.view,arch_db:di_stock_replenish.di_stock_replenish_view_form
+msgid "Print Document"
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+#: model_terms:ir.ui.view,arch_db:di_stock_replenish.di_stock_replenish_view_form
+msgid "Print Tags"
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish_line__product_id
+msgid "Product"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish__categ_ids
+msgid "Product Categories"
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+msgid "Product Category"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model_terms:ir.ui.view,arch_db:di_stock_replenish.di_stock_replenish_view_form
+msgid ""
+"Products the source holds and a destination does not. Free to use is shown "
+"at the source and on hand at the destinations, so what you see is what can "
+"actually be moved onto a shelf. Narrow it by season, brand, supplier or "
+"category, and choose whether to see every row, only what a shop has run out "
+"of, what has gone below zero, or only what every shop is down to fewer than "
+"a number you type in. Confirming generates one transfer per source and "
+"destination, "
+"left Ready for the worker to check the pile against before validating it in "
+"Inventory."
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish__price_bucket
+msgid "Promo Price"
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-javascript
+#: code:addons/di_stock_replenish/static/src/replenish_matrix/replenish_matrix.js:0
+msgid "Quantities saved."
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish_line__quantity
+msgid "Quantity"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish__name
+msgid "Reference"
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-javascript
+#: code:addons/di_stock_replenish/static/src/replenish_matrix/replenish_matrix.xml:0
+msgid "Refresh"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.actions.act_window,name:di_stock_replenish.di_stock_replenish_action
+#: model:ir.actions.report,name:di_stock_replenish.action_report_replenish
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish_line__replenish_id
+#: model:ir.model.fields,field_description:di_stock_replenish.field_stock_picking__di_replenish_id
+#: model:ir.ui.menu,name:di_stock_replenish.menu_di_replenish_root
+msgid "Replenishment"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model_terms:ir.ui.view,arch_db:di_stock_replenish.di_stock_replenish_view_form
+msgid "Replenishment Comparison"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model_terms:ir.ui.view,arch_db:di_stock_replenish.di_stock_replenish_view_list
+msgid "Replenishment Comparisons"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model,name:di_stock_replenish.model_di_stock_replenish_line
+msgid "Replenishment Line"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,help:di_stock_replenish.field_stock_picking__di_replenish_id
+msgid "Replenishment document this transfer was generated from."
+msgstr ""
+
+#. module: di_stock_replenish
+#: model_terms:ir.ui.view,arch_db:di_stock_replenish.di_stock_replenish_view_form
+msgid "Reset to Draft"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+msgid "Sales Price"
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-javascript
+#: code:addons/di_stock_replenish/static/src/replenish_matrix/replenish_matrix.xml:0
+msgid "Save Quantities"
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-javascript
+#: code:addons/di_stock_replenish/static/src/replenish_matrix/replenish_matrix.js:0
+msgid "Save the comparison first."
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-javascript
+#: code:addons/di_stock_replenish/static/src/replenish_matrix/replenish_matrix.xml:0
+msgid "Save the comparison to run it."
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+msgid "Season"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish__season_keys
+msgid "Seasons"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,help:di_stock_replenish.field_di_stock_replenish_line__warehouse_id
+msgid "Shop or stockroom this quantity is sent to."
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,help:di_stock_replenish.field_di_stock_replenish__destination_warehouse_ids
+msgid ""
+"Shops and stockrooms to compare against the source. Pick as many as you want "
+"to look at together."
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish__missing_mode
+msgid "Show"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish__source_warehouse_ids
+msgid "Source"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish__state
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish_line__state
+msgid "Status"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model,name:di_stock_replenish.model_di_stock_replenish
+msgid "Stock Replenishment Comparison"
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish__supplier_ids
+msgid "Supplier"
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+msgid "That destination is not one of this document's."
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+msgid "That product no longer exists."
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+msgid ""
+"That would print %(total)s tags. Print them in smaller batches from the "
+"product list, or the printer and the PDF will both give up."
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+msgid "The Cartellino report is not available on this database."
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish_line.py:0
+msgid "The destination cannot be the source warehouse itself (%s)."
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,help:di_stock_replenish.field_di_stock_replenish__position_keys
+msgid ""
+"The posizionamenti picked in the grid, as ids. Edited through the chips "
+"rather than typed."
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+msgid ""
+"The quantity to stay below cannot be negative. Use Only Negative to look for "
+"destinations under zero."
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,help:di_stock_replenish.field_di_stock_replenish__season_keys
+msgid ""
+"The seasons picked in the grid, as ids. Edited through the season chips "
+"rather than typed."
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.constraint,message:di_stock_replenish.constraint_di_stock_replenish_line_product_warehouse_uniq
+msgid ""
+"This product is already going to that destination on this document. Edit the "
+"existing row instead of adding a second one."
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+msgid "Tick at least one product to print its tag."
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish__line_ids
+#: model_terms:ir.ui.view,arch_db:di_stock_replenish.di_stock_replenish_view_form
+msgid "To Transfer"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish__total_quantity
+#: model_terms:ir.ui.view,arch_db:di_stock_replenish.di_stock_replenish_view_form
+msgid "Total Quantity"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model,name:di_stock_replenish.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish__picking_ids
+#: model_terms:ir.ui.view,arch_db:di_stock_replenish.di_stock_replenish_view_form
+msgid "Transfers"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields.selection,name:di_stock_replenish.selection__di_stock_replenish__state__done
+msgid "Transfers Generated"
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-javascript
+#: code:addons/di_stock_replenish/static/src/replenish_matrix/replenish_matrix.js:0
+msgid "Type a quantity of zero or more."
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+msgid "Warehouse %s has no internal operation type configured."
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,help:di_stock_replenish.field_di_stock_replenish__source_warehouse_ids
+msgid ""
+"Warehouses the stock would be taken from. Defaults to the arrival warehouse "
+"configured in Inventory settings. With more than one, each quantity is "
+"taken from the first that has it, then the next."
+msgstr ""
+
+#. module: di_stock_replenish
+#: model_terms:ir.ui.view,arch_db:di_stock_replenish.di_stock_replenish_view_form
+msgid "Warehouses"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,field_description:di_stock_replenish.field_di_stock_replenish__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,help:di_stock_replenish.field_di_stock_replenish__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,help:di_stock_replenish.field_di_stock_replenish__missing_mode
+msgid ""
+"Which rows to keep. Only Missing keeps the products at least one destination "
+"has none of. Only Negative keeps just the destinations that have gone below "
+"zero - stock sold that was never counted in. Below a Quantity keeps only "
+"what every destination is thin on. All leaves the comparison whole."
+msgstr ""
+
+#. module: di_stock_replenish
+#: model:ir.model.fields,help:di_stock_replenish.field_di_stock_replenish__below_quantity
+msgid ""
+"With Show set to Below a Quantity, keep the products EVERY destination has "
+"fewer than this many of - one well stocked shop is enough to drop the row. "
+"The number itself is not included: 5 keeps 4, 3, 2, 1, 0 and anything "
+"negative."
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+msgid "free to use"
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+msgid "id"
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+msgid "on hand"
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+msgid "%s cannot be a source and a destination at once."
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-javascript
+#: code:addons/di_stock_replenish/static/src/replenish_matrix/replenish_matrix.js:0
+msgid "Reset column order"
+msgstr ""
+
+#. module: di_stock_replenish
+#. odoo-python
+#: code:addons/di_stock_replenish/models/stock_replenish.py:0
+msgid "There is nothing to print tags for."
+msgstr ""

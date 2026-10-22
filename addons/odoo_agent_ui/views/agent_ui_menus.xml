@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_agent_ui" model="ir.actions.client">
+        <field name="name">Autonomous Agent</field>
+        <field name="tag">odoo_agent_ui.agent</field>
+    </record>
+
+    <menuitem
+        id="menu_agent_ui_root"
+        name="Autonomous Agent"
+        action="action_agent_ui"
+        groups="odoo_agent_ui.group_agent_ui_user"
+        sequence="95"
+    />
+</odoo>

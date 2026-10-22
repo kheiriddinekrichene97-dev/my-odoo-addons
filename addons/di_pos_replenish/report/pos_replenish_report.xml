@@ -1,0 +1,14 @@
+<odoo>
+
+    <record id="action_report_pos_replenish" model="ir.actions.report">
+        <field name="name">Sales Replenishment</field>
+        <field name="model">di.pos.replenish</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">di_pos_replenish.report_pos_replenish_document</field>
+        <field name="report_file">di_pos_replenish.report_pos_replenish_document</field>
+        <field name="binding_model_id" ref="model_di_pos_replenish"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'%s' % (object.name)</field>
+    </record>
+
+</odoo>

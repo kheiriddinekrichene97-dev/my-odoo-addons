@@ -1,0 +1,46 @@
+<odoo>
+    <record id="bonus_point_category_rule_view_list" model="ir.ui.view">
+        <field name="name">bonus.point.category.rule.list</field>
+        <field name="model">bonus.point.category.rule</field>
+        <field name="arch" type="xml">
+            <list string="Bonus Points Category Rules">
+                <field name="name"/>
+                <field name="reparto_ids" widget="many2many_tags"/>
+                <field name="max_discount_rate"/>
+                <field name="active"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="bonus_point_category_rule_view_form" model="ir.ui.view">
+        <field name="name">bonus.point.category.rule.form</field>
+        <field name="model">bonus.point.category.rule</field>
+        <field name="arch" type="xml">
+            <form string="Bonus Points Category Rule">
+                <sheet>
+                    <group>
+                        <field name="company_id" groups="base.group_multi_company"/>
+                        <field name="name"/>
+                        <field name="reparto_ids" widget="many2many_tags"/>
+                        <field name="max_discount_rate"/>
+                        <field name="allow_manager_override"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="bonus_point_category_rule_action" model="ir.actions.act_window">
+        <field name="name">Category Rules</field>
+        <field name="res_model">bonus.point.category.rule</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Link groups of Reparto values (e.g. Donna, Uomo) to the maximum
+                discount % an item can already have and still earn bonus points.
+            </p>
+        </field>
+    </record>
+</odoo>

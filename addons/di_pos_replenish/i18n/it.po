@@ -1,0 +1,654 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* di_pos_replenish
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-07 00:00+0000\n"
+"PO-Revision-Date: 2026-09-07 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: di_pos_replenish
+#: model:ir.model,name:di_pos_replenish.model_di_pos_replenish
+#: model:ir.model.fields,field_description:di_pos_replenish.field_stock_picking__di_pos_replenish_id
+#: model_terms:ir.ui.view,arch_db:di_pos_replenish.di_pos_replenish_view_form
+#: model_terms:ir.ui.view,arch_db:di_pos_replenish.di_pos_replenish_view_list
+#: model_terms:ir.ui.view,arch_db:di_pos_replenish.di_pos_replenish_view_search
+#: model:ir.ui.menu,name:di_pos_replenish.menu_di_pos_replenish_sales
+#: model:ir.actions.act_window,name:di_pos_replenish.di_pos_replenish_action
+#: model:ir.actions.report,name:di_pos_replenish.action_report_pos_replenish
+msgid "Sales Replenishment"
+msgstr "Riassortimento di Vendita"
+
+#. module: di_pos_replenish
+#: model:ir.model,name:di_pos_replenish.model_di_pos_replenish_line
+msgid "Sales Replenishment Line"
+msgstr "Riga Riassortimento di Vendita"
+
+#. module: di_pos_replenish
+#: model:ir.model,name:di_pos_replenish.model_di_pos_replenish_allocation
+msgid "Sales Replenishment Allocation"
+msgstr "Assegnazione Riassortimento di Vendita"
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish__name
+msgid "Reference"
+msgstr "Riferimento"
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish__date
+msgid "Created"
+msgstr "Creato il"
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish__state
+msgid "Status"
+msgstr "Stato"
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish__company_id
+msgid "Company"
+msgstr "Azienda"
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish__date_from
+msgid "From"
+msgstr "Dal"
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish__date_to
+msgid "To"
+msgstr "Al"
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish__config_ids
+msgid "Points of Sale"
+msgstr "Punti Vendita"
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,help:di_pos_replenish.field_di_pos_replenish__config_ids
+msgid "The shops to restock. Every till that sold something in the period gets its own table."
+msgstr "I negozi da riassortire. Ogni cassa che ha venduto qualcosa nel periodo ha la sua tabella."
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish__source_warehouse_ids
+msgid "Source Warehouses"
+msgstr "Magazzini di Origine"
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,help:di_pos_replenish.field_di_pos_replenish__source_warehouse_ids
+msgid "Where the replacement stock is taken from. A variant normally sits in only one of them, so nothing has to be prioritised; where both hold it, both are offered and you choose."
+msgstr "Da dove viene prelevata la merce di reintegro. Una variante di solito si trova in uno solo dei due, quindi non c'è nulla da prioritizzare; dove entrambi la contengono, entrambi vengono proposti e scegli tu."
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish__excluded_season_keys
+msgid "Excluded Seasons"
+msgstr "Stagioni Escluse"
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,help:di_pos_replenish.field_di_pos_replenish__excluded_season_keys
+msgid "Seasons dropped from this run, as ids. Toggled with the chips above the table rather than typed."
+msgstr "Stagioni escluse da questa elaborazione, come id. Si attivano con i pulsanti sopra la tabella invece di essere digitate."
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish__computed_on
+msgid "Built On"
+msgstr "Costruito il"
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,help:di_pos_replenish.field_di_pos_replenish__computed_on
+msgid "When the rows were last read from the till receipts. An empty run that has been built means nothing was sold, which is not the same as a run nobody has built yet."
+msgstr "Quando le righe sono state lette l'ultima volta dagli scontrini. Un'elaborazione vuota ma costruita significa che non è stato venduto nulla, che non è la stessa cosa di un'elaborazione che nessuno ha ancora costruito."
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish__line_ids
+msgid "Lines"
+msgstr "Righe"
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish__line_count
+msgid "Line Count"
+msgstr "Numero Righe"
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish__total_sold
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish_line__sold_qty
+msgid "Sold"
+msgstr "Venduto"
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish__total_to_send
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish_line__qty_to_send
+#: model_terms:ir.ui.view,arch_db:di_pos_replenish.di_pos_replenish_view_form
+msgid "To Send"
+msgstr "Da Inviare"
+
+#. module: di_pos_replenish
+#. odoo-python
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish__picking_ids
+#: model_terms:ir.ui.view,arch_db:di_pos_replenish.di_pos_replenish_view_form
+#: code:addons/di_pos_replenish/models/pos_replenish.py:0
+msgid "Transfers"
+msgstr "Trasferimenti"
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish__picking_count
+msgid "Picking Count"
+msgstr "Numero Trasferimenti"
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish__matrix
+msgid "Comparison"
+msgstr "Confronto"
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish_line__replenish_id
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish_allocation__replenish_id
+#: model_terms:ir.ui.view,arch_db:di_pos_replenish.di_pos_replenish_view_form
+msgid "Replenishment"
+msgstr "Riassortimento"
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish_line__sequence
+msgid "Sequence"
+msgstr "Sequenza"
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish_line__config_id
+msgid "Point of Sale"
+msgstr "Punto Vendita"
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish_line__warehouse_id
+msgid "Destination Warehouse"
+msgstr "Magazzino di Destinazione"
+
+#. module: di_pos_replenish
+#. odoo-python
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish_line__product_id
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish_allocation__product_id
+#: code:addons/di_pos_replenish/models/pos_replenish.py:0
+msgid "Product"
+msgstr "Prodotto"
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish_line__default_code
+msgid "Internal Reference"
+msgstr "Riferimento Interno"
+
+#. module: di_pos_replenish
+#. odoo-python
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish_line__barcode
+#: code:addons/di_pos_replenish/models/pos_replenish.py:0
+msgid "Barcode"
+msgstr "Codice a Barre"
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish_line__returned_qty
+msgid "Returned"
+msgstr "Reso"
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,help:di_pos_replenish.field_di_pos_replenish_line__returned_qty
+msgid "Pieces that came back over the period, as a positive count. A return is a negative line at the till, whether it went through Odoo's refund flow or was typed as -1."
+msgstr "Pezzi rientrati nel periodo, come conteggio positivo. Un reso è una riga negativa alla cassa, sia che sia passato dal rimborso di Odoo sia che sia stato digitato come -1."
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish_line__net_sold_qty
+#: model_terms:ir.ui.view,arch_db:di_pos_replenish.di_pos_replenish_view_form
+msgid "To Replace"
+msgstr "Da Reintegrare"
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,help:di_pos_replenish.field_di_pos_replenish_line__net_sold_qty
+msgid "Sold less returned: a returned piece is back on the shop's own shelf, so it does not need replacing."
+msgstr "Venduto meno reso: un pezzo rientrato è già sullo scaffale del negozio, quindi non va reintegrato."
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish_line__allocation_ids
+msgid "Sources"
+msgstr "Origini"
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish_line__shortfall
+msgid "Short"
+msgstr "Mancante"
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,help:di_pos_replenish.field_di_pos_replenish_line__shortfall
+msgid "Sold more than the source warehouses can replace. The shop stays short by this much."
+msgstr "Venduto più di quanto i magazzini di origine possano reintegrare. Al negozio manca questa quantità."
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish_line__season_key
+msgid "Season Id"
+msgstr "Id Stagione"
+
+#. module: di_pos_replenish
+#. odoo-python
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish_line__season_name
+#: code:addons/di_pos_replenish/models/pos_replenish.py:0
+msgid "Season"
+msgstr "Stagione"
+
+#. module: di_pos_replenish
+#. odoo-python
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish_line__position_name
+#: code:addons/di_pos_replenish/models/pos_replenish.py:0
+msgid "Positioning"
+msgstr "Posizionamento"
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish_line__category_root
+msgid "Main Category"
+msgstr "Categoria Principale"
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,help:di_pos_replenish.field_di_pos_replenish_line__category_root
+msgid "The top of the category tree the product sits under - ABBI, ACCE and so on. The table is grouped by this first, then by posizionamento inside it."
+msgstr "La cima dell'albero delle categorie sotto cui si trova il prodotto - ABBI, ACCE e così via. La tabella è raggruppata prima per questa, poi per posizionamento al suo interno."
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish_line__category_label
+msgid "Category"
+msgstr "Categoria"
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,help:di_pos_replenish.field_di_pos_replenish_line__category_label
+msgid "The child category where the product has one, the category itself where it does not."
+msgstr "La categoria figlia dove il prodotto ne ha una, la categoria stessa dove non ce l'ha."
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish_line__is_excluded
+msgid "Dropped"
+msgstr "Escluso"
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,help:di_pos_replenish.field_di_pos_replenish_line__is_excluded
+msgid "Its season was dropped from this run, so it is not printed and not transferred."
+msgstr "La sua stagione è stata esclusa da questa elaborazione, quindi non viene stampata né trasferita."
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish_allocation__line_id
+msgid "Line"
+msgstr "Riga"
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish_allocation__warehouse_id
+msgid "Source"
+msgstr "Origine"
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,help:di_pos_replenish.field_di_pos_replenish_allocation__warehouse_id
+msgid "Which source warehouse this share of the row comes out of."
+msgstr "Da quale magazzino di origine esce questa quota della riga."
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,field_description:di_pos_replenish.field_di_pos_replenish_allocation__quantity
+msgid "Quantity"
+msgstr "Quantità"
+
+#. module: di_pos_replenish
+#: model:ir.model.fields,help:di_pos_replenish.field_stock_picking__di_pos_replenish_id
+msgid "Sales replenishment run this transfer was generated from."
+msgstr "Elaborazione di riassortimento di vendita da cui è stato generato questo trasferimento."
+
+#. module: di_pos_replenish
+#: model:ir.model.fields.selection,name:di_pos_replenish.selection__di_pos_replenish__state__draft
+#: model_terms:ir.ui.view,arch_db:di_pos_replenish.di_pos_replenish_view_search
+msgid "Draft"
+msgstr "Bozza"
+
+#. module: di_pos_replenish
+#: model:ir.model.fields.selection,name:di_pos_replenish.selection__di_pos_replenish__state__confirmed
+#: model_terms:ir.ui.view,arch_db:di_pos_replenish.di_pos_replenish_view_search
+msgid "Transfers Created"
+msgstr "Trasferimenti Creati"
+
+#. module: di_pos_replenish
+#: model:ir.model.fields.selection,name:di_pos_replenish.selection__di_pos_replenish__state__cancel
+msgid "Cancelled"
+msgstr "Annullato"
+
+#. module: di_pos_replenish
+#: model_terms:ir.ui.view,arch_db:di_pos_replenish.di_pos_replenish_view_form
+msgid "Compute"
+msgstr "Calcola"
+
+#. module: di_pos_replenish
+#: model_terms:ir.ui.view,arch_db:di_pos_replenish.di_pos_replenish_view_form
+msgid "Rebuild every row from the till receipts for this period? Quantities you have adjusted by hand will be replaced."
+msgstr "Ricostruire tutte le righe dagli scontrini di questo periodo? Le quantità corrette a mano verranno sostituite."
+
+#. module: di_pos_replenish
+#: model_terms:ir.ui.view,arch_db:di_pos_replenish.di_pos_replenish_view_form
+msgid "Create Transfers"
+msgstr "Crea Trasferimenti"
+
+#. module: di_pos_replenish
+#: model_terms:ir.ui.view,arch_db:di_pos_replenish.di_pos_replenish_view_form
+msgid "Generate the internal transfers for this run? They are created ready to validate, so nothing moves until the warehouse picks them."
+msgstr "Generare i trasferimenti interni per questa elaborazione? Vengono creati pronti da convalidare, quindi nulla si muove finché il magazzino non li preleva."
+
+#. module: di_pos_replenish
+#: model_terms:ir.ui.view,arch_db:di_pos_replenish.di_pos_replenish_view_form
+msgid "Print Document"
+msgstr "Stampa Documento"
+
+#. module: di_pos_replenish
+#: model_terms:ir.ui.view,arch_db:di_pos_replenish.di_pos_replenish_view_form
+msgid "Cancel"
+msgstr "Annulla"
+
+#. module: di_pos_replenish
+#: model_terms:ir.ui.view,arch_db:di_pos_replenish.di_pos_replenish_view_form
+msgid "Reset to Draft"
+msgstr "Reimposta a Bozza"
+
+#. module: di_pos_replenish
+#: model_terms:ir.ui.view,arch_db:di_pos_replenish.di_pos_replenish_view_form
+#: model_terms:ir.ui.view,arch_db:di_pos_replenish.di_pos_replenish_view_search
+msgid "Period"
+msgstr "Periodo"
+
+#. module: di_pos_replenish
+#: model_terms:ir.ui.view,arch_db:di_pos_replenish.di_pos_replenish_view_form
+msgid "Scope"
+msgstr "Ambito"
+
+#. module: di_pos_replenish
+#: model_terms:ir.ui.view,arch_db:di_pos_replenish.di_pos_replenish_view_form
+msgid "All Rows"
+msgstr "Tutte le Righe"
+
+#. module: di_pos_replenish
+#: model_terms:ir.ui.view,arch_db:di_pos_replenish.di_pos_replenish_view_list
+msgid "Rows"
+msgstr "Righe"
+
+#. module: di_pos_replenish
+#: model_terms:ir.ui.view,arch_db:di_pos_replenish.di_pos_replenish_view_form
+msgid ""
+"What each shop sold over the period, with the free stock at the\n"
+"                        source warehouses beside it and what to send back proposed and\n"
+"                        capped by what is actually there. Press <b>Compute</b> to build\n"
+"                        the run, drop any season you do not want to move, adjust the\n"
+"                        quantities, then print the cartellini shop by shop."
+msgstr ""
+"Quanto ha venduto ogni negozio nel periodo, con accanto la giacenza libera nei\n"
+"                        magazzini di origine e la proposta di cosa rimandare indietro,\n"
+"                        limitata a quello che c'è davvero. Premi <b>Calcola</b> per costruire\n"
+"                        l'elaborazione, escludi le stagioni che non vuoi movimentare, correggi\n"
+"                        le quantità, poi stampa i cartellini negozio per negozio."
+
+#. module: di_pos_replenish
+#. odoo-python
+#: code:addons/di_pos_replenish/models/pos_replenish.py:0
+msgid "New"
+msgstr "Nuovo"
+
+#. module: di_pos_replenish
+#. odoo-python
+#: code:addons/di_pos_replenish/models/pos_replenish.py:0
+msgid "The period ends before it starts."
+msgstr "Il periodo finisce prima di iniziare."
+
+#. module: di_pos_replenish
+#. odoo-python
+#: code:addons/di_pos_replenish/models/pos_replenish.py:0
+msgid "%s has already generated transfers, so it cannot be deleted. Cancel those in Inventory first, then cancel the run."
+msgstr "%s ha già generato dei trasferimenti, quindi non può essere eliminato. Annulla prima quelli da Magazzino, poi annulla l'elaborazione."
+
+#. module: di_pos_replenish
+#. odoo-python
+#: code:addons/di_pos_replenish/models/pos_replenish.py:0
+msgid "%s is no longer a draft, so it cannot be rebuilt."
+msgstr "%s non è più una bozza, quindi non può essere ricostruito."
+
+#. module: di_pos_replenish
+#. odoo-python
+#: code:addons/di_pos_replenish/models/pos_replenish.py:0
+msgid "Choose at least one point of sale."
+msgstr "Scegli almeno un punto vendita."
+
+#. module: di_pos_replenish
+#. odoo-python
+#: code:addons/di_pos_replenish/models/pos_replenish.py:0
+msgid "Choose at least one source warehouse."
+msgstr "Scegli almeno un magazzino di origine."
+
+#. module: di_pos_replenish
+#. odoo-python
+#: code:addons/di_pos_replenish/models/pos_replenish.py:0
+msgid "Nothing was sold in that period at the chosen points of sale."
+msgstr "Nel periodo scelto non è stato venduto nulla nei punti vendita selezionati."
+
+#. module: di_pos_replenish
+#. odoo-python
+#: code:addons/di_pos_replenish/models/pos_replenish.py:0
+msgid "Product Category"
+msgstr "Categoria Prodotto"
+
+#. module: di_pos_replenish
+#. odoo-python
+#: code:addons/di_pos_replenish/models/pos_replenish.py:0
+msgid "free to use"
+msgstr "libera all'uso"
+
+#. module: di_pos_replenish
+#. odoo-python
+#: code:addons/di_pos_replenish/models/pos_replenish.py:0
+msgid "Print Tags"
+msgstr "Stampa Cartellini"
+
+#. module: di_pos_replenish
+#. odoo-python
+#: code:addons/di_pos_replenish/models/pos_replenish.py:0
+msgid "Nothing to show yet. Set the period and press Compute."
+msgstr "Ancora niente da mostrare. Imposta il periodo e premi Calcola."
+
+#. module: di_pos_replenish
+#. odoo-python
+#: code:addons/di_pos_replenish/models/pos_replenish.py:0
+msgid "Unclassified"
+msgstr "Non classificato"
+
+#. module: di_pos_replenish
+#. odoo-python
+#: code:addons/di_pos_replenish/models/pos_replenish.py:0
+msgid "Uncategorised"
+msgstr "Senza categoria"
+
+#. module: di_pos_replenish
+#. odoo-python
+#: code:addons/di_pos_replenish/models/pos_replenish.py:0
+msgid "No season"
+msgstr "Senza stagione"
+
+#. module: di_pos_replenish
+#. odoo-python
+#: code:addons/di_pos_replenish/models/pos_replenish.py:0
+msgid "%s is no longer a draft, so its quantities cannot be changed."
+msgstr "%s non è più una bozza, quindi le sue quantità non possono essere modificate."
+
+#. module: di_pos_replenish
+#. odoo-python
+#: code:addons/di_pos_replenish/models/pos_replenish.py:0
+msgid "Malformed cell %r."
+msgstr "Cella %r non valida."
+
+#. module: di_pos_replenish
+#. odoo-python
+#: code:addons/di_pos_replenish/models/pos_replenish.py:0
+msgid "That row is not part of this document."
+msgstr "Quella riga non fa parte di questo documento."
+
+#. module: di_pos_replenish
+#. odoo-python
+#: code:addons/di_pos_replenish/models/pos_replenish.py:0
+msgid "That warehouse is not one of this document's sources."
+msgstr "Quel magazzino non è tra le origini di questo documento."
+
+#. module: di_pos_replenish
+#. odoo-python
+#: code:addons/di_pos_replenish/models/pos_replenish.py:0
+msgid "A quantity cannot be negative."
+msgstr "Una quantità non può essere negativa."
+
+#. module: di_pos_replenish
+#. odoo-python
+#: code:addons/di_pos_replenish/models/pos_replenish.py:0
+msgid "%(product)s: %(planned)s asked for across the shops but only %(free)s free at %(warehouse)s."
+msgstr "%(product)s: %(planned)s richiesti tra i negozi ma solo %(free)s liberi presso %(warehouse)s."
+
+#. module: di_pos_replenish
+#. odoo-python
+#: code:addons/di_pos_replenish/models/pos_replenish.py:0
+msgid "The Cartellino report is not available on this database."
+msgstr "Il report Cartellino non è disponibile su questo database."
+
+#. module: di_pos_replenish
+#. odoo-python
+#: code:addons/di_pos_replenish/models/pos_replenish.py:0
+msgid "There is nothing to print tags for."
+msgstr "Non c'è nulla per cui stampare i cartellini."
+
+#. module: di_pos_replenish
+#. odoo-python
+#: code:addons/di_pos_replenish/models/pos_replenish.py:0
+msgid "That would print %(total)s tags. Print one point of sale at a time, or the printer and the PDF will both give up."
+msgstr "Verrebbero stampati %(total)s cartellini. Stampa un punto vendita alla volta, o la stampante e il PDF si arrenderanno entrambi."
+
+#. module: di_pos_replenish
+#. odoo-python
+#: code:addons/di_pos_replenish/models/pos_replenish.py:0
+msgid "That point of sale has nothing left to send."
+msgstr "Quel punto vendita non ha più nulla da inviare."
+
+#. module: di_pos_replenish
+#. odoo-python
+#: code:addons/di_pos_replenish/models/pos_replenish.py:0
+msgid "Only a draft can be confirmed."
+msgstr "Solo una bozza può essere confermata."
+
+#. module: di_pos_replenish
+#. odoo-python
+#: code:addons/di_pos_replenish/models/pos_replenish.py:0
+msgid "Nothing to transfer: every row is at zero, or every season has been dropped."
+msgstr "Niente da trasferire: tutte le righe sono a zero, o tutte le stagioni sono state escluse."
+
+#. module: di_pos_replenish
+#. odoo-python
+#: code:addons/di_pos_replenish/models/pos_replenish.py:0
+msgid "%(name)s has transfers that are still open: %(pickings)s. Cancel those in Inventory first, so the movement stays traceable to the run that asked for it."
+msgstr "%(name)s ha trasferimenti ancora aperti: %(pickings)s. Annulla prima quelli da Magazzino, così il movimento resta tracciabile all'elaborazione che l'ha richiesto."
+
+#. module: di_pos_replenish
+#. odoo-python
+#: code:addons/di_pos_replenish/models/pos_replenish.py:0
+msgid "Only a cancelled document can be set back to draft."
+msgstr "Solo un documento annullato può essere riportato a bozza."
+
+#. module: di_pos_replenish
+#. odoo-python
+#: code:addons/di_pos_replenish/models/pos_replenish.py:0
+msgid "Warehouse %s has no internal operation type configured."
+msgstr "Il magazzino %s non ha un tipo di operazione interna configurato."
+
+#. module: di_pos_replenish
+#. odoo-python
+#: code:addons/di_pos_replenish/models/pos_replenish.py:0
+msgid "Point of sale %s has no warehouse configured."
+msgstr "Il punto vendita %s non ha un magazzino configurato."
+
+#. module: di_pos_replenish
+#. odoo-python
+#: code:addons/di_pos_replenish/models/pos_replenish.py:0
+msgid "That source is already on this row. Edit the quantity instead of adding a second one."
+msgstr "Quell'origine è già su questa riga. Modifica la quantità invece di aggiungerne una seconda."
+
+#. module: di_pos_replenish
+#. odoo-python
+#: code:addons/di_pos_replenish/models/pos_replenish.py:0
+msgid "A quantity to send cannot be negative."
+msgstr "Una quantità da inviare non può essere negativa."
+
+#. module: di_pos_replenish
+#. odoo-python
+#: code:addons/di_pos_replenish/models/pos_replenish.py:0
+msgid "This product is already on this run for that point of sale."
+msgstr "Questo prodotto è già in questa elaborazione per quel punto vendita."
+
+#. module: di_pos_replenish
+#. odoo-python
+#: code:addons/di_pos_replenish/models/pos_replenish.py:0
+msgid "%(product)s at %(config)s: %(total)s to send but only %(sold)s sold. A run puts back what went out; to send more, use an arrival distribution."
+msgstr "%(product)s presso %(config)s: %(total)s da inviare ma solo %(sold)s venduti. Un riassortimento rimette ciò che è uscito; per inviare di più, usa una distribuzione di arrivo."
+
+#. module: di_pos_replenish
+#. odoo-javascript
+#: code:addons/di_pos_replenish/static/src/sales_matrix/sales_matrix.js:0
+msgid "Type a quantity of zero or more."
+msgstr "Digita una quantità pari o superiore a zero."
+
+#. module: di_pos_replenish
+#. odoo-javascript
+#: code:addons/di_pos_replenish/static/src/sales_matrix/sales_matrix.js:0
+msgid "More than this shop sold."
+msgstr "Più di quanto questo negozio ha venduto."
+
+#. module: di_pos_replenish
+#. odoo-javascript
+#: code:addons/di_pos_replenish/static/src/sales_matrix/sales_matrix.js:0
+msgid "More than that warehouse has free."
+msgstr "Più di quanto quel magazzino ha libero."
+
+#. module: di_pos_replenish
+#. odoo-javascript
+#: code:addons/di_pos_replenish/static/src/sales_matrix/sales_matrix.js:0
+msgid "Quantities saved."
+msgstr "Quantità salvate."
+
+#. module: di_pos_replenish
+#. odoo-javascript
+#: code:addons/di_pos_replenish/static/src/sales_matrix/sales_matrix.js:0
+msgid "Save the run first."
+msgstr "Salva prima l'elaborazione."
+
+#. module: di_pos_replenish
+#. odoo-javascript
+#: code:addons/di_pos_replenish/static/src/sales_matrix/sales_matrix.js:0
+msgid "Save Quantities"
+msgstr "Salva Quantità"
+
+#. module: di_pos_replenish
+#. odoo-javascript
+#: code:addons/di_pos_replenish/static/src/sales_matrix/sales_matrix.js:0
+msgid "Discard"
+msgstr "Scarta"
+
+#. module: di_pos_replenish
+#. odoo-python
+#: code:addons/di_pos_replenish/models/pos_replenish.py:0
+msgid "Could not find a free reference: every number the sequence gives is already used. Check the sales replenishment sequence under Settings > Technical > Sequences."
+msgstr "Impossibile trovare un riferimento libero: ogni numero dato dalla sequenza è già usato. Controlla la sequenza del riassortimento di vendita in Impostazioni > Tecnico > Sequenze."
+
+#. module: di_pos_replenish
+#. odoo-javascript
+#: code:addons/di_pos_replenish/static/src/sales_matrix/sales_matrix.js:0
+msgid "Reset column order"
+msgstr "Ripristina ordine colonne"
+
+#. module: di_pos_replenish
+#. odoo-javascript
+#: code:addons/di_pos_replenish/static/src/sales_matrix/sales_matrix.js:0
+msgid "%s sold with no free stock at the sources: not shown."
+msgstr "%s venduti senza giacenza libera nelle origini: non mostrati."

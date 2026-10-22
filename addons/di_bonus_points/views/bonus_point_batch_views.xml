@@ -1,0 +1,60 @@
+<odoo>
+    <record id="bonus_point_batch_view_list" model="ir.ui.view">
+        <field name="name">bonus.point.batch.list</field>
+        <field name="model">bonus.point.batch</field>
+        <field name="arch" type="xml">
+            <list string="Bonus Points Batches" default_order="expiry_date">
+                <field name="partner_id"/>
+                <field name="points_earned"/>
+                <field name="points_remaining"/>
+                <field name="earn_date"/>
+                <field name="expiry_date"/>
+                <field name="state" decoration-success="state == 'active'"
+                       decoration-muted="state == 'depleted'"
+                       decoration-danger="state == 'expired'"/>
+                <field name="source_pos_order_id"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="bonus_point_batch_view_form" model="ir.ui.view">
+        <field name="name">bonus.point.batch.form</field>
+        <field name="model">bonus.point.batch</field>
+        <field name="arch" type="xml">
+            <form string="Bonus Points Batch">
+                <sheet>
+                    <group>
+                        <field name="company_id" groups="base.group_multi_company"/>
+                        <field name="partner_id"/>
+                        <field name="points_earned"/>
+                        <field name="points_remaining"/>
+                        <field name="earn_date"/>
+                        <field name="expiry_date"/>
+                        <field name="state"/>
+                        <field name="source_pos_order_id"/>
+                    </group>
+                    <notebook>
+                        <page string="Movements">
+                            <field name="movement_ids" readonly="1">
+                                <list>
+                                    <field name="date"/>
+                                    <field name="movement_type"/>
+                                    <field name="points"/>
+                                    <field name="pos_order_id"/>
+                                    <field name="pos_order_line_id"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="bonus_point_batch_action" model="ir.actions.act_window">
+        <field name="name">Bonus Points Batches</field>
+        <field name="res_model">bonus.point.batch</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_pricelist_item_form_view_extend" model="ir.ui.view">
+        <field name="name">product.pricelist.item.form.extend</field>
+        <field name="model">product.pricelist.item</field>
+        <field name="inherit_id" ref="product.product_pricelist_item_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='compute_price']" position="before">
+                <group string="Filtri aggiuntivi" col="2" colspan="2">
+                    <field name="x_vendor_id"
+                           widget="many2many_tags"
+                           placeholder="Seleziona uno o piu fornitori"
+                           options="{'create': False, 'edit_tags': False}"/>
+                    <field name="x_marche_id"
+                           widget="many2many_tags"
+                           placeholder="Seleziona una o piu marche"
+                           options="{'create': False, 'edit_tags': False}"/>
+                    <field name="x_stagione_id"
+                           widget="many2many_tags"
+                           placeholder="Seleziona una o piu stagioni"
+                           options="{'create': False, 'edit_tags': False}"/>
+                    <field name="x_reparto_id"
+                           widget="many2many_tags"
+                           placeholder="Seleziona uno o piu reparti"
+                           options="{'create': False, 'edit_tags': False}"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

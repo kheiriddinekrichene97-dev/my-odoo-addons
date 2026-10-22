@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- The variant's own BA code, in the same General Information group the
+         template form puts it in (product_template_views.xml). It needs its
+         own record: product.product_normal_form_view is a primary view
+         inheriting product_template_form_view, not the
+         product_template_only_form_view the template field is added to, so it
+         picks up nothing from there. It also wants its own number - an
+         attribute price extra can land a size or colour in a different price
+         bracket than its template, and the variant's is the one a cartellino
+         prints. Anchored on the core group, never on a Studio view: those
+         carry environment-specific xml ids. -->
+    <record id="product_product_form_bonus_ba_code" model="ir.ui.view">
+        <field name="name">product.product.form.bonus.ba.code</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='group_general']" position="inside">
+                <field name="bonus_ba_code"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Also in the Product Variants list, which is where the cartellini are
+         selected for printing - so the BA can be checked against the tags
+         before sending a run to the thermal printer. Optional, so anyone who
+         doesn't care can drop the column. -->
+    <record id="product_product_list_bonus_ba_code" model="ir.ui.view">
+        <field name="name">product.product.list.bonus.ba.code</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_product_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="lst_price" position="after">
+                <field name="bonus_ba_code" optional="show"/>
+            </field>
+        </field>
+    </record>
+</odoo>

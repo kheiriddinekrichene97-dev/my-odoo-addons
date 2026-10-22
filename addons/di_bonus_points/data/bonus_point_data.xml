@@ -1,0 +1,86 @@
+<odoo>
+    <data noupdate="1">
+
+        <!-- Default settings (point value, earn divisor, expiry days) -->
+        <record id="bonus_point_settings_default" model="bonus.point.settings">
+            <field name="company_id" ref="base.main_company"/>
+            <field name="point_value">5.0</field>
+            <field name="earn_divisor">5.0</field>
+            <field name="expiry_days">30</field>
+        </record>
+
+        <!-- Default price brackets, matching the confirmed table exactly:
+             price <= 14.95         -> 0 pts
+             14.95 < price < 35.00  -> 1 pt
+             35.00 <= price < 90.00 -> 2 pts
+             90.00 <= price < 150.00 -> 3 pts
+             price >= 150.00        -> 4 pts
+        -->
+        <record id="bonus_point_bracket_0" model="bonus.point.bracket">
+            <field name="company_id" ref="base.main_company"/>
+            <field name="sequence">10</field>
+            <field name="price_from">0.0</field>
+            <field name="price_from_inclusive">1</field>
+            <field name="price_to">14.95</field>
+            <field name="price_to_inclusive">1</field>
+            <field name="points">0</field>
+        </record>
+
+        <record id="bonus_point_bracket_1" model="bonus.point.bracket">
+            <field name="company_id" ref="base.main_company"/>
+            <field name="sequence">20</field>
+            <field name="price_from">14.95</field>
+            <field name="price_from_inclusive">0</field>
+            <field name="price_to">35.00</field>
+            <field name="price_to_inclusive">0</field>
+            <field name="points">1</field>
+        </record>
+
+        <record id="bonus_point_bracket_2" model="bonus.point.bracket">
+            <field name="company_id" ref="base.main_company"/>
+            <field name="sequence">30</field>
+            <field name="price_from">35.00</field>
+            <field name="price_from_inclusive">1</field>
+            <field name="price_to">90.00</field>
+            <field name="price_to_inclusive">0</field>
+            <field name="points">2</field>
+        </record>
+
+        <record id="bonus_point_bracket_3" model="bonus.point.bracket">
+            <field name="company_id" ref="base.main_company"/>
+            <field name="sequence">40</field>
+            <field name="price_from">90.00</field>
+            <field name="price_from_inclusive">1</field>
+            <field name="price_to">150.00</field>
+            <field name="price_to_inclusive">0</field>
+            <field name="points">3</field>
+        </record>
+
+        <record id="bonus_point_bracket_4" model="bonus.point.bracket">
+            <field name="company_id" ref="base.main_company"/>
+            <field name="sequence">50</field>
+            <field name="price_from">150.00</field>
+            <field name="price_from_inclusive">1</field>
+            <field name="no_upper_limit">1</field>
+            <field name="points">4</field>
+        </record>
+
+        <!-- Placeholder category rules. reparto_ids is intentionally left
+             empty: the x_reparto records (D/DN/D+/DO/U/U+/...) are
+             Studio-created and their IDs are environment-specific, so they
+             must be linked manually after install (Bonus Points >
+             Configuration > Category Rules). -->
+        <record id="bonus_point_category_rule_donna" model="bonus.point.category.rule">
+            <field name="company_id" ref="base.main_company"/>
+            <field name="name">Donna</field>
+            <field name="max_discount_rate">50.0</field>
+        </record>
+
+        <record id="bonus_point_category_rule_uomo" model="bonus.point.category.rule">
+            <field name="company_id" ref="base.main_company"/>
+            <field name="name">Uomo</field>
+            <field name="max_discount_rate">30.0</field>
+        </record>
+
+    </data>
+</odoo>

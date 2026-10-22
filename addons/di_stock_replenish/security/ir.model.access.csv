@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_di_stock_replenish_user,di.stock.replenish.user,model_di_stock_replenish,di_stock_arrival.group_di_arrival_user,1,1,1,1
+access_di_stock_replenish_manager,di.stock.replenish.manager,model_di_stock_replenish,di_stock_arrival.group_di_arrival_manager,1,1,1,1
+access_di_stock_replenish_line_user,di.stock.replenish.line.user,model_di_stock_replenish_line,di_stock_arrival.group_di_arrival_user,1,1,1,1
+access_di_stock_replenish_line_manager,di.stock.replenish.line.manager,model_di_stock_replenish_line,di_stock_arrival.group_di_arrival_manager,1,1,1,1

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Show the BA code on the product form, in the same General Information
+         group as Stagione/Marca/Reparto. Anchored on the core group rather
+         than on the Studio view that adds those fields: Studio views carry
+         environment-specific xml ids, and depending on Studio records from a
+         module is what broke the POS once already (x_reparto) and what stops
+         a fresh database from booting (pricelist_extend's x_marche). -->
+    <record id="product_template_form_bonus_ba_code" model="ir.ui.view">
+        <field name="name">product.template.form.bonus.ba.code</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='group_general']" position="inside">
+                <field name="bonus_ba_code"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_template_view_list_bonus_eligible" model="ir.ui.view">
+        <field name="name">product.template.list.bonus.eligible</field>
+        <field name="model">product.template</field>
+        <field name="arch" type="xml">
+            <list string="Bonus Points Eligible Products" create="0">
+                <field name="default_code" string="Ref"/>
+                <field name="name"/>
+                <field name="x_studio_prodotti2reparto"/>
+                <field name="x_studio_Prodotti2Marca" optional="show"/>
+                <field name="x_studio_prodotti2stagione" optional="hide"/>
+                <field name="list_price" string="Sales Price" widget="monetary"/>
+                <field name="bonus_promo_price" string="Promo Price" widget="monetary"/>
+                <field name="bonus_discount_pct" string="Discount %" digits="[16,1]"/>
+                <field name="bonus_ba_code" string="BA"/>
+                <field name="qty_available" string="On Hand" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="product_template_search_bonus_eligible" model="ir.ui.view">
+        <field name="name">product.template.search.bonus.eligible</field>
+        <field name="model">product.template</field>
+        <field name="arch" type="xml">
+            <search string="Bonus Points Eligible Products">
+                <field name="name"/>
+                <field name="default_code"/>
+                <field name="x_studio_prodotti2reparto"/>
+                <field name="x_studio_Prodotti2Marca"/>
+                <group>
+                    <filter string="Reparto" name="group_reparto" domain="[]" context="{'group_by': 'x_studio_prodotti2reparto'}"/>
+                    <filter string="Marca" name="group_marca" domain="[]" context="{'group_by': 'x_studio_Prodotti2Marca'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="product_template_action_bonus_eligible" model="ir.actions.act_window">
+        <field name="name">Eligible Products</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="product_template_view_list_bonus_eligible"/>
+        <field name="search_view_id" ref="product_template_search_bonus_eligible"/>
+        <field name="domain">[('bonus_points_eligible', '=', True)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No product currently qualifies for bonus points.
+            </p><p>
+                A product shows up here when (Sales Price - Promo Price) / Sales Price
+                is within its Reparto's Donna/Uomo discount cap.
+            </p>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,19 @@
+<odoo>
+
+    <record id="res_config_settings_view_form_di_arrival" model="ir.ui.view">
+        <field name="name">res.config.settings.form.inherit.di.stock.arrival</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="stock.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@name='warehouse_setting_container']" position="inside">
+                <setting id="di_arrival_warehouse_setting"
+                         title="Warehouse incoming goods land in before being divided across shops and stockrooms."
+                         help="Arrival documents always receive into this warehouse.">
+                    <field name="di_arrival_warehouse_id"
+                           options="{'no_create': True}"/>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

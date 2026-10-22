@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--
+          The authorization gate for every checked projection in this addon.
+
+          WHY A GROUP, AND WHY THE METHOD MUST CHECK IT ITSELF. An `ir.model.access` entry does not
+          gate an RPC call. Odoo 19 dispatches `/json/2/<model>/<method>` through
+          `get_public_method` (odoo/service/model.py:45) and then calls the function; `call_kw`
+          takes the same path. Neither performs `check_access`. An ACL bounds what the ORM does
+          *inside* a method — it does not decide whether the method runs at all.
+
+          Measured, not assumed. Against Odoo Server 19.0-20260908 with the model's ACL granted to
+          `base.group_user`, a user holding only `base.group_user` called
+          `agent_projected_picking_company_v1` over `/json/2/` and received HTTP 200 with a
+          well-formed projection response. The integration suite reproduces that as a regression
+          test, so the gap cannot silently reopen.
+
+          DELIBERATELY UNASSIGNED. This record carries no `user_ids`, no `implied_ids` and no
+          `privilege_id`:
+
+            * no `implied_ids` → nothing confers it. `base.group_user` does not, and neither does
+              Inventory Administrator or Settings;
+            * no `user_ids` → nobody holds it on install, not `base.user_admin` and not
+              `base.user_root`, so the projection refuses every identity until an operator
+              deliberately assigns it;
+            * no `privilege_id` → it does not appear as a selectable role in the user form's
+              privilege widgets, so it cannot be granted by accident while configuring something
+              else.
+
+          The default state of a fresh install is therefore: the capability exists, and nobody can
+          invoke it. That is the fail-closed direction.
+
+          FOR WHOEVER ASSIGNS IT. This is not an "inventory read" permission and must not be given
+          to a human role. It marks exactly one non-human identity — the agent's dedicated service
+          user, whose reads are bounded by the control plane. Granting it to a person does not let
+          them see more than their own record rules already allow, but it does make their calls
+          indistinguishable from the agent's in an audit.
+        -->
+        <record id="group_agent_projection_service" model="res.groups">
+            <field name="name">Agent gateway: checked projection service</field>
+            <field name="comment">Holds the right to invoke this addon's checked read projections over RPC. Unassigned on install by design; grant it only to the agent's dedicated service identity.</field>
+        </record>
+    </data>
+</odoo>

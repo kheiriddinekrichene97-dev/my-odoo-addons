@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- One tab, three forms, two different shapes. Placed after Inventory
+         on every one of them: it answers an inventory question, and a tab
+         that moves between the template and the variant would be a tab
+         nobody trusts.
+
+         The template's shape and the variant's are deliberately different,
+         not just the same list with one column dropped. The old
+         "Esistenza per colori articolo" screen only makes sense at the
+         style level - one variant already has a fixed colour AND a fixed
+         size, so a colour x size grid for it would be a single cell. The
+         two variant forms keep the flat per-location list; only the
+         template gets the grid. -->
+
+    <!-- Template: Colore x Taglia x Filiale, reproducing the old screen. -->
+    <record id="product_template_form_stock_locations" model="ir.ui.view">
+        <field name="name">product.template.form.stock.locations</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='inventory']" position="after">
+                <page string="Locations" name="di_locations"
+                      invisible="not is_storable">
+                    <field name="di_color_size_matrix" nolabel="1"
+                           widget="di_color_size_matrix"/>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Variant, full form: this variant only. No Variant column - the form
+         is already about one. -->
+    <record id="product_product_form_stock_locations" model="ir.ui.view">
+        <field name="name">product.product.form.stock.locations</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='inventory']" position="after">
+                <page string="Locations" name="di_locations"
+                      invisible="not is_storable">
+                    <field name="di_internal_quant_ids" nolabel="1" readonly="1">
+                        <list create="false" delete="false" edit="false"
+                              default_order="quantity desc">
+                            <field name="location_id"/>
+                            <field name="warehouse_id" optional="show"/>
+                            <field name="quantity" sum="On Hand"/>
+                            <field name="reserved_quantity" sum="Reserved"
+                                   optional="show"/>
+                            <field name="available_quantity" optional="hide"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Variant, easy-edit form: what product.product_variant_action actually
+         opens, and the form the shop reaches from a template's Variants list.
+         It has no notebook at all, so the tab needs one built for it - hence
+         a notebook holding a single page rather than a page added to one. -->
+    <record id="product_variant_easy_edit_stock_locations" model="ir.ui.view">
+        <field name="name">product.product.form.easy.stock.locations</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                <!-- is_storable is not on this form, and a field named in an
+                     invisible expression has to be in the view to be read. -->
+                <field name="is_storable" invisible="1"/>
+                <notebook>
+                    <page string="Locations" name="di_locations"
+                          invisible="not is_storable">
+                        <field name="di_internal_quant_ids" nolabel="1"
+                               readonly="1">
+                            <list create="false" delete="false" edit="false"
+                                  default_order="quantity desc">
+                                <field name="location_id"/>
+                                <field name="warehouse_id" optional="show"/>
+                                <field name="quantity" sum="On Hand"/>
+                                <field name="reserved_quantity" sum="Reserved"
+                                       optional="show"/>
+                                <field name="available_quantity"
+                                       optional="hide"/>
+                            </list>
+                        </field>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+</odoo>

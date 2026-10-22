@@ -1,0 +1,21 @@
+<odoo>
+
+    <menuitem id="menu_di_arrival_root"
+              name="Arrivals"
+              parent="stock.menu_stock_root"
+              sequence="7"
+              groups="group_di_arrival_user"/>
+
+    <menuitem id="menu_di_arrival_arrivals"
+              name="Arrivals"
+              parent="menu_di_arrival_root"
+              action="di_stock_arrival_action"
+              sequence="10"/>
+
+    <menuitem id="menu_di_arrival_distribution"
+              name="Distribution"
+              parent="menu_di_arrival_root"
+              action="di_stock_arrival_allocation_action"
+              sequence="20"/>
+
+</odoo>

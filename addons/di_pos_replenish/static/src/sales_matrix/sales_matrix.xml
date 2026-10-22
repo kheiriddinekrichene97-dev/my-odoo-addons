@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="di_pos_replenish.PosSalesMatrix">
+        <div class="di_matrix di_sales">
+
+            <!-- One tab per till that sold something. The pieces sold ride on
+                 the tab so a worker can see what is waiting behind each shop
+                 without opening it - pieces, not rows, so it reads the same
+                 as the till's own total. -->
+            <div t-if="state.configs.length" class="di_sales_tabs d-flex flex-wrap gap-1 mb-2">
+                <button t-foreach="state.configs" t-as="config" t-key="config.id"
+                        class="btn btn-sm di_sales_tab"
+                        t-att-class="isActiveConfig(config.id) ? 'btn-primary' : 'btn-outline-secondary'"
+                        t-att-disabled="state.loading or state.saving"
+                        t-att-title="config.warehouse"
+                        t-on-click="() => this.selectConfig(config.id)">
+                    <span t-esc="config.name"/>
+                    <span class="badge bg-light text-dark ms-1" t-esc="format(config.sold)"/>
+                </button>
+            </div>
+
+            <div class="di_matrix_toolbar d-flex flex-wrap align-items-center gap-2 mb-2">
+                <input type="text" class="form-control form-control-sm di_matrix_search"
+                       t-att-placeholder="state.labels.product"
+                       t-model="state.rowFilter"/>
+                <div class="flex-grow-1"/>
+                <span t-if="state.loaded and state.configs.length"
+                      class="text-muted small di_sales_count"
+                      t-att-title="state.labels.net">
+                    <t t-esc="visibleSold"/>
+                </span>
+                <button t-if="state.editable and hasEdits" class="btn btn-primary btn-sm"
+                        t-att-disabled="state.saving"
+                        t-on-click="() => this.saveQuantities()">Save Quantities</button>
+                <button t-if="state.editable and hasEdits" class="btn btn-secondary btn-sm"
+                        t-att-disabled="state.saving"
+                        t-on-click="discardQuantities">Discard</button>
+                <button t-if="state.canPrint and state.configs.length"
+                        class="btn btn-secondary btn-sm"
+                        t-att-disabled="state.loading or state.saving"
+                        t-on-click="printTags"
+                        t-esc="state.labels.print"/>
+                <!-- Only once something has been moved: back to the order
+                     the grid opens in. -->
+                <button t-if="columnOrder.hasCustomOrder and state.configs.length"
+                        class="btn btn-secondary btn-sm"
+                        t-att-title="resetColumnsTitle"
+                        t-att-aria-label="resetColumnsTitle"
+                        t-on-click="() => this.columnOrder.reset()">
+                    <i class="fa fa-undo"/>
+                </button>
+                <button class="btn btn-primary btn-sm"
+                        t-att-disabled="state.loading"
+                        t-on-click="refresh">Refresh</button>
+            </div>
+
+            <!-- Dropping a season is a filter over rows that already exist,
+                 not a recompute, so a quantity somebody has already adjusted
+                 by hand comes straight back when the season is picked up
+                 again. Only the seasons this run actually touched are
+                 offered - the picker would otherwise be a list of 77 to
+                 search rather than a row of chips to press. -->
+            <div t-if="state.seasons.length > 1" class="di_matrix_picker mb-2">
+                <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
+                    <span class="fw-bold small" t-esc="state.labels.season"/>
+                    <button class="btn btn-link btn-sm p-0"
+                            t-att-disabled="!state.excludedSeasons.length or state.loading"
+                            t-on-click="restoreAllSeasons">&#215;</button>
+                </div>
+                <div class="di_matrix_chips">
+                    <button t-foreach="state.seasons" t-as="season" t-key="season.id"
+                            class="btn btn-sm di_matrix_chip"
+                            t-att-class="isSeasonDropped(season.id) ? 'btn-outline-danger di_sales_dropped' : 'btn-primary'"
+                            t-att-disabled="state.loading or state.saving"
+                            t-on-click="() => this.toggleSeason(season.id)">
+                        <span t-esc="season.name"/>
+                        <span class="badge bg-light text-dark ms-1" t-esc="season.sold"/>
+                    </button>
+                </div>
+            </div>
+
+            <div t-if="state.message" class="alert alert-info mb-0" role="alert"
+                 t-esc="state.message"/>
+
+            <div t-if="!state.message and state.hiddenUnstocked" class="text-muted small mb-2"
+                 t-esc="hiddenUnstockedLabel"/>
+
+            <div t-if="!state.message" class="di_matrix_scroll">
+                <!-- Read once here: columns is rebuilt on every call, and
+                     every row below walks it. -->
+                <t t-set="cols" t-value="columns"/>
+                <table class="di_matrix_table di_sales_table">
+                    <thead>
+                        <tr>
+                            <th class="di_matrix_sticky" t-esc="state.labels.product"/>
+                            <!-- Every heading after the product one can be
+                                 dragged onto another to move its column
+                                 there, remembered in this browser - see
+                                 di_stock_replenish's column_order.js.
+                                 A source column is headed by the warehouse
+                                 as it is named everywhere else in Odoo; the
+                                 short code is kept in the tooltip: it is
+                                 what the picking references are built from,
+                                 so it stays reachable without heading the
+                                 column with something a new worker cannot
+                                 read. -->
+                            <th t-foreach="cols" t-as="col" t-key="col.key"
+                                draggable="true"
+                                class="di_col_draggable"
+                                t-att-class="{
+                                    'text-end': col.key === 'net' or col.key === 'to_send',
+                                    'text-center di_sales_source': col.type === 'source',
+                                }"
+                                t-att-title="col.title"
+                                t-on-dragstart="(ev) => this.columnOrder.onDragStart(col.key, ev)"
+                                t-on-dragover="(ev) => this.columnOrder.onDragOver(col.key, ev)"
+                                t-on-dragleave="(ev) => this.columnOrder.onDragLeave(ev)"
+                                t-on-drop="(ev) => this.columnOrder.onDrop(col.key, defaultKeys, ev)"
+                                t-on-dragend="(ev) => this.columnOrder.onDragEnd(ev)">
+                                <span t-esc="col.label"/>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="filteredGroups" t-as="group" t-key="group_index">
+                            <!-- Main category, then posizionamento inside it,
+                                 then the child category: ABBI-SCA, ABBI-APP,
+                                 ACCE-SCA. ABBI heads the categories and SCA
+                                 heads each one. Ordered server-side, where the
+                                 taxonomy lives. The child is blank where it
+                                 would just repeat the root. -->
+                            <tr class="di_sales_group">
+                                <td t-att-colspan="cols.length + 1">
+                                    <span class="fw-bold" t-esc="group.root"/>
+                                    <span class="mx-2 opacity-50">/</span>
+                                    <span class="fw-bold" t-esc="group.position"/>
+                                    <t t-if="group.category">
+                                        <span class="mx-2 opacity-50">/</span>
+                                        <span t-esc="group.category"/>
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr t-foreach="group.rows" t-as="row" t-key="row.id"
+                                t-att-class="isShort(row) ? 'di_sales_short_row' : ''">
+                                <td class="di_matrix_sticky">
+                                    <div class="di_sales_name" t-esc="row.name"/>
+                                    <div t-if="row.code" class="di_sales_code text-muted"
+                                         t-esc="row.code"/>
+                                </td>
+                                <t t-foreach="cols" t-as="col" t-key="col.key">
+                                    <td t-if="col.key === 'barcode'" class="di_sales_barcode"
+                                        t-esc="row.barcode"/>
+                                    <td t-elif="col.key === 'season'" class="di_sales_info"
+                                        t-esc="row.season"/>
+                                    <!-- Sold net of what came back. The
+                                         tooltip carries both halves, so a
+                                         worker can see why the number is
+                                         lower than they remember selling. -->
+                                    <td t-elif="col.key === 'net'" class="text-end fw-bold"
+                                        t-att-title="row.returned ? state.labels.sold + ': ' + row.sold + ' / ' + state.labels.returned + ': ' + row.returned : ''">
+                                        <span t-esc="row.net"/>
+                                        <span t-if="row.returned" class="di_sales_returned">&#8722;<t t-esc="row.returned"/></span>
+                                    </td>
+                                    <td t-elif="col.type === 'source'"
+                                        class="di_sales_cell"
+                                        t-att-class="available(row, col.id) ? '' : 'di_sales_empty'">
+                                        <div class="d-flex align-items-center justify-content-center gap-1">
+                                            <!-- Enter moves down this
+                                                 warehouse's column - see
+                                                 moveDownColumn. -->
+                                            <input type="text" class="form-control form-control-sm di_sales_input"
+                                                   t-att-class="isOverAvailable(row, col.id) ? 'di_sales_over' : ''"
+                                                   t-att-data-column="col.key"
+                                                   t-att-value="takeDisplay(row, col.id)"
+                                                   t-att-readonly="!state.editable"
+                                                   t-att-placeholder="'0'"
+                                                   t-on-keydown="onQuantityKeydown"
+                                                   t-on-change="(ev) => this.onQuantityChange(row, col.id, ev)"/>
+                                            <!-- What the warehouse actually
+                                                 has free, beside the cell
+                                                 rather than behind a
+                                                 tooltip: it is the number the
+                                                 typed one is judged against. -->
+                                            <span class="di_sales_avail text-muted"
+                                                  t-att-title="state.labels.available">
+                                                /&#160;<t t-esc="available(row, col.id)"/>
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td t-else="" class="text-end fw-bold di_sales_total">
+                                        <span t-esc="rowTotal(row)"/>
+                                        <!-- Sold more than the warehouses can
+                                             replace: the shop stays short by
+                                             this much, and somebody has to
+                                             know. -->
+                                        <span t-if="isShort(row)" class="di_sales_short"
+                                              t-esc="'−' + format(row.net - rowTotal(row))"/>
+                                    </td>
+                                </t>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </t>
+
+</templates>

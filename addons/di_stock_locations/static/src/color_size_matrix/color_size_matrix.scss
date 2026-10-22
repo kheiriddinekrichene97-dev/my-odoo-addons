@@ -1,0 +1,234 @@
+// Colour strategy and the full-width fix, both borrowed wholesale from
+// di_stock_arrival's distribution_matrix.scss - this grid had the same two
+// problems, already solved there.
+//
+// Odoo's backend bundle does not expose Bootstrap's CSS custom properties:
+// every var(--bs-*) resolves to its fallback, silently. What Odoo does give
+// a module is its SCSS variables, compiled once per theme, so light and dark
+// each get the right value at build time. This grid used the wrong
+// mechanism at first and looked "native" purely by fallback-value
+// coincidence - fixed here to read the real theme.
+//
+// The other half is width, and it turned out to need one more rule than
+// di_stock_arrival's own version does. Odoo wraps a field widget in its own
+// div - class o_field_<widget name>, here o_field_di_color_size_matrix -
+// and that wrapper rendered at 0 width (confirmed in devtools), because
+// this field is a Char with no value: Odoo's o_field_empty styling collapses
+// an empty field's own box, and .di_csm filling 100% of a 0-wide parent is
+// still 0. The other grids in this codebase never hit this because their
+// anchor fields (di_stock_replenish.comparison and its siblings) are read
+// the same way, so either their box is not collapsed for some other reason
+// or nobody had devtools open on the right day - either way, the fix has to
+// target the WRAPPER, not just this component's own root.
+
+$di-csm-surface: #fff;
+@if variable-exists(o-view-background-color) {
+    $di-csm-surface: $o-view-background-color;
+} @else if variable-exists(body-bg) {
+    $di-csm-surface: $body-bg;
+}
+
+$di-csm-focus: #714b67;
+@if variable-exists(o-brand-primary) {
+    $di-csm-focus: $o-brand-primary;
+}
+
+// Odoo's own wrapper around this field - collapsed to 0 width by its
+// o_field_empty state, since the field never carries a real value. Undoing
+// that collapse is what actually stretches the grid; everything on .di_csm
+// below is necessary but was never sufficient on its own.
+.o_field_di_color_size_matrix {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0;
+}
+
+.di_csm {
+    --di-csm-surface:     #{$di-csm-surface};
+    --di-csm-focus:       #{$di-csm-focus};
+    --di-csm-rule:        rgba(127, 127, 127, 0.32);
+    --di-csm-rule-strong: rgba(127, 127, 127, 0.55);
+    --di-csm-hover:       rgba(127, 127, 127, 0.10);
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+    min-width: 0;
+    gap: 0.5rem;
+}
+
+.di_csm_titlebar {
+    padding: 0.4rem 0.6rem;
+    background-color: var(--di-csm-surface);
+    border: 1px solid var(--di-csm-rule);
+    border-radius: 4px;
+    font-weight: 600;
+    // No colour declared: text inherits the form's, correct in both themes.
+}
+
+.di_csm_titletext {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.di_csm_filiale {
+    width: auto;
+    max-width: 220px;
+}
+
+// A toggle, not a one-shot button: pressed state is painted by border and
+// text colour only, so it reads the same on both themes without depending
+// on any --bs-* custom property (see the header comment).
+.di_csm_instock_btn {
+    white-space: nowrap;
+    border: 1px solid var(--di-csm-rule-strong);
+    color: inherit;
+    background: transparent;
+    opacity: 0.8;
+
+    &:hover {
+        opacity: 1;
+        box-shadow: inset 0 0 0 9999px var(--di-csm-hover);
+    }
+
+    &.active {
+        opacity: 1;
+        font-weight: 600;
+        color: var(--di-csm-focus);
+        border-color: var(--di-csm-focus);
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--di-csm-focus);
+        outline-offset: 1px;
+    }
+}
+
+.di_csm_collapse_btn {
+    background: transparent;
+    border: 0;
+    color: inherit;
+    padding: 0.1rem 0.4rem;
+    cursor: pointer;
+    opacity: 0.7;
+
+    &:hover {
+        opacity: 1;
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--di-csm-focus);
+        outline-offset: 1px;
+    }
+}
+
+.di_csm_status {
+    padding: 0.75rem;
+    opacity: 0.7;
+}
+
+.di_csm_scroll {
+    // max-width alone only ever caps this box - it never forces it to
+    // actually reach 100%, so a table with few/narrow columns (few sizes,
+    // one filtered warehouse) rendered narrower than the tab even though
+    // the grid around it was already full width. width: 100% is the fix.
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: auto;
+    // The old screen was tall by design - every warehouse, per colour, zero
+    // rows included.
+    max-height: 65vh;
+    border: 1px solid var(--di-csm-rule);
+    border-radius: 4px;
+}
+
+// Deliberately not Bootstrap's .table - see distribution_matrix.scss for
+// why (it paints text colour through --bs-table-color, which is exactly the
+// custom property this whole file exists to avoid depending on).
+.di_csm_table {
+    width: 100%;
+    margin-bottom: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+    white-space: nowrap;
+
+    th, td {
+        padding: 0.35rem 0.6rem;
+        border-right: 1px solid var(--di-csm-rule);
+        border-bottom: 1px solid var(--di-csm-rule);
+        vertical-align: middle;
+    }
+
+    tbody tr:hover td {
+        box-shadow: inset 0 0 0 9999px var(--di-csm-hover);
+    }
+
+    thead th {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        background-color: var(--di-csm-surface);
+        border-bottom: 2px solid var(--di-csm-rule-strong);
+        font-weight: 600;
+    }
+
+    tfoot td {
+        position: sticky;
+        bottom: 0;
+        z-index: 2;
+        background-color: var(--di-csm-surface);
+        border-top: 2px solid var(--di-csm-rule-strong);
+        font-weight: 700;
+    }
+}
+
+.di_csm_sticky {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background-color: var(--di-csm-surface);
+    border-right: 2px solid var(--di-csm-rule);
+}
+
+thead .di_csm_sticky,
+tfoot .di_csm_sticky {
+    z-index: 3;
+}
+
+.di_csm_table tbody tr:hover .di_csm_sticky {
+    background-color: var(--di-csm-hover);
+}
+
+.di_csm_row_label {
+    text-align: left;
+    min-width: 200px;
+}
+
+.di_csm_total_col {
+    font-weight: 700;
+    border-left: 2px solid var(--di-csm-rule-strong);
+}
+
+// The bold aggregate row per colour - "BIANCO 4 0 0 17 8 29" in the old
+// screen - reads as a header for the location rows underneath it, not one
+// more row among them.
+.di_csm_colour_row {
+    font-weight: 700;
+    background-color: var(--di-csm-surface);
+
+    td.di_csm_sticky {
+        background-color: var(--di-csm-surface);
+    }
+}
+
+.di_csm_location_row .di_csm_location_label {
+    padding-left: 1.4rem;
+    font-weight: 400;
+}
+
+.di_csm_empty {
+    opacity: 0.55;
+}

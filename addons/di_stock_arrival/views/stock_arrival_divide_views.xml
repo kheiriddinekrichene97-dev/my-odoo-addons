@@ -1,0 +1,35 @@
+<odoo>
+
+    <record id="di_stock_arrival_divide_view_form" model="ir.ui.view">
+        <field name="name">di.stock.arrival.divide.form</field>
+        <field name="model">di.stock.arrival.divide</field>
+        <field name="arch" type="xml">
+            <form string="Divide Across Warehouses">
+                <field name="arrival_id" invisible="1"/>
+                <field name="company_id" invisible="1"/>
+                <group>
+                    <field name="warehouse_id" options="{'no_create': True}"/>
+                    <field name="method" widget="radio"/>
+                    <field name="percentage" invisible="method != 'percent'"
+                           required="method == 'percent'"/>
+                    <field name="rounding" invisible="method != 'percent'"/>
+                    <field name="quantity" invisible="method != 'fixed'"
+                           required="method == 'fixed'"/>
+                    <field name="only_undistributed"/>
+                </group>
+                <div class="alert alert-info" role="alert">
+                    This adds to the distribution rather than replacing it, so you can
+                    run it once per destination. Whatever you never distribute stays at
+                    the arrival warehouse.
+                </div>
+                <footer>
+                    <button name="action_apply" type="object" string="Apply"
+                            class="btn-primary" data-hotkey="q"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"
+                            data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

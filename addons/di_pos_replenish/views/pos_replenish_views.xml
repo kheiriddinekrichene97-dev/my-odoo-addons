@@ -1,0 +1,161 @@
+<odoo>
+
+    <record id="di_pos_replenish_view_form" model="ir.ui.view">
+        <field name="name">di.pos.replenish.form</field>
+        <field name="model">di.pos.replenish</field>
+        <field name="arch" type="xml">
+            <!-- di_full_width_form (from di_stock_replenish) lifts the
+                 sheet's max width, and there is no chatter: the grid is the
+                 whole screen, as on the stock comparison. The model keeps
+                 mail.thread, so state changes are still tracked. -->
+            <form string="Sales Replenishment" class="di_full_width_form">
+                <header>
+                    <button name="action_compute" type="object"
+                            string="Compute" class="btn-primary"
+                            invisible="state != 'draft'"
+                            confirm="Rebuild every row from the till receipts for this period? Quantities you have adjusted by hand will be replaced."/>
+                    <button name="action_confirm" type="object"
+                            string="Create Transfers" class="btn-primary"
+                            invisible="state != 'draft' or line_count == 0"
+                            confirm="Generate the internal transfers for this run? They are created ready to validate, so nothing moves until the warehouse picks them."/>
+                    <button name="action_print_document" type="object"
+                            string="Print Document" invisible="line_count == 0"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state != 'draft'"/>
+                    <button name="action_reset_to_draft" type="object"
+                            string="Reset to Draft" invisible="state != 'cancel'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,confirmed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_transfers" type="object"
+                                class="oe_stat_button" icon="fa-truck"
+                                invisible="picking_count == 0">
+                            <field name="picking_count" widget="statinfo"
+                                   string="Transfers"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <field name="company_id" invisible="1"/>
+                    <field name="line_count" invisible="1"/>
+                    <group>
+                        <group string="Period">
+                            <field name="date_from" readonly="state != 'draft'"/>
+                            <field name="date_to" readonly="state != 'draft'"/>
+                            <field name="date" readonly="1"/>
+                            <field name="computed_on" readonly="1"
+                                   invisible="not computed_on"/>
+                        </group>
+                        <group string="Scope">
+                            <field name="config_ids" widget="many2many_tags"
+                                   options="{'no_create': True}"
+                                   readonly="state != 'draft'"/>
+                            <field name="source_warehouse_ids"
+                                   widget="many2many_tags"
+                                   options="{'no_create': True}"
+                                   readonly="state != 'draft'"/>
+                            <!-- Dropped seasons are toggled with the chips
+                                 above the table; the stored value is
+                                 technical. -->
+                            <field name="excluded_season_keys" invisible="1"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-info" role="alert">
+                        What each shop sold over the period, with the free stock at the
+                        source warehouses beside it and what to send back proposed and
+                        capped by what is actually there. Press <b>Compute</b> to build
+                        the run, drop any season you do not want to move, adjust the
+                        quantities, then print the cartellini shop by shop.
+                    </div>
+                    <notebook>
+                        <page string="Replenishment" name="matrix">
+                            <field name="matrix" widget="di_pos_sales_matrix"
+                                   nolabel="1" class="di_matrix_field"/>
+                        </page>
+                        <page string="All Rows" name="lines">
+                            <field name="line_ids" readonly="1">
+                                <list default_order="config_id, sequence"
+                                      decoration-muted="is_excluded"
+                                      decoration-warning="shortfall &gt; 0">
+                                    <field name="config_id"/>
+                                    <field name="category_root" optional="show"/>
+                                    <field name="position_name" optional="show"/>
+                                    <field name="category_label" optional="show"/>
+                                    <field name="product_id"/>
+                                    <field name="default_code" optional="show"/>
+                                    <field name="barcode" optional="hide"/>
+                                    <field name="season_name" optional="show"/>
+                                    <field name="sold_qty" optional="hide"/>
+                                    <field name="returned_qty" optional="hide"/>
+                                    <field name="net_sold_qty" sum="To Replace"/>
+                                    <field name="qty_to_send" sum="To Send"/>
+                                    <field name="shortfall" optional="show"/>
+                                    <field name="is_excluded" optional="hide"/>
+                                    <field name="sequence" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                    <group class="oe_subtotal_footer oe_right">
+                        <field name="total_sold"/>
+                        <field name="total_to_send"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="di_pos_replenish_view_list" model="ir.ui.view">
+        <field name="name">di.pos.replenish.list</field>
+        <field name="model">di.pos.replenish</field>
+        <field name="arch" type="xml">
+            <list string="Sales Replenishment"
+                  decoration-muted="state == 'cancel'"
+                  decoration-success="state == 'confirmed'">
+                <field name="name"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="config_ids" widget="many2many_tags" optional="show"/>
+                <field name="line_count" string="Rows" optional="show"/>
+                <field name="total_sold" optional="hide"/>
+                <field name="total_to_send" optional="show"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-success="state == 'confirmed'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="di_pos_replenish_view_search" model="ir.ui.view">
+        <field name="name">di.pos.replenish.search</field>
+        <field name="model">di.pos.replenish</field>
+        <field name="arch" type="xml">
+            <search string="Sales Replenishment">
+                <field name="name"/>
+                <field name="config_ids"/>
+                <filter name="filter_draft" string="Draft"
+                        domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_confirmed" string="Transfers Created"
+                        domain="[('state', '=', 'confirmed')]"/>
+                <separator/>
+                <filter name="filter_period" string="Period" date="date_to"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="di_pos_replenish_action" model="ir.actions.act_window">
+        <field name="name">Sales Replenishment</field>
+        <field name="res_model">di.pos.replenish</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Restock the shops with what they sold</p>
+            <p>Create a run, press Compute, and every point of sale gets its own
+               table of what went over the counter and what the warehouses can put
+               back. On a Monday the period covers Saturday and Sunday by itself.</p>
+        </field>
+    </record>
+
+</odoo>

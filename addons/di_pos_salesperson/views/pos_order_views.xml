@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- ============ the order: a read-only summary of its lines ============ -->
+    <record id="view_pos_pos_form_inherit_di_pos_salesperson" model="ir.ui.view">
+        <field name="name">pos.order.form.di.pos.salesperson</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="di_salesperson_label"/>
+            </field>
+            <xpath expr="//field[@name='lines']/list/field[@name='qty']" position="after">
+                <field name="salesperson_id" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_pos_order_tree_inherit_di_pos_salesperson" model="ir.ui.view">
+        <field name="name">pos.order.list.di.pos.salesperson</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_tree"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="di_salesperson_label" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_pos_order_filter_inherit_di_pos_salesperson" model="ir.ui.view">
+        <field name="name">pos.order.list.select.di.pos.salesperson</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_filter"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="salesperson_id"/>
+            </field>
+            <filter name="customer" position="after">
+                <filter string="Salesperson" name="di_salesperson" domain="[]" context="{'group_by': 'salesperson_id'}"/>
+            </filter>
+        </field>
+    </record>
+
+    <!-- ============ the lines: where attribution actually lives ============ -->
+    <record id="view_pos_order_line_inherit_di_pos_salesperson" model="ir.ui.view">
+        <field name="name">pos.order.line.list.di.pos.salesperson</field>
+        <field name="model">pos.order.line</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_line"/>
+        <field name="arch" type="xml">
+            <field name="product_id" position="after">
+                <field name="salesperson_id" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_pos_order_tree_all_sales_lines_inherit_di_pos_salesperson" model="ir.ui.view">
+        <field name="name">pos.order.line.all.sales.list.di.pos.salesperson</field>
+        <field name="model">pos.order.line</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_tree_all_sales_lines"/>
+        <field name="arch" type="xml">
+            <field name="product_id" position="after">
+                <field name="salesperson_id" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- point_of_sale ships list views for pos.order.line but no search view,
+         so grouping sales by the employee who made them needs one. -->
+    <record id="view_pos_order_line_search_di_pos_salesperson" model="ir.ui.view">
+        <field name="name">pos.order.line.search.di.pos.salesperson</field>
+        <field name="model">pos.order.line</field>
+        <field name="arch" type="xml">
+            <search string="Sales by Salesperson">
+                <field name="salesperson_id"/>
+                <field name="product_id"/>
+                <field name="order_id"/>
+                <filter string="Attributed" name="di_attributed" domain="[('salesperson_id', '!=', False)]"/>
+                <filter string="Not attributed" name="di_unattributed" domain="[('salesperson_id', '=', False)]"/>
+                <separator/>
+                <filter string="Today" name="di_today"
+                        domain="[('create_date', '&gt;=', 'today'), ('create_date', '&lt;', 'today +1d')]"/>
+                <group>
+                    <filter string="Salesperson" name="di_group_salesperson" context="{'group_by': 'salesperson_id'}"/>
+                    <filter string="Product" name="di_group_product" context="{'group_by': 'product_id'}"/>
+                    <filter string="Order" name="di_group_order" context="{'group_by': 'order_id'}"/>
+                    <filter string="Date" name="di_group_date" context="{'group_by': 'create_date:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_di_sales_by_salesperson" model="ir.actions.act_window">
+        <field name="name">Sales by Salesperson</field>
+        <field name="res_model">pos.order.line</field>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="point_of_sale.view_pos_order_tree_all_sales_lines"/>
+        <field name="search_view_id" ref="view_pos_order_line_search_di_pos_salesperson"/>
+        <field name="context">{'search_default_di_group_salesperson': 1, 'search_default_di_attributed': 1}</field>
+    </record>
+
+    <menuitem id="menu_di_sales_by_salesperson"
+              parent="point_of_sale.menu_point_of_sale"
+              action="action_di_sales_by_salesperson"
+              sequence="6"
+              groups="point_of_sale.group_pos_manager"/>
+</odoo>

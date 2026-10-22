@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Physical label: 70 mm x 38 mm, no margins, 203 dpi (thermal). -->
+    <record id="paperformat_product_tag" model="report.paperformat">
+        <field name="name">Product Tag 70x38</field>
+        <field name="format">custom</field>
+        <field name="page_width">70</field>
+        <field name="page_height">38</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">0</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <!-- dpi feeds wkhtmltopdf and scales the HTML layout (not the thermal
+             print resolution). 96 keeps mm units 1:1 with the page; a high value
+             like 203 shrinks the whole tag. -->
+        <field name="dpi">96</field>
+        <!-- Narrow label formats must NOT be smart-shrunk, or wkhtmltopdf
+             renders the tag miniature in the top-left corner. -->
+        <field name="disable_shrinking" eval="True"/>
+    </record>
+
+    <!-- One PDF page per selected variant, printed straight to the label printer. -->
+    <record id="action_report_product_tag" model="ir.actions.report">
+        <field name="name">Cartellino</field>
+        <field name="model">product.product</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">di_tag_export.report_product_tag</field>
+        <field name="report_file">di_tag_export.report_product_tag</field>
+        <field name="binding_model_id" ref="product.model_product_product"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="paperformat_product_tag"/>
+    </record>
+</odoo>

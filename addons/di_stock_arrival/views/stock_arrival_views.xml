@@ -1,0 +1,259 @@
+<odoo>
+
+    <record id="di_stock_arrival_view_list" model="ir.ui.view">
+        <field name="name">di.stock.arrival.list</field>
+        <field name="model">di.stock.arrival</field>
+        <field name="arch" type="xml">
+            <list string="Arrivals" decoration-muted="state == 'cancel'"
+                  decoration-info="state == 'draft'"
+                  decoration-warning="state == 'to_divide'"
+                  decoration-success="state == 'divided'">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="partner_id"/>
+                <field name="warehouse_id" optional="hide"/>
+                <field name="line_count" string="Lines" optional="show"/>
+                <field name="total_quantity" sum="Received"/>
+                <field name="total_allocated" sum="Distributed" optional="show"/>
+                <field name="total_remaining" sum="Staying Here" optional="show"/>
+                <field name="total_value" sum="Value" optional="hide"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-warning="state == 'to_divide'"
+                       decoration-success="state == 'divided'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="di_stock_arrival_view_form" model="ir.ui.view">
+        <field name="name">di.stock.arrival.form</field>
+        <field name="model">di.stock.arrival</field>
+        <field name="arch" type="xml">
+            <form string="Arrival">
+                <header>
+                    <button name="action_confirm" type="object" string="Confirm Arrival"
+                            class="oe_highlight" invisible="state != 'draft'"
+                            help="Receive the goods into the arrival warehouse."/>
+                    <button name="action_open_divide_wizard" type="object"
+                            string="Divide" invisible="state != 'to_divide'"
+                            class="oe_highlight"/>
+                    <button name="action_validate_division" type="object"
+                            string="Mark as Divided" invisible="state != 'to_divide'"
+                            confirm="Generate the internal transfers for this distribution? Anything not distributed stays at the arrival warehouse."/>
+                    <button name="action_print_tags" type="object"
+                            string="Print Tags"
+                            invisible="state not in ('to_divide', 'divided')"
+                            help="One cartellino per piece received, ordered by barcode."/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state != 'draft'"/>
+                    <button name="action_reset_to_draft" type="object"
+                            string="Reset to Draft" invisible="state != 'cancel'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,to_divide,divided"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_transfers" type="object"
+                                class="oe_stat_button" icon="fa-truck"
+                                invisible="state in ('draft', 'cancel')">
+                            <field name="transfer_count" widget="statinfo"
+                                   string="Transfers"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id"
+                                   options="{'no_quick_create': False, 'no_create_edit': False}"
+                                   readonly="state != 'draft'"/>
+                            <field name="date" readonly="state != 'draft'"/>
+                        </group>
+                        <group>
+                            <field name="warehouse_id" readonly="state != 'draft'"/>
+                            <field name="company_id" groups="base.group_multi_company" readonly="state != 'draft'"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Products Received" name="lines">
+                            <!-- Editable up to the division: a miscount found after
+                                 confirming is corrected here, and the receipt follows
+                                 (see di.stock.arrival.line.write). The product itself
+                                 stays a draft-only edit - the goods for it are already
+                                 in the warehouse - so those cells lock on the line's
+                                 own state while the quantity stays open. -->
+                            <field name="line_ids" readonly="state not in ('draft', 'to_divide')">
+                                <list editable="bottom">
+                                    <field name="state" column_invisible="1"/>
+                                    <field name="sequence" widget="handle"
+                                           readonly="state != 'draft'"/>
+                                    <field name="product_id"
+                                           options="{'no_create': True}"
+                                           readonly="state != 'draft'"/>
+                                    <field name="default_code" optional="show"/>
+                                    <field name="barcode" optional="show"/>
+                                    <field name="quantity" sum="Received"/>
+                                    <field name="qty_allocated" sum="Distributed" readonly="1" optional="show"/>
+                                    <field name="qty_remaining" sum="Staying Here" readonly="1" optional="show"
+                                           decoration-warning="qty_remaining &gt; 0"/>
+                                    <field name="price_unit" optional="show"/>
+                                    <field name="subtotal" sum="Value" optional="hide"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                            <button name="action_open_import_wizard" type="object"
+                                    string="Import from CSV" icon="fa-upload"
+                                    class="btn-link" invisible="state != 'draft'"/>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="total_quantity"/>
+                                <field name="total_value" widget="monetary"/>
+                            </group>
+                        </page>
+                        <page string="Distribution" name="distribution">
+                            <div class="alert alert-info" role="alert"
+                                 invisible="state == 'cancel'">
+                                Distribute all or part of what arrived. Anything you leave
+                                undistributed simply stays at the arrival warehouse - that is
+                                normal and does not block the document.
+                            </div>
+                            <!-- The grid: lines down, destinations across. Drop the
+                                 widget attribute to fall back to the plain list in the
+                                 Distribution Rows tab if the asset bundle ever fails. -->
+                            <field name="allocation_ids" nolabel="1"
+                                   widget="di_distribution_matrix"
+                                   class="di_matrix_field"/>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="total_allocated"/>
+                                <field name="total_remaining"/>
+                            </group>
+                        </page>
+                        <page string="Distribution Rows" name="distribution_rows"
+                              groups="base.group_no_one">
+                            <field name="allocation_ids" readonly="state not in ('draft', 'to_divide')">
+                                <list editable="bottom">
+                                    <field name="line_id" string="Product"
+                                           options="{'no_create': True}"
+                                           domain="[('arrival_id', '=', parent.id),
+                                                    ('qty_remaining', '&gt;', 0)]"/>
+                                    <field name="line_quantity" readonly="1" optional="show"/>
+                                    <field name="line_qty_remaining" readonly="1" optional="show"/>
+                                    <field name="warehouse_id" options="{'no_create': True}"
+                                           domain="[('id', '!=', parent.warehouse_id)]"/>
+                                    <field name="quantity" sum="Distributed"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Already in the Catalogue" name="existing"
+                              invisible="not existing_html">
+                            <field name="existing_html" nolabel="1" class="w-100"/>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="note" placeholder="Internal notes about this arrival..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="di_stock_arrival_view_search" model="ir.ui.view">
+        <field name="name">di.stock.arrival.search</field>
+        <field name="model">di.stock.arrival</field>
+        <field name="arch" type="xml">
+            <search string="Arrivals">
+                <field name="name" string="Reference"/>
+                <field name="partner_id"/>
+                <field name="line_ids" string="Product"
+                       filter_domain="[('line_ids.product_id', 'ilike', self)]"/>
+                <separator/>
+                <filter name="filter_draft" string="Draft"
+                        domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_to_divide" string="Not Divided"
+                        domain="[('state', '=', 'to_divide')]"/>
+                <filter name="filter_divided" string="Divided"
+                        domain="[('state', '=', 'divided')]"/>
+                <separator/>
+                <filter name="filter_has_remainder" string="Stock Left Behind"
+                        domain="[('total_remaining', '&gt;', 0), ('state', '=', 'divided')]"/>
+                <separator/>
+                <filter name="filter_date" string="Arrival Date" date="date"/>
+                <group name="group_by">
+                    <filter name="group_partner" string="Supplier"
+                            context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_state" string="Status"
+                            context="{'group_by': 'state'}"/>
+                    <filter name="group_warehouse" string="Warehouse"
+                            context="{'group_by': 'warehouse_id'}"/>
+                    <filter name="group_date" string="Arrival Date"
+                            context="{'group_by': 'date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="di_stock_arrival_action" model="ir.actions.act_window">
+        <field name="name">Arrivals</field>
+        <field name="res_model">di.stock.arrival</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="di_stock_arrival_view_search"/>
+        <field name="context">{'search_default_filter_to_divide': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Record your first arrival</p>
+            <p>
+                When goods turn up from a supplier, record them here: what arrived,
+                from whom, and on which delivery note. Confirming brings the stock
+                into the arrival warehouse, then you divide it across your shops and
+                stockrooms.
+            </p>
+        </field>
+    </record>
+
+    <!-- Distribution seen on its own, for "what is going where today" -->
+    <record id="di_stock_arrival_allocation_view_list" model="ir.ui.view">
+        <field name="name">di.stock.arrival.allocation.list</field>
+        <field name="model">di.stock.arrival.allocation</field>
+        <field name="arch" type="xml">
+            <list string="Distribution" create="false">
+                <field name="arrival_id"/>
+                <field name="product_id"/>
+                <field name="warehouse_id"/>
+                <field name="quantity" sum="Quantity"/>
+                <field name="state" widget="badge" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="di_stock_arrival_allocation_view_search" model="ir.ui.view">
+        <field name="name">di.stock.arrival.allocation.search</field>
+        <field name="model">di.stock.arrival.allocation</field>
+        <field name="arch" type="xml">
+            <search string="Distribution">
+                <field name="arrival_id"/>
+                <field name="product_id"/>
+                <field name="warehouse_id"/>
+                <group name="group_by">
+                    <filter name="group_warehouse" string="Destination"
+                            context="{'group_by': 'warehouse_id'}"/>
+                    <filter name="group_arrival" string="Arrival"
+                            context="{'group_by': 'arrival_id'}"/>
+                    <filter name="group_product" string="Product"
+                            context="{'group_by': 'product_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="di_stock_arrival_allocation_action" model="ir.actions.act_window">
+        <field name="name">Distribution</field>
+        <field name="res_model">di.stock.arrival.allocation</field>
+        <field name="view_mode">list</field>
+        <field name="search_view_id" ref="di_stock_arrival_allocation_view_search"/>
+        <field name="context">{'search_default_group_warehouse': 1}</field>
+    </record>
+
+</odoo>

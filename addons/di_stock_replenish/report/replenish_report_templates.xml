@@ -1,0 +1,103 @@
+<odoo>
+
+    <template id="report_replenish_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <!-- Every heading comes from the field it prints. Free text in
+                     a QWeb template is a view term, and those do not reach
+                     this module's catalogue on every database, so the sheet
+                     would print English beside an Italian screen. -->
+                <t t-set="labels" t-value="doc.report_labels()"/>
+                <!-- One document per destination, each starting on a page of
+                     its own: a sheet is carried round the stockroom for one
+                     shop at a time and handed over with that shop's pile, so
+                     two shops' rows on one page would have to be torn apart. -->
+                <t t-foreach="doc.report_destinations()" t-as="dest">
+                <t t-call="web.external_layout">
+                    <div class="page">
+
+                        <h2>
+                            <span t-field="doc.name"/>
+                            <span class="mx-2">&#8594;</span>
+                            <span t-esc="dest['warehouse'].display_name"/>
+                            <span t-if="doc.state != 'done'"
+                                  class="badge text-bg-secondary ms-2"
+                                  t-esc="labels['state']"/>
+                        </h2>
+
+                        <div class="row mt-3 mb-4">
+                            <div class="col-3">
+                                <strong t-esc="labels['source']"/>
+                                <div t-esc="labels['source_names']"/>
+                            </div>
+                            <div class="col-3">
+                                <strong t-esc="labels['destination']"/>
+                                <div t-esc="dest['warehouse'].display_name"/>
+                            </div>
+                            <div class="col-3">
+                                <strong t-esc="labels['date']"/>
+                                <div t-field="doc.date"/>
+                            </div>
+                            <div class="col-3">
+                                <strong t-esc="labels['total']"/>
+                                <div t-esc="dest['quantity']"/>
+                            </div>
+                        </div>
+
+                        <table class="table table-sm o_main_table">
+                            <thead>
+                                <tr>
+                                    <th t-esc="labels['product']"/>
+                                    <th t-esc="labels['code']"/>
+                                    <th t-esc="labels['barcode']"/>
+                                    <!-- Only with more than one source: which
+                                         building each line is picked in. -->
+                                    <th t-if="dest['sources']" t-esc="labels['source']"/>
+                                    <th class="text-end" t-esc="labels['quantity']"/>
+                                    <!-- Ticked by hand while picking; a
+                                         column of boxes needs no word. -->
+                                    <th class="text-center" style="width:8%;"/>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="dest['lines']" t-as="line">
+                                    <td><span t-field="line.product_id.display_name"/></td>
+                                    <td><span t-field="line.default_code"/></td>
+                                    <td><span t-field="line.barcode"/></td>
+                                    <td t-if="dest['sources']" t-esc="dest['sources'].get(line.id, '')"/>
+                                    <td class="text-end"><span t-field="line.quantity"/></td>
+                                    <td class="text-center">&#9744;</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <!-- A sigma rather than "Subtotal":
+                                         no field carries that word. -->
+                                    <td t-att-colspan="4 if dest['sources'] else 3" class="text-end"><strong>&#931;</strong></td>
+                                    <td class="text-end">
+                                        <strong t-esc="dest['quantity']"/>
+                                    </td>
+                                    <td/>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                        <!-- The transfer this sheet is checked against, so
+                             the worker scanning the pile knows which one to
+                             open in Inventory. -->
+                        <div t-if="dest['pickings']" class="mt-4">
+                            <strong t-esc="labels['transfers']"/>
+                            <div t-foreach="dest['pickings']" t-as="picking">
+                                <span t-field="picking.name"/>
+                                <span class="text-muted ms-2" t-field="picking.state"/>
+                            </div>
+                        </div>
+
+                    </div>
+                </t>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

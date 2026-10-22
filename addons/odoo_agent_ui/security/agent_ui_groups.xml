@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--
+          Who may open the agent UI. DELIBERATELY UNASSIGNED: no user_ids, no implied_ids and no
+          privilege_id, so a fresh install shows the menu to nobody until an administrator grants
+          it on purpose.
+
+          Holding it grants NO data access and NO agent capability. The UI's routes check it in
+          their bodies (an ir.model.access row does not gate a controller), and every workflow a
+          user selects is re-authorized on the server. It is unrelated to
+          odoo_agent_gateway.group_agent_projection_service, which this addon neither references
+          nor assigns.
+        -->
+        <record id="group_agent_ui_user" model="res.groups">
+            <field name="name">Agent UI: user</field>
+            <field name="comment">May open the read-only Autonomous Agent screen. Grants no data access and no agent capability.</field>
+        </record>
+    </data>
+</odoo>

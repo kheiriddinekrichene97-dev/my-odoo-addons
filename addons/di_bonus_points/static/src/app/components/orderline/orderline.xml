@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="di_bonus_points.Orderline" t-inherit="point_of_sale.Orderline" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('product-name')]/span[hasclass('text-wrap')]" position="before">
+            <span t-if="this.isBonusPointsEligible and props.mode !== 'receipt'"
+                  class="o_bonus_points_line_badge d-inline-flex align-items-center justify-content-center rounded-circle text-bg-warning me-1 flex-shrink-0"
+                  style="width: 18px; height: 18px; font-size: 0.65rem;"
+                  title="Eligible for Bonus Points">
+                <i class="fa fa-gift" role="img" aria-label="Bonus Points" />
+            </span>
+        </xpath>
+    </t>
+</templates>
