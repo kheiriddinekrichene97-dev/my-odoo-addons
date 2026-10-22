@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <!-- The settle actions, called from the customer's menu in both layouts. -->
+    <t t-name="di_pos_customer_account.SettleItems">
+        <t t-if="pos.diCustomerAccountMethod">
+            <DropdownItem t-if="diBalance and diBalance.pos_due gt 0" onSelected="() => this.diSettle('debt')">
+                Settle Debt
+            </DropdownItem>
+            <DropdownItem t-if="diBalance and diBalance.invoices_due gt 0" onSelected="() => this.diSettle('invoices')">
+                Settle Invoices
+            </DropdownItem>
+            <DropdownItem onSelected="() => this.diSettle('deposit')">
+                Deposit Money
+            </DropdownItem>
+        </t>
+    </t>
+
+    <t t-inherit="point_of_sale.PartnerLine" t-inherit-mode="extension">
+        <xpath expr="//td[hasclass('partner-line-balance')]" position="inside">
+            <t t-set="balance" t-value="diBalance"/>
+            <div t-if="balance and balance.total_due gt 0" class="text-danger fw-bold text-end text-nowrap">
+                <t t-esc="env.utils.formatCurrency(balance.total_due)"/>
+                <div class="small fw-normal">to pay</div>
+            </div>
+            <div t-elif="balance and balance.total_due lt 0" class="text-success fw-bold text-end text-nowrap">
+                <t t-esc="env.utils.formatCurrency(-balance.total_due)"/>
+                <div class="small fw-normal">credit</div>
+            </div>
+        </xpath>
+        <!-- Small screens -->
+        <xpath expr="//t[@t-if='ui.isSmall']//t[@t-set-slot='content']" position="inside">
+            <t t-call="di_pos_customer_account.SettleItems"/>
+        </xpath>
+        <!-- Desktop -->
+        <xpath expr="//tr[hasclass('partner-info')]//t[@t-set-slot='content']" position="inside">
+            <t t-call="di_pos_customer_account.SettleItems"/>
+        </xpath>
+    </t>
+
+</templates>

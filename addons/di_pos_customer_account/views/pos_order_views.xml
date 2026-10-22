@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_pos_order_form_customer_account" model="ir.ui.view">
+        <field name="name">pos.order.form.customer.account</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="di_settle_kind" invisible="not di_settle_kind"/>
+                <field name="di_settle_invoice_ids" invisible="di_settle_kind != 'invoices'"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_pos_order_search_customer_account" model="ir.ui.view">
+        <field name="name">pos.order.search.customer.account</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_filter"/>
+        <field name="arch" type="xml">
+            <filter name="invoiced" position="after">
+                <filter string="Customer Account Operations" name="di_settlements" domain="[('di_settle_kind', '!=', False)]"/>
+            </filter>
+        </field>
+    </record>
+</odoo>

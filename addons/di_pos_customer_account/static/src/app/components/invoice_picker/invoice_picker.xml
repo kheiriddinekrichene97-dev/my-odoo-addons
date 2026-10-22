@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="di_pos_customer_account.InvoicePicker">
+        <Dialog title="props.title" size="'lg'">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th/>
+                        <th>Invoice</th>
+                        <th>Due Date</th>
+                        <th class="text-end">Total</th>
+                        <th class="text-end">To Pay</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach="props.invoices" t-as="invoice" t-key="invoice.id"
+                        role="button" t-on-click="() => this.toggle(invoice)">
+                        <td>
+                            <input type="checkbox" class="form-check-input" t-att-checked="state.selected[invoice.id]"/>
+                        </td>
+                        <td t-esc="invoice.name"/>
+                        <td t-esc="invoice.date_due or ''"/>
+                        <td class="text-end" t-esc="env.utils.formatCurrency(invoice.amount_total)"/>
+                        <td class="text-end fw-bold" t-esc="env.utils.formatCurrency(invoice.amount_residual)"/>
+                    </tr>
+                </tbody>
+            </table>
+            <t t-set-slot="footer">
+                <button class="btn btn-primary btn-lg lh-lg" t-att-disabled="!selectedInvoices.length" t-on-click="confirm">
+                    Pay <t t-esc="env.utils.formatCurrency(total)"/>
+                </button>
+                <button class="btn btn-secondary btn-lg lh-lg" t-on-click="props.close">Cancel</button>
+            </t>
+        </Dialog>
+    </t>
+
+</templates>

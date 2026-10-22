@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Information line of a settlement order: always at 0, the money is in the payments. -->
+    <record id="product_customer_account" model="product.product">
+        <field name="name">Customer Account Operation</field>
+        <field name="type">service</field>
+        <field name="list_price">0</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="available_in_pos" eval="True"/>
+        <field name="taxes_id" eval="[(5, 0, 0)]"/>
+        <field name="supplier_taxes_id" eval="[(5, 0, 0)]"/>
+        <field name="company_id" eval="False"/>
+    </record>
+</odoo>
