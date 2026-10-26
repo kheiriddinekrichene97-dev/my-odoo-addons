@@ -1,6 +1,6 @@
 {
     'name': 'POS Salesperson Attribution',
-    'version': '19.0.1.1.0',
+    'version': '19.0.1.1.1',
     'summary': 'Optionally attribute a POS order to the employee who assisted the customer, separate from the cashier',
     'description': """
 POS Salesperson Attribution

@@ -16,3 +16,12 @@ class HrEmployee(models.Model):
     def _load_pos_data_fields(self, config):
         fields_list = super()._load_pos_data_fields(config)
         return fields_list + ['is_pos_salesperson']
+
+
+class HrEmployeePublic(models.Model):
+    """A till logged in by a user without Employees rights reads employees
+    through their public profile: every field the till loads must exist
+    there too, or loading the point of sale fails with an access error."""
+    _inherit = 'hr.employee.public'
+
+    is_pos_salesperson = fields.Boolean(readonly=True)
