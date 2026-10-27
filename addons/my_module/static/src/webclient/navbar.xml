@@ -3,6 +3,8 @@
 
     <t t-inherit="web.NavBar.AppsMenu" t-inherit-mode="extension">
         <xpath expr="//t[@t-if='this.ui.isSmall']" position="before">
+            <!-- Small screens already have Odoo's own side menu -->
+            <SideMenu t-if="!isScopedApp and !this.ui.isSmall"/>
             <a t-if="!isScopedApp" href="/odoo/home" class="o_my_home_button" title="Home"
                aria-label="Home" t-on-click.prevent="onHomeButtonClick">
                 <i class="fa fa-home"/>

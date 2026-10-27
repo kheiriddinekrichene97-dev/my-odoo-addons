@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="my_module.SideMenu">
+        <button class="o_my_side_menu_toggle" title="Menu" aria-label="Open the menu" t-on-click="toggle">
+            <i class="fa fa-bars"/>
+        </button>
+        <t t-portal="'body'">
+            <div class="o_my_side_menu_backdrop" t-att-class="{ o_open: state.open }" t-on-click="close"/>
+            <aside class="o_my_side_menu" t-att-class="{ o_open: state.open }" aria-label="Main menu">
+                <div class="o_my_side_menu_header">
+                    <span>Menu</span>
+                    <button class="btn btn-link text-reset" title="Close" aria-label="Close the menu" t-on-click="close">
+                        <i class="fa fa-times"/>
+                    </button>
+                </div>
+                <div class="o_my_side_menu_search">
+                    <i class="fa fa-search" aria-hidden="true"/>
+                    <input t-ref="search" type="text" placeholder="Search apps..." aria-label="Search apps"
+                           autocomplete="off" t-model="state.query" t-on-keydown="onSearchKeydown"/>
+                </div>
+                <nav class="o_my_side_menu_body">
+                    <a href="/odoo/home" class="o_my_side_menu_row o_my_side_menu_home" t-on-click.prevent="goHome">
+                        <span class="o_my_side_menu_icon"><i class="fa fa-home"/></span>
+                        <span>Home</span>
+                    </a>
+                    <t t-foreach="apps" t-as="entry" t-key="entry.app.id">
+                        <div class="o_my_side_menu_app" t-att-class="{ o_current: isCurrentApp(entry.app) }">
+                            <a class="o_my_side_menu_row" t-att-href="href(entry.app)"
+                               t-att-data-menu-xmlid="entry.app.xmlid"
+                               t-on-click.prevent="() => this.select(entry.app)">
+                                <img t-if="entry.webIconData" class="o_my_side_menu_icon" t-att-src="entry.webIconData" alt=""/>
+                                <span t-else="" class="o_my_side_menu_icon" t-attf-style="background-color: {{entry.webIcon.backgroundColor}};">
+                                    <i t-att-class="entry.webIcon.iconClass" t-attf-style="color: {{entry.webIcon.color}};"/>
+                                </span>
+                                <span class="text-truncate" t-esc="entry.app.name"/>
+                            </a>
+                            <button t-if="children(entry.app).length" class="o_my_side_menu_chevron"
+                                    t-att-aria-expanded="isExpanded(entry.app) ? 'true' : 'false'"
+                                    t-att-aria-label="'Show the menus of ' + entry.app.name"
+                                    t-on-click="() => this.toggleExpand(entry.app)">
+                                <i t-attf-class="fa fa-chevron-{{ isExpanded(entry.app) ? 'down' : 'right' }}"/>
+                            </button>
+                        </div>
+                        <ul t-if="isExpanded(entry.app)" class="o_my_side_menu_children">
+                            <t t-foreach="children(entry.app)" t-as="menu" t-key="menu.id">
+                                <t t-call="my_module.SideMenu.Item"/>
+                            </t>
+                        </ul>
+                    </t>
+                    <div t-if="!apps.length" class="o_my_side_menu_empty">No app matches.</div>
+                </nav>
+            </aside>
+        </t>
+    </t>
+
+    <t t-name="my_module.SideMenu.Item">
+        <li>
+            <a class="o_my_side_menu_sub" t-att-href="href(menu)" t-att-data-menu-xmlid="menu.xmlid"
+               t-on-click.prevent="() => this.onMenuClick(menu)">
+                <span class="text-truncate" t-esc="menu.name"/>
+                <i t-if="menu.childrenTree.length" t-attf-class="fa fa-chevron-{{ isExpanded(menu) ? 'down' : 'right' }} ms-auto small"/>
+            </a>
+            <ul t-if="menu.childrenTree.length and isExpanded(menu)">
+                <t t-foreach="menu.childrenTree" t-as="child" t-key="child.id">
+                    <t t-call="my_module.SideMenu.Item">
+                        <t t-set="menu" t-value="child"/>
+                    </t>
+                </t>
+            </ul>
+        </li>
+    </t>
+
+</templates>

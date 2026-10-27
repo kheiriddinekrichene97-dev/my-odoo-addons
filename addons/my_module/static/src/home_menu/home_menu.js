@@ -2,6 +2,7 @@ import { Component, onMounted, onWillStart, onWillUnmount, useRef, useState } fr
 import { registry } from "@web/core/registry";
 import { user } from "@web/core/user";
 import { useBus, useService } from "@web/core/utils/hooks";
+import { getAppIcon, normalizeSearch as normalize } from "../app_icon";
 
 export const HOME_MENU_ACTION = "my_module.action_home_menu";
 
@@ -11,10 +12,6 @@ export const homeMenuState = { isActive: false };
 
 // Used when the company has no brand colours set (Settings > Companies).
 const DEFAULT_COLORS = ["#5f3c5c", "#22394d"];
-
-function normalize(text) {
-    return (text || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
-}
 
 export class HomeMenu extends Component {
     static template = "my_module.HomeMenu";
@@ -81,34 +78,13 @@ export class HomeMenu extends Component {
             xmlid: app.xmlid,
             href: `/odoo/${app.actionPath || "action-" + app.actionID}`,
             menu: app,
-            ...this.getIcon(app),
+            ...getAppIcon(app),
         }));
     }
 
     get visibleApps() {
         const query = normalize(this.state.query.trim());
         return query ? this.apps.filter((app) => normalize(app.name).includes(query)) : this.apps;
-    }
-
-    /**
-     * Normalizes the app icon the same way the command palette does: either an
-     * image (base64 png/svg or url), or a font icon on a colored background.
-     */
-    getIcon(app) {
-        if (app.webIconData) {
-            if (app.webIconData.startsWith("data:image") || app.webIconData.startsWith("/")) {
-                return { webIconData: app.webIconData };
-            }
-            const prefix = app.webIconData.startsWith("P")
-                ? "data:image/svg+xml;base64,"
-                : "data:image/png;base64,";
-            return { webIconData: prefix + app.webIconData.replace(/\s/g, "") };
-        }
-        const [iconClass, color, backgroundColor] = (app.webIcon || "").split(",");
-        if (backgroundColor !== undefined) {
-            return { webIcon: { iconClass, color, backgroundColor } };
-        }
-        return { webIconData: "/web/static/img/default_icon_app.png" };
     }
 
     onSearchInput(ev) {
