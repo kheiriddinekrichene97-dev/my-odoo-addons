@@ -27,3 +27,87 @@ html.o_my_branded.o_my_brand_light .o_main_navbar {
     --NavBar-entry-backgroundColor--focus: rgba(0, 0, 0, .06);
     --NavBar-entry-backgroundColor--active: rgba(0, 0, 0, .1);
 }
+
+// Sidebar in the brand colours: brand background, light text, accent highlights
+html.o_my_branded:not(.o_my_brand_light) .o_my_side_menu {
+    color: rgba(255, 255, 255, .88);
+    background-color: var(--my-brand-primary);
+    border-right: 1px solid color-mix(in srgb, var(--my-brand-accent) 35%, transparent);
+
+    .o_my_side_menu_header {
+        border-bottom-color: rgba(255, 255, 255, .08);
+        color: var(--my-brand-accent);
+        letter-spacing: .08em;
+        text-transform: uppercase;
+    }
+
+    .o_my_side_menu_search {
+        .fa-search {
+            color: rgba(255, 255, 255, .45);
+        }
+
+        input {
+            border-color: rgba(255, 255, 255, .12);
+            color: #fff;
+            background-color: rgba(255, 255, 255, .06);
+
+            &::placeholder {
+                color: rgba(255, 255, 255, .45);
+            }
+
+            &:focus {
+                border-color: var(--my-brand-accent);
+                background-color: rgba(255, 255, 255, .1);
+            }
+        }
+    }
+
+    .o_my_side_menu_row:hover,
+    .o_my_side_menu_chevron:hover,
+    .o_my_side_menu_sub:hover {
+        color: #fff;
+        background-color: rgba(255, 255, 255, .07);
+    }
+
+    .o_my_side_menu_home .o_my_side_menu_icon {
+        color: var(--my-brand-accent);
+        background-color: rgba(255, 255, 255, .08);
+    }
+
+    .o_my_side_menu_app.o_current {
+        background-color: color-mix(in srgb, var(--my-brand-accent) 14%, transparent);
+        box-shadow: inset 3px 0 0 var(--my-brand-accent);
+
+        .o_my_side_menu_row {
+            color: var(--my-brand-accent);
+        }
+    }
+
+    .o_my_side_menu_chevron {
+        color: rgba(255, 255, 255, .5);
+    }
+
+    .o_my_side_menu_children {
+        border-left-color: rgba(255, 255, 255, .1);
+    }
+
+    .o_my_side_menu_sub {
+        color: rgba(255, 255, 255, .7);
+    }
+
+    .o_my_side_menu_empty {
+        color: rgba(255, 255, 255, .5);
+    }
+}
+
+// A light brand colour keeps the white sidebar, with the brand as accent
+html.o_my_branded.o_my_brand_light .o_my_side_menu {
+    .o_my_side_menu_app.o_current {
+        background-color: color-mix(in srgb, var(--my-brand-primary) 12%, transparent);
+        box-shadow: inset 3px 0 0 var(--my-brand-primary);
+    }
+
+    .o_my_side_menu_search input:focus {
+        border-color: var(--my-brand-primary);
+    }
+}
