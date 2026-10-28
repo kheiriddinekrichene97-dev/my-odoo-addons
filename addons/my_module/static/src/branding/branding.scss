@@ -1,8 +1,23 @@
 // Top bar in the company's brand colours (set by brand_service.js only when
 // the company has colours; otherwise Odoo's own look is kept).
 html.o_my_branded .o_main_navbar {
-    border-bottom: 1px solid var(--my-brand-accent);
+    position: relative;
+    border-bottom-color: transparent;
     background: var(--my-brand-primary);
+
+    // Accent line drawn above the bar's entries: as a plain border, entries
+    // with their own background/border (systray items) cover parts of it.
+    &::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 2;
+        height: 1px;
+        background: var(--my-brand-accent);
+        pointer-events: none;
+    }
     --NavBar-entry-backgroundColor: var(--my-brand-primary);
     --NavBar-entry-backgroundColor--hover: rgba(255, 255, 255, .08);
     --NavBar-entry-backgroundColor--focus: rgba(255, 255, 255, .08);
