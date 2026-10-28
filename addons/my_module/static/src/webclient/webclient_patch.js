@@ -18,4 +18,12 @@ patch(NavBar.prototype, {
     get currentApp() {
         return homeMenuState.isActive ? undefined : super.currentApp;
     },
+
+    get isHomeMenuActive() {
+        return homeMenuState.isActive;
+    },
+
+    onHomeButtonClick() {
+        this.actionService.doAction(HOME_MENU_ACTION, { clearBreadcrumbs: true });
+    },
 });
