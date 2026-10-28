@@ -18,6 +18,7 @@ export const APP_GLYPHS = {
     "base.menu_administration": `${ICONS}/settings.png`,
     "sale.sale_menu_root": `${ICONS}/sales.svg`,
     "di_bonus_points.menu_bonus_point_root": `${ICONS}/bonus_points.svg`,
+    "utm.menu_link_tracker_root": `${ICONS}/link_tracker.svg`,
 };
 
 export const HOME_GLYPH = `${ICONS}/home.png`;
@@ -37,6 +38,16 @@ export function glyphStyle(url) {
 export function getAppIcon(app) {
     if (APP_GLYPHS[app.xmlid]) {
         return { glyph: APP_GLYPHS[app.xmlid] };
+    }
+    // Any other app (e.g. installed later): its own icon as a silhouette in
+    // the brand colour, so no coloured icon breaks the set.
+    if (app.webIconData) {
+        const icon = app.webIconData;
+        if (icon.startsWith("data:image") || icon.startsWith("/")) {
+            return { glyph: icon };
+        }
+        const prefix = icon.startsWith("P") ? "data:image/svg+xml;base64," : "data:image/png;base64,";
+        return { glyph: prefix + icon.replace(/\s/g, "") };
     }
     if (app.webIconData) {
         if (app.webIconData.startsWith("data:image") || app.webIconData.startsWith("/")) {
