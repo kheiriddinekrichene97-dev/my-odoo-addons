@@ -1,6 +1,5 @@
-import { Component, onMounted, onWillStart, onWillUnmount, useRef, useState } from "@odoo/owl";
+import { Component, onMounted, onWillUnmount, useRef, useState } from "@odoo/owl";
 import { registry } from "@web/core/registry";
-import { user } from "@web/core/user";
 import { useBus, useService } from "@web/core/utils/hooks";
 import { getAppIcon, normalizeSearch as normalize } from "../app_icon";
 
@@ -12,6 +11,8 @@ export const homeMenuState = { isActive: false };
 
 // Used when the company has no brand colours set (Settings > Companies).
 const DEFAULT_COLORS = ["#5f3c5c", "#22394d"];
+// Glow colour when the company has no accent colour.
+const DEFAULT_ACCENT = "#ffffff";
 
 export class HomeMenu extends Component {
     static template = "my_module.HomeMenu";
@@ -19,14 +20,12 @@ export class HomeMenu extends Component {
 
     setup() {
         this.menuService = useService("menu");
-        this.orm = useService("orm");
         this.ui = useService("ui");
+        // Name, tagline, logo and colours of the active company (Settings > Companies)
+        this.brand = useState(useService("my_brand"));
         this.searchRef = useRef("search");
         this.state = useState({ query: "", focusedIndex: 0 });
-        this.company = { id: user.activeCompany?.id, name: user.activeCompany?.name || "", hasLogo: false };
-        this.colors = DEFAULT_COLORS;
         useBus(this.env.bus, "MENUS:APP-CHANGED", () => this.render());
-        onWillStart(() => this.loadBranding());
         onMounted(() => {
             this.setActive(true);
             // No autofocus on phones: it would pop the keyboard up.
@@ -37,38 +36,27 @@ export class HomeMenu extends Component {
         onWillUnmount(() => this.setActive(false));
     }
 
-    async loadBranding() {
-        if (!this.company.id) {
-            return;
-        }
-        try {
-            const [company] = await this.orm.read(
-                "res.company",
-                [this.company.id],
-                ["name", "primary_color", "secondary_color", "uses_default_logo"]
-            );
-            this.company.name = company.name;
-            this.company.hasLogo = !company.uses_default_logo;
-            if (company.primary_color) {
-                this.colors = [company.primary_color, company.secondary_color || DEFAULT_COLORS[1]];
-            }
-        } catch {
-            // Branding is cosmetic: keep the defaults.
-        }
-    }
-
     setActive(isActive) {
         homeMenuState.isActive = isActive;
         this.env.bus.trigger("MENUS:APP-CHANGED");
     }
 
     get backgroundStyle() {
-        const [primary, secondary] = this.colors;
-        return `background: radial-gradient(circle at 15% 0%, ${primary} 0%, transparent 60%), linear-gradient(135deg, ${primary} 0%, ${secondary} 100%);`;
+        const brand = this.brand;
+        if (!brand.primary) {
+            const [primary, secondary] = DEFAULT_COLORS;
+            return `background: radial-gradient(circle at 15% 0%, ${primary} 0%, transparent 60%), linear-gradient(135deg, ${primary} 0%, ${secondary} 100%);`;
+        }
+        // Brand colour as background, a soft glow of the accent from the top
+        const accent = brand.accent || DEFAULT_ACCENT;
+        return (
+            `background: radial-gradient(circle at 50% -15%, color-mix(in srgb, ${accent} 26%, transparent), transparent 55%), ` +
+            `linear-gradient(160deg, ${brand.primary} 0%, color-mix(in srgb, ${brand.primary} 72%, #505050) 100%);`
+        );
     }
 
-    get logoUrl() {
-        return `/web/image/res.company/${this.company.id}/logo`;
+    get accentStyle() {
+        return this.brand.accent ? `color: ${this.brand.accent};` : "";
     }
 
     get apps() {

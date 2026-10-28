@@ -5,8 +5,9 @@
         <div class="o_action o_my_home_menu h-100 overflow-auto" t-att-style="backgroundStyle">
             <div class="o_my_home_menu_content">
                 <div class="o_my_home_menu_brand">
-                    <img t-if="company.hasLogo" class="o_my_home_menu_logo" t-att-src="logoUrl" t-att-alt="company.name"/>
-                    <div t-else="" class="o_my_home_menu_company" t-esc="company.name"/>
+                    <img t-if="brand.hasLogo" class="o_my_home_menu_logo" t-att-src="brand.logoUrl" t-att-alt="brand.name"/>
+                    <div class="o_my_home_menu_company" t-att-style="accentStyle" t-esc="brand.name"/>
+                    <div t-if="brand.tagline" class="o_my_home_menu_tagline" t-esc="brand.tagline"/>
                 </div>
 
                 <div class="o_my_home_menu_search">

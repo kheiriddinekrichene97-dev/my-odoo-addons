@@ -12,27 +12,33 @@
 
     .o_my_home_menu_brand {
         display: flex;
-        justify-content: center;
+        flex-direction: column;
+        align-items: center;
         margin-bottom: 1.75rem;
         animation: o_my_home_fade .4s ease-out both;
     }
 
     .o_my_home_menu_logo {
-        max-height: 72px;
-        max-width: 280px;
+        max-height: 84px;
+        max-width: 240px;
+        margin-bottom: .6rem;
         object-fit: contain;
-        padding: .5rem .9rem;
-        border-radius: .75rem;
-        background-color: rgba(255, 255, 255, .92);
-        box-shadow: 0 6px 24px rgba(0, 0, 0, .18);
     }
 
     .o_my_home_menu_company {
-        font-size: 1.9rem;
+        font-size: 1.75rem;
         font-weight: 300;
-        letter-spacing: .12em;
+        letter-spacing: .16em;
         text-transform: uppercase;
         text-shadow: 0 2px 12px rgba(0, 0, 0, .25);
+    }
+
+    .o_my_home_menu_tagline {
+        margin-top: .2rem;
+        font-size: .8rem;
+        letter-spacing: .3em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, .65);
     }
 
     .o_my_home_menu_search {

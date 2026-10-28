@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Login page in the brand of the company (name, tagline, logo, colours
+         all come from Settings > Companies, so they can change any time). -->
+    <template id="login_layout_brand" inherit_id="web.login_layout" name="Login Layout: company brand">
+        <xpath expr="//t[@t-call='web.frontend_layout']/div" position="before">
+            <t t-set="brand_company" t-value="request.env['res.company'].sudo()._my_get_brand_company()"/>
+            <t t-set="title" t-value="brand_company.name"/>
+            <t t-set="x_icon" t-value="'/my_module/brand/logo'"/>
+            <t t-set="body_classname" t-value="'o_my_brand_login'"/>
+        </xpath>
+        <xpath expr="//t[@t-call='web.frontend_layout']/div" position="attributes">
+            <attribute name="t-att-style">'--my-brand-primary: %s; --my-brand-accent: %s;' % (brand_company.primary_color or '#5f3c5c', brand_company.secondary_color or '#d3b85c')</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('card-body')]/div[hasclass('text-center')]/img" position="replace">
+            <img src="/my_module/brand/logo" t-att-alt="brand_company.name" class="o_my_brand_login_logo"/>
+            <div class="o_my_brand_login_name" t-esc="brand_company.name"/>
+            <div t-if="brand_company._my_brand_tagline()" class="o_my_brand_login_tagline" t-esc="brand_company._my_brand_tagline()"/>
+        </xpath>
+    </template>
+</odoo>

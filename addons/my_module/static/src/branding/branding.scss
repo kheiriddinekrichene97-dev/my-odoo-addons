@@ -1,0 +1,29 @@
+// Top bar in the company's brand colours (set by brand_service.js only when
+// the company has colours; otherwise Odoo's own look is kept).
+html.o_my_branded .o_main_navbar {
+    border-bottom: 1px solid var(--my-brand-accent);
+    background: var(--my-brand-primary);
+    --NavBar-entry-backgroundColor: var(--my-brand-primary);
+    --NavBar-entry-backgroundColor--hover: rgba(255, 255, 255, .08);
+    --NavBar-entry-backgroundColor--focus: rgba(255, 255, 255, .08);
+    --NavBar-entry-backgroundColor--active: rgba(255, 255, 255, .12);
+
+    .o_menu_brand {
+        color: var(--my-brand-accent);
+    }
+
+    // Our own buttons (sidebar, home) take the bar's text colour
+    .o_my_side_menu_toggle,
+    .o_my_home_button {
+        color: var(--NavBar-entry-color, rgba(255, 255, 255, .9));
+    }
+}
+
+// A light brand colour needs dark text in the top bar
+html.o_my_branded.o_my_brand_light .o_main_navbar {
+    --NavBar-entry-color: rgba(0, 0, 0, .85);
+    color: rgba(0, 0, 0, .85);
+    --NavBar-entry-backgroundColor--hover: rgba(0, 0, 0, .06);
+    --NavBar-entry-backgroundColor--focus: rgba(0, 0, 0, .06);
+    --NavBar-entry-backgroundColor--active: rgba(0, 0, 0, .1);
+}
