@@ -8,7 +8,7 @@
             <!-- Back to the home page: pointless while already on it -->
             <a t-if="!isScopedApp and !isHomeMenuActive" href="/odoo/home" class="o_my_home_button"
                title="Home" aria-label="Home" t-on-click.prevent="onHomeButtonClick">
-                <i class="fa fa-home"/>
+                <span class="o_my_app_glyph o_my_navbar_glyph" t-att-style="homeGlyphStyle"/>
             </a>
         </xpath>
         <!-- The sidebar replaces the apps dropdown (it lists Home and every app) -->

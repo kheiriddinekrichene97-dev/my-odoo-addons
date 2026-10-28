@@ -25,7 +25,10 @@
                        t-att-data-menu-xmlid="app.xmlid"
                        t-att-style="'animation-delay: ' + (app_index * 25) + 'ms'"
                        t-on-click="(ev) => this.onAppClick(ev, app)">
-                        <img t-if="app.webIconData" class="o_my_home_menu_icon" t-att-src="app.webIconData" alt=""/>
+                        <span t-if="app.glyph" class="o_my_home_menu_icon o_my_app_tile">
+                            <span class="o_my_app_glyph" t-att-style="glyphStyle(app.glyph)"/>
+                        </span>
+                        <img t-elif="app.webIconData" class="o_my_home_menu_icon" t-att-src="app.webIconData" alt=""/>
                         <div t-else="" class="o_my_home_menu_icon d-flex align-items-center justify-content-center"
                              t-attf-style="background-color: {{app.webIcon.backgroundColor}};">
                             <i t-att-class="app.webIcon.iconClass" t-attf-style="color: {{app.webIcon.color}};"/>

@@ -21,7 +21,7 @@
                 </div>
                 <nav class="o_my_side_menu_body">
                     <a href="/odoo/home" class="o_my_side_menu_row o_my_side_menu_home" t-on-click.prevent="goHome">
-                        <span class="o_my_side_menu_icon"><i class="fa fa-home"/></span>
+                        <span class="o_my_side_menu_icon o_my_app_tile"><span class="o_my_app_glyph" t-att-style="glyphStyle(homeGlyph)"/></span>
                         <span>Home</span>
                     </a>
                     <t t-foreach="apps" t-as="entry" t-key="entry.app.id">
@@ -29,7 +29,10 @@
                             <a class="o_my_side_menu_row" t-att-href="href(entry.app)"
                                t-att-data-menu-xmlid="entry.app.xmlid"
                                t-on-click.prevent="() => this.select(entry.app)">
-                                <img t-if="entry.webIconData" class="o_my_side_menu_icon" t-att-src="entry.webIconData" alt=""/>
+                                <span t-if="entry.glyph" class="o_my_side_menu_icon o_my_app_tile">
+                                    <span class="o_my_app_glyph" t-att-style="glyphStyle(entry.glyph)"/>
+                                </span>
+                                <img t-elif="entry.webIconData" class="o_my_side_menu_icon" t-att-src="entry.webIconData" alt=""/>
                                 <span t-else="" class="o_my_side_menu_icon" t-attf-style="background-color: {{entry.webIcon.backgroundColor}};">
                                     <i t-att-class="entry.webIcon.iconClass" t-attf-style="color: {{entry.webIcon.color}};"/>
                                 </span>

@@ -1,6 +1,7 @@
 import { patch } from "@web/core/utils/patch";
 import { NavBar } from "@web/webclient/navbar/navbar";
 import { WebClient } from "@web/webclient/webclient";
+import { glyphStyle, HOME_GLYPH } from "../app_icon";
 import { HOME_MENU_ACTION, homeMenuState } from "../home_menu/home_menu";
 import { SideMenu } from "../side_menu/side_menu";
 
@@ -17,6 +18,10 @@ patch(WebClient.prototype, {
 patch(NavBar.prototype, {
     get currentApp() {
         return homeMenuState.isActive ? undefined : super.currentApp;
+    },
+
+    get homeGlyphStyle() {
+        return glyphStyle(HOME_GLYPH);
     },
 
     get isHomeMenuActive() {

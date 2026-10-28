@@ -1,6 +1,6 @@
 import { Component, useExternalListener, useRef, useState } from "@odoo/owl";
 import { useBus, useService } from "@web/core/utils/hooks";
-import { getAppIcon, normalizeSearch } from "../app_icon";
+import { getAppIcon, glyphStyle, HOME_GLYPH, normalizeSearch } from "../app_icon";
 import { HOME_MENU_ACTION } from "../home_menu/home_menu";
 
 /**
@@ -15,6 +15,8 @@ export class SideMenu extends Component {
     setup() {
         this.menuService = useService("menu");
         this.action = useService("action");
+        this.glyphStyle = glyphStyle;
+        this.homeGlyph = HOME_GLYPH;
         this.searchRef = useRef("search");
         this.state = useState({ open: false, query: "", expanded: {} });
         useBus(this.env.bus, "MENUS:APP-CHANGED", () => this.render());

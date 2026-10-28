@@ -1,0 +1,34 @@
+// App icon tile: the company's line icon (a mask) painted in the brand accent
+// colour on a dark rounded tile. Size comes from the element it is used on.
+.o_my_app_tile {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, .08);
+    border-radius: 24%;
+    background-color: color-mix(in srgb, var(--my-brand-primary, #1c1c1c) 88%, #fff);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .3);
+}
+
+.o_my_app_glyph {
+    display: inline-block;
+    width: 50%;
+    height: 50%;
+    background-color: var(--my-brand-accent, #d3b85c);
+    -webkit-mask: var(--o-my-glyph) center / contain no-repeat;
+    mask: var(--o-my-glyph) center / contain no-repeat;
+}
+
+// Sidebar: same dark tile, smaller
+.o_my_side_menu .o_my_side_menu_icon.o_my_app_tile {
+    border-radius: .5rem;
+    background-color: color-mix(in srgb, var(--my-brand-primary, #1c1c1c) 88%, #fff);
+}
+
+// Top bar Home button: the house in the bar's text colour
+.o_main_navbar .o_my_navbar_glyph {
+    width: 1.05rem;
+    height: 1.05rem;
+    background-color: currentColor;
+}

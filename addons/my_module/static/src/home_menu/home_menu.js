@@ -1,7 +1,7 @@
 import { Component, onMounted, onWillUnmount, useRef, useState } from "@odoo/owl";
 import { registry } from "@web/core/registry";
 import { useBus, useService } from "@web/core/utils/hooks";
-import { getAppIcon, normalizeSearch as normalize } from "../app_icon";
+import { getAppIcon, glyphStyle, normalizeSearch as normalize } from "../app_icon";
 
 export const HOME_MENU_ACTION = "my_module.action_home_menu";
 
@@ -23,6 +23,7 @@ export class HomeMenu extends Component {
         this.ui = useService("ui");
         // Name, tagline, logo and colours of the active company (Settings > Companies)
         this.brand = useState(useService("my_brand"));
+        this.glyphStyle = glyphStyle;
         this.searchRef = useRef("search");
         this.state = useState({ query: "", focusedIndex: 0 });
         useBus(this.env.bus, "MENUS:APP-CHANGED", () => this.render());
