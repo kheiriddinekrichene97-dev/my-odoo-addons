@@ -33,13 +33,36 @@ function plainText(html) {
     return new DOMParser().parseFromString(html || "", "text/html").body.textContent.trim();
 }
 
-function isLight(hex) {
+function toRgb(hex) {
     const match = /^#?([\da-f]{2})([\da-f]{2})([\da-f]{2})$/i.exec(hex || "");
-    if (!match) {
+    return match ? match.slice(1).map((c) => parseInt(c, 16)) : null;
+}
+
+function isLight(hex) {
+    const rgb = toRgb(hex);
+    if (!rgb) {
         return false;
     }
-    const [r, g, b] = match.slice(1).map((c) => parseInt(c, 16) / 255);
+    const [r, g, b] = rgb.map((c) => c / 255);
     return 0.2126 * r + 0.7152 * g + 0.0722 * b > 0.6;
+}
+
+/** `ratio` of `hex` mixed with black, as an "r, g, b" triplet. */
+function darken(hex, ratio) {
+    return toRgb(hex).map((c) => Math.round(c * ratio));
+}
+
+/**
+ * Colours for Odoo's own buttons, links, tabs... (brand_overrides.css):
+ * - ui: backgrounds and borders - the brand colour, or a dark accent when
+ *   the brand colour is too light to carry white text;
+ * - text: a shade of the accent dark enough to read on white.
+ */
+function uiColors(primary, accent) {
+    const accentRgb = toRgb(accent) || toRgb(primary);
+    const text = darken(`#${accentRgb.map((c) => c.toString(16).padStart(2, "0")).join("")}`, 0.62);
+    const ui = isLight(primary) ? text : toRgb(primary);
+    return { ui: ui.join(", "), text: text.join(", ") };
 }
 
 export const brandService = {
@@ -65,6 +88,11 @@ export const brandService = {
             if (brand.primary) {
                 root.style.setProperty("--my-brand-primary", brand.primary);
                 root.style.setProperty("--my-brand-accent", brand.accent || brand.primary);
+                const { ui, text } = uiColors(brand.primary, brand.accent);
+                root.style.setProperty("--my-brand-ui-rgb", ui);
+                root.style.setProperty("--my-brand-ui", `rgb(${ui})`);
+                root.style.setProperty("--my-brand-text-rgb", text);
+                root.style.setProperty("--my-brand-text", `rgb(${text})`);
             }
             if (brand.hasLogo) {
                 for (const link of document.querySelectorAll("link[rel~='icon']")) {
