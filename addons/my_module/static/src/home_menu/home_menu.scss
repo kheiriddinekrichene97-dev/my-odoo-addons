@@ -74,17 +74,17 @@
 
     .o_my_home_menu_grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-        gap: 1.75rem 1rem;
+        grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+        gap: 1.25rem .75rem;
     }
 
     .o_my_home_menu_app {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: .6rem;
-        padding: .9rem .4rem;
-        border-radius: 1rem;
+        gap: .5rem;
+        padding: .75rem .4rem;
+        border-radius: .75rem;
         color: #fff;
         text-decoration: none;
         animation: o_my_home_fade .35s ease-out both;
@@ -102,22 +102,25 @@
     }
 
     .o_my_home_menu_icon {
-        width: 72px;
-        height: 72px;
-        border-radius: 1.1rem;
+        width: 52px;
+        height: 52px;
+        border-radius: .7rem;
         object-fit: cover;
-        box-shadow: 0 6px 18px rgba(0, 0, 0, .28);
+        // Crisp edge instead of a soft glow
+        box-shadow: 0 0 0 1px rgba(255, 255, 255, .12), 0 2px 6px rgba(0, 0, 0, .25);
 
         > i {
-            font-size: 34px;
+            font-size: 24px;
         }
     }
 
     .o_my_home_menu_caption {
-        font-size: .98rem;
+        font-size: .88rem;
+        font-weight: 500;
+        letter-spacing: .01em;
         text-align: center;
-        line-height: 1.25;
-        text-shadow: 0 1px 6px rgba(0, 0, 0, .35);
+        line-height: 1.2;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, .4);
         overflow-wrap: anywhere;
     }
 
